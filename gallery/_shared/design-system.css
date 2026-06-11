@@ -1,0 +1,563 @@
+/* ============================================================
+   汎用LP デザインシステム
+   ============================================================
+   使い方:
+   1. このCSSをHTMLに読み込む
+   2. :root のカラーパレットをプロジェクトに合わせて上書きする
+   3. Google Fontsのlinkタグでフォントを読み込む
+   4. ユーティリティクラスとコンポーネントクラスを活用する
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Design Tokens（CSS変数）
+   ------------------------------------------------------------ */
+:root {
+  /* --- カラーパレット（プロジェクトごとに差し替え） ---
+     colorhunt.co / coolors.co でパレットを選び、以下を上書きしてください。
+     紫系・ネオン系は禁止。プロジェクトのトーンに合った色を選ぶこと。 */
+  --color-primary:   #2B6777;  /* メインカラー（例: 落ち着いたティール） */
+  --color-secondary: #52AB98;  /* サブカラー */
+  --color-accent:    #C8D8E4;  /* アクセントカラー */
+  --color-text:      #2D2D2D;  /* テキストカラー */
+  --color-text-light:#6B7280;  /* テキストカラー（薄） */
+  --color-bg:        #FAFAF8;  /* 背景カラー（純白#FFFを避ける） */
+  --color-bg-alt:    #F2EFE9;  /* 背景カラー（代替・セクション交互用） */
+  --color-border:    #E5E2DC;  /* ボーダーカラー */
+  --color-white:     #FFFFFF;  /* ホワイト */
+
+  /* --- フォント ---
+     Inter / Roboto は禁止。必ず2書体使うこと。
+     日本語: Noto Serif JP（見出し）+ Noto Sans JP（本文）を基本とする。 */
+  --font-heading: 'Noto Serif JP', 'Playfair Display', Georgia, serif;
+  --font-body:    'Noto Sans JP', 'Nunito Sans', sans-serif;
+
+  /* --- フォントサイズ（clampでレスポンシブ対応） --- */
+  --text-h1:      clamp(32px, 5vw, 56px);
+  --text-h2:      clamp(24px, 3.5vw, 40px);
+  --text-h3:      clamp(20px, 2.5vw, 28px);
+  --text-body:    clamp(15px, 1.2vw, 18px);
+  --text-small:   clamp(12px, 1vw, 14px);
+  --text-caption: clamp(11px, 0.8vw, 13px);
+
+  /* --- フォントウェイト --- */
+  --weight-bold:     700;
+  --weight-semibold: 600;
+  --weight-regular:  400;
+  --weight-light:    300;
+
+  /* --- 行間 --- */
+  --leading-tight:   1.3;
+  --leading-normal:  1.7;
+  --leading-relaxed: 1.9;
+
+  /* --- 余白（8pxグリッドシステム） --- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  16px;
+  --space-4:  24px;
+  --space-5:  32px;
+  --space-6:  48px;
+  --space-7:  64px;
+  --space-8:  80px;
+  --space-9:  96px;
+  --space-10: 120px;
+
+  /* --- セクション間余白 --- */
+  --section-padding: clamp(64px, 8vw, 120px);
+
+  /* --- 角丸 --- */
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  24px;
+  --radius-full: 9999px;
+
+  /* --- シャドウ --- */
+  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg:  0 8px 30px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
+
+  /* --- トランジション --- */
+  --transition-fast:   0.2s ease-out;
+  --transition-normal: 0.4s ease-out;
+  --transition-slow:   0.8s ease-out;
+
+  /* --- コンテンツ幅 --- */
+  --content-width:  1200px;
+  --content-narrow: 800px;
+}
+
+
+/* ------------------------------------------------------------
+   リセットCSS
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-secondary);
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+
+/* ------------------------------------------------------------
+   基本タイポグラフィ
+   ※ 必ず2書体使用。見出しはserif系、本文はsans-serif系。
+   ※ フォントウェイトの階層を明確にする。
+   ------------------------------------------------------------ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: var(--leading-tight);
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: var(--text-h1);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-semibold);
+}
+
+p {
+  margin-bottom: var(--space-3);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+small,
+.text-small {
+  font-size: var(--text-small);
+  font-weight: var(--weight-light);
+  color: var(--color-text-light);
+}
+
+.text-caption {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-light);
+  color: var(--color-text-light);
+}
+
+strong {
+  font-weight: var(--weight-semibold);
+}
+
+
+/* ------------------------------------------------------------
+   レイアウト・ユーティリティ
+   ------------------------------------------------------------ */
+
+/* コンテナ */
+.container {
+  width: 100%;
+  max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+.container--narrow {
+  max-width: var(--content-narrow);
+}
+
+/* セクション */
+.section {
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
+}
+
+.section--alt {
+  background-color: var(--color-bg-alt);
+}
+
+/* --- グリッド ---
+   3カラム均等グリッドは禁止。非対称配置（6:4, 7:3）を活用すること。 */
+.grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* 2カラム: 6:4 非対称 */
+.grid--2col {
+  grid-template-columns: 1fr;
+}
+
+/* 2カラム: 7:3 非対称 */
+.grid--sidebar {
+  grid-template-columns: 1fr;
+}
+
+/* 2カラム: 均等（限定的に使用可） */
+.grid--2col-equal {
+  grid-template-columns: 1fr;
+}
+
+/* 交互レイアウト: 偶数行は画像と文章を逆に */
+.grid--reverse {
+  direction: rtl;
+}
+
+.grid--reverse > * {
+  direction: ltr;
+}
+
+/* Flexユーティリティ */
+.flex {
+  display: flex;
+}
+
+.flex--center {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex--between {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex--col {
+  flex-direction: column;
+}
+
+.flex--wrap {
+  flex-wrap: wrap;
+}
+
+.flex--gap-sm {
+  gap: var(--space-2);
+}
+
+.flex--gap-md {
+  gap: var(--space-4);
+}
+
+.flex--gap-lg {
+  gap: var(--space-6);
+}
+
+/* テキスト配置 */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+/* 余白ユーティリティ */
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-5); }
+.mt-6 { margin-top: var(--space-6); }
+
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-5 { margin-bottom: var(--space-5); }
+.mb-6 { margin-bottom: var(--space-6); }
+
+
+/* ------------------------------------------------------------
+   コンポーネント
+   ------------------------------------------------------------ */
+
+/* ボタン */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  opacity: 0.9;
+}
+
+.btn--outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn--outline:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  transform: translateY(-2px);
+}
+
+/* カード
+   ※ 丸背景色付きアイコンは禁止。グラスモーフィズムも禁止。 */
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* 画像
+   ※ 角丸で切り抜く。直角のまま配置しない。aspect-ratio指定で崩れ防止。 */
+.img-rounded {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.img-rounded img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* バッジ / タグ */
+.badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+  background-color: var(--color-accent);
+  border-radius: var(--radius-full);
+}
+
+
+/* ------------------------------------------------------------
+   セクション区切り（有機的な曲線）
+   ※ 完全な直線のみのデザインを避ける。wave dividerでセクション間を繋ぐ。
+   ------------------------------------------------------------ */
+.wave-divider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.wave-divider svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.wave-divider--top {
+  transform: rotate(180deg);
+}
+
+
+/* ------------------------------------------------------------
+   アニメーション
+   ※ 控えめで有機的。パーティクル・パララックスは禁止。
+   ------------------------------------------------------------ */
+
+/* フェードアップ（スクロール連動用） */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* フェードイン */
+.fade-in {
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+}
+
+/* スライドイン（左から） */
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.slide-in-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* スライドイン（右から） */
+.slide-in-right {
+  opacity: 0;
+  transform: translateX(32px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.slide-in-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 遅延用クラス */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+
+
+/* ------------------------------------------------------------
+   レスポンシブ（モバイルファースト）
+   ブレークポイント: 480px / 768px / 1024px / 1280px
+   ------------------------------------------------------------ */
+
+/* sm: 480px以上 */
+@media (min-width: 480px) {
+  .container {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+}
+
+/* md: 768px以上 */
+@media (min-width: 768px) {
+  .grid--2col {
+    grid-template-columns: 3fr 2fr; /* 6:4 非対称 */
+  }
+
+  .grid--sidebar {
+    grid-template-columns: 7fr 3fr; /* 7:3 非対称 */
+  }
+
+  .grid--2col-equal {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .container {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+}
+
+/* lg: 1024px以上 */
+@media (min-width: 1024px) {
+  .grid--2col {
+    gap: var(--space-7);
+  }
+
+  .grid--sidebar {
+    gap: var(--space-6);
+  }
+}
+
+/* xl: 1280px以上 */
+@media (min-width: 1280px) {
+  .container {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+
+/* ------------------------------------------------------------
+   スクロール連動アニメーション用 JavaScript（インラインで使用可）
+   以下のscriptタグをHTMLの</body>直前に配置:
+
+   <script>
+   const observer = new IntersectionObserver((entries) => {
+     entries.forEach(entry => {
+       if (entry.isIntersecting) {
+         entry.target.classList.add('is-visible');
+       }
+     });
+   }, { threshold: 0.1 });
+
+   document.querySelectorAll('.fade-up, .fade-in, .slide-in-left, .slide-in-right')
+     .forEach(el => observer.observe(el));
+   </script>
+   ------------------------------------------------------------ */
