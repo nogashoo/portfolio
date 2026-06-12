@@ -14,6 +14,14 @@
    ===================================================================== */
 window.GALLERY_WORKS = [
   {
+    slug: "2026-06-12-nail",
+    title: "Lily nail — private nail salon",
+    category: "Landing Page — Design & Build",
+    summary:
+      "自宅プライベートネイルサロンのLP。ダスティピンク×生成りのやさしい配色で、デザインギャラリー・料金・LINE予約導線を1ページに。",
+    tags: ["HTML", "CSS", "JavaScript"],
+  },
+  {
     slug: "2026-06-11-komugi",
     title: "こむぎの時間 Bakery & Morning",
     category: "Landing Page — Design & Build",
