@@ -30,6 +30,11 @@ body {
   overflow-x: clip;
 }
 
+/* アンカー移動時にスティッキーヘッダーの高さぶん下げて止める */
+html {
+  scroll-padding-top: 78px;
+}
+
 /* design-system の .is-visible は transform: translate(0) を残すため
    スタッキングコンテキストが残り、子孫の mix-blend-mode: multiply
    （パーツ画像の白地除去）が効かない。表示完了後は none に戻す */
@@ -974,13 +979,15 @@ body {
   }
 }
 
-/* SP ではタブバーぶん本文とギャラリー導線を持ち上げる */
+/* SP ではタブバーぶんの逃げをフッター内に確保する
+   （body の padding だと地の色がフッターとタブバーの間に見えるため、
+   ピンクのフッター自体を下に伸ばして隙間をなくす） */
 @media (max-width: 767px) {
-  body {
-    padding-bottom: 60px;
+  .footer {
+    padding-bottom: calc(var(--space-4) + 58px + env(safe-area-inset-bottom));
   }
 
   .gallery-return {
-    bottom: 76px;
+    bottom: 66px;
   }
 }
