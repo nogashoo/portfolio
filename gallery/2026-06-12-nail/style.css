@@ -835,6 +835,7 @@ body {
 .btn-line__label small {
   font-size: 10px;
   font-weight: 300;
+  color: #FFFFFF; /* design-system の small { color: text-light } を打ち消す */
   opacity: 0.9;
   letter-spacing: 0.14em;
 }
