@@ -30,9 +30,16 @@ body {
   overflow-x: clip;
 }
 
-/* アンカー移動時にスティッキーヘッダーの高さぶん下げて止める */
+/* アンカー移動時にスティッキーヘッダーの高さぶん下げて止める
+   （ヘッダー実高ちょうど: セクションの色の境目がヘッダー下端に揃う） */
 html {
-  scroll-padding-top: 78px;
+  scroll-padding-top: 67px; /* 実測: padding 10x2 + ロゴ46 + border 1 */
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: 72px; /* 実測 71.9px（padding 12x2 + 内容 + border） */
+  }
 }
 
 /* design-system の .is-visible は transform: translate(0) を残すため
