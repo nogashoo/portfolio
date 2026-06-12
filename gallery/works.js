@@ -14,7 +14,7 @@
    ===================================================================== */
 window.GALLERY_WORKS = [
   {
-    slug: "2026-06-12-nail",
+    slug: "2026-06-13-nail",
     title: "Lily nail — private nail salon",
     category: "Landing Page — Design & Build",
     summary:
