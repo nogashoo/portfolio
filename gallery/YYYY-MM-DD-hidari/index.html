@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ヒダリ文具店｜左利きのための文房具店 — 蔵前</title>
+  <meta name="description" content="左利きのための文房具店「ヒダリ文具店」。逆刃のハサミ、右綴じノート、30からはじまる定規、注ぎ口が左の急須。10人に1人のための道具を、東京・蔵前から。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../_shared/design-system.css">
+  <link rel="stylesheet" href="../_shared/gallery-return.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- 左端レール: 「左」がこのサイトの主役であることを示す常設サイン -->
+  <div class="rail" aria-hidden="true">
+    <span class="rail__line"></span>
+    <span class="rail__text">こちら側が、ヒダリ。</span>
+  </div>
+
+  <!-- ===== Header（世間と鏡写し: ナビが左、ロゴが右） ===== -->
+  <header class="header">
+    <nav class="header__nav" aria-label="メイン">
+      <ul>
+        <li><a href="#minority">10人に1人</a></li>
+        <li><a href="#friction">観察記録</a></li>
+        <li><a href="#tools">道具</a></li>
+        <li><a href="#shop">店舗</a></li>
+      </ul>
+    </nav>
+    <a href="#top" class="header__logo">
+      <span class="header__logo-en">for the left-handed</span>
+      <span class="header__logo-ja">ヒダリ文具店</span>
+    </a>
+  </header>
+
+  <main id="top">
+
+    <!-- ===== Hero: 鏡文字で「左利きの違和感」を1.5秒だけ体験させる ===== -->
+    <section class="hero" aria-label="導入">
+      <p class="hero__note" data-mirror-note>
+        いま、読みにくいと感じましたか。<br>
+        その違和感を、左利きは生まれた日から知っています。
+      </p>
+
+      <h1 class="hero__title" id="hero-title">
+        <span class="hero__line"><span class="hero__flip" data-flip>世界は、</span></span>
+        <span class="hero__line"><span class="hero__flip" data-flip>右利き用に</span></span>
+        <span class="hero__line"><span class="hero__flip" data-flip>できている。</span></span>
+      </h1>
+
+      <button class="hero__restore" type="button" data-restore>
+        <span class="hero__restore-icon" aria-hidden="true">⟲</span>
+        <span data-restore-label>文字を、こちらの世界に戻す</span>
+      </button>
+
+      <p class="hero__tate" aria-hidden="true">左利きのための文房具店</p>
+
+      <div class="hero__foot">
+        <p class="hero__place">東京・蔵前｜木金土のみ開店</p>
+        <p class="hero__scroll" aria-hidden="true">下へ<span class="hero__scroll-bar"></span></p>
+      </div>
+    </section>
+
+    <!-- ===== 10人に1人 ===== -->
+    <section class="minority" id="minority" aria-labelledby="minority-title">
+      <div class="minority__inner">
+        <div class="minority__text" data-reveal>
+          <p class="sec-label">少数派の話</p>
+          <h2 class="minority__title" id="minority-title">
+            <em class="num" data-count="10">10</em>人に<em class="num">1</em>人が、<br>左利き。
+          </h2>
+          <p class="minority__body">
+            世界の人口のおよそ10%。クラスに3人、満員電車の一両に15人。<br>
+            けっして珍しくないのに、文房具売り場に「左利きの棚」はありません。<br>
+            ハサミも、定規も、急須も、当たり前のように右手のかたちをしている。
+          </p>
+          <p class="minority__body minority__body--strong">
+            私たちは、その10%のためだけに棚を作りました。
+          </p>
+        </div>
+        <div class="minority__dots" data-reveal aria-hidden="true">
+          <!-- 100個のドット = 100人。10個だけ朱色 = 左利き。JSで生成 -->
+          <div class="dots" id="dots"></div>
+          <p class="dots__caption">● が、あなたかもしれない10人</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 定規ディバイダ（目盛りが30→0。左利き定規は右から測る） ===== -->
+    <div class="ruler" aria-hidden="true">
+      <div class="ruler__ticks" id="ruler-1"></div>
+      <p class="ruler__caption">左利きの定規は、30からはじまる</p>
+    </div>
+
+    <!-- ===== 右利き用の世界・観察記録 ===== -->
+    <section class="friction" id="friction" aria-labelledby="friction-title">
+      <header class="friction__head" data-reveal>
+        <p class="sec-label sec-label--light">毎日の小さな摩擦</p>
+        <h2 class="friction__title" id="friction-title">右利き用の世界・観察記録</h2>
+        <p class="friction__lead">
+          壊れているわけではない。ただ、ぜんぶ少しずつ「逆」なだけ。<br>
+          左利きが今日も黙ってやり過ごしている、六つの場面。
+        </p>
+      </header>
+
+      <ol class="friction__list">
+        <li class="friction__item" data-reveal>
+          <span class="friction__num">01</span>
+          <h3 class="friction__name">ハサミ</h3>
+          <p class="friction__desc">左手で握ると刃の噛み合わせが逆になり、紙が切れずに「折れる」。子どもの頃、不器用なのは自分のせいだと思っていた人へ。</p>
+        </li>
+        <li class="friction__item" data-reveal>
+          <span class="friction__num">02</span>
+          <h3 class="friction__name">急須</h3>
+          <p class="friction__desc">左手で持つと、注ぎ口はあさっての方向を向く。来客にお茶を出すたび、手首だけが頑張っている。</p>
+        </li>
+        <li class="friction__item" data-reveal>
+          <span class="friction__num">03</span>
+          <h3 class="friction__name">定規</h3>
+          <p class="friction__desc">左から右へ目盛りを読むと、線を引く左手が数字を隠す。測り終わる頃には、はじまりが見えない。</p>
+        </li>
+        <li class="friction__item" data-reveal>
+          <span class="friction__num">04</span>
+          <h3 class="friction__name">リングノート</h3>
+          <p class="friction__desc">左綴じのリングは、書くあいだずっと左手首の下にいる。跡がつくのは、ページではなく手のほう。</p>
+        </li>
+        <li class="friction__item" data-reveal>
+          <span class="friction__num">05</span>
+          <h3 class="friction__name">横書き</h3>
+          <p class="friction__desc">書いた端から、手のひらがインクの上を通過していく。左利きの小指の側面は、いつも少し青い。</p>
+        </li>
+        <li class="friction__item" data-reveal>
+          <span class="friction__num">06</span>
+          <h3 class="friction__name">改札・自販機・レードル</h3>
+          <p class="friction__desc">ICタッチは右、ボタンは右、スープの注ぎ口も右。世界の「利き手」は、確認するまでもなく決まっている。</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===== 道具 ===== -->
+    <section class="tools" id="tools" aria-labelledby="tools-title">
+      <header class="tools__head" data-reveal>
+        <p class="sec-label">直すのは、あなたじゃない</p>
+        <h2 class="tools__title" id="tools-title">道具のほうを、<br class="sp-only">取り替える。</h2>
+        <p class="tools__lead">矯正しなくていい。慣れなくていい。左手のかたちに作られた道具は、ただ静かによく働きます。</p>
+      </header>
+
+      <div class="tools__grid">
+
+        <article class="tool" data-reveal>
+          <figure class="tool__fig" aria-hidden="true">
+            <svg viewBox="0 0 200 200" class="tool__svg">
+              <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M60 162 C44 162 34 150 34 138 C34 126 44 116 57 116 C66 116 73 120 78 127 L96 100" />
+                <path d="M118 164 C134 164 144 152 144 140 C144 128 134 118 121 118 C112 118 105 122 100 129 L82 102" />
+                <path d="M96 100 L150 32" class="tool__svg-accent" stroke-width="5"/>
+                <path d="M82 102 L36 36" class="tool__svg-accent" stroke-width="5"/>
+                <circle cx="89" cy="101" r="6" fill="currentColor" stroke="none"/>
+              </g>
+            </svg>
+          </figure>
+          <div class="tool__body">
+            <p class="tool__copy">逆刃、正解。</p>
+            <h3 class="tool__name">左利き用ハサミ</h3>
+            <p class="tool__desc">刃の重なりを左右逆に組んだ、左手のための一丁。握った瞬間、紙が「切れる」という当たり前を取り戻します。</p>
+            <p class="tool__price"><span>¥</span>2,420</p>
+          </div>
+        </article>
+
+        <article class="tool tool--offset" data-reveal>
+          <figure class="tool__fig" aria-hidden="true">
+            <svg viewBox="0 0 200 200" class="tool__svg">
+              <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+                <rect x="38" y="36" width="110" height="132" rx="8"/>
+                <line x1="58" y1="70" x2="120" y2="70" opacity=".45"/>
+                <line x1="58" y1="92" x2="128" y2="92" opacity=".45"/>
+                <line x1="58" y1="114" x2="112" y2="114" opacity=".45"/>
+                <g class="tool__svg-accent">
+                  <circle cx="160" cy="52" r="7"/>
+                  <circle cx="160" cy="80" r="7"/>
+                  <circle cx="160" cy="108" r="7"/>
+                  <circle cx="160" cy="136" r="7"/>
+                </g>
+              </g>
+            </svg>
+          </figure>
+          <div class="tool__body">
+            <p class="tool__copy">リングは、右へ。</p>
+            <h3 class="tool__name">右綴じリングノート</h3>
+            <p class="tool__desc">綴じを右側に移しただけで、左手首はどこにもぶつからない。最後のページまで、腕がまっすぐのまま書けます。</p>
+            <p class="tool__price"><span>¥</span>980</p>
+          </div>
+        </article>
+
+        <article class="tool" data-reveal>
+          <figure class="tool__fig" aria-hidden="true">
+            <svg viewBox="0 0 200 200" class="tool__svg">
+              <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+                <rect x="24" y="84" width="152" height="44" rx="4"/>
+                <g opacity=".9">
+                  <line x1="40" y1="84" x2="40" y2="100"/>
+                  <line x1="64" y1="84" x2="64" y2="96"/>
+                  <line x1="88" y1="84" x2="88" y2="100"/>
+                  <line x1="112" y1="84" x2="112" y2="96"/>
+                  <line x1="136" y1="84" x2="136" y2="100"/>
+                  <line x1="160" y1="84" x2="160" y2="96"/>
+                </g>
+                <g class="tool__svg-accent" font-size="14" stroke-width="1" font-family="inherit">
+                  <text x="34" y="120" fill="currentColor" stroke="none">15</text>
+                  <text x="82" y="120" fill="currentColor" stroke="none">10</text>
+                  <text x="132" y="120" fill="currentColor" stroke="none">5</text>
+                </g>
+              </g>
+            </svg>
+          </figure>
+          <div class="tool__body">
+            <p class="tool__copy">30から、はじまる。</p>
+            <h3 class="tool__name">逆目盛り定規</h3>
+            <p class="tool__desc">目盛りが右から左へ。左手で線を引いても、数字はずっと見えたまま。「測れない定規」とは今日でお別れです。</p>
+            <p class="tool__price"><span>¥</span>660</p>
+          </div>
+        </article>
+
+        <article class="tool tool--offset" data-reveal>
+          <figure class="tool__fig" aria-hidden="true">
+            <svg viewBox="0 0 200 200" class="tool__svg">
+              <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M70 78 C56 86 48 100 48 116 C48 142 70 160 100 160 C130 160 152 142 152 116 C152 100 144 86 130 78"/>
+                <path d="M70 78 C70 68 84 60 100 60 C116 60 130 68 130 78 C130 86 116 92 100 92 C84 92 70 86 70 78 Z"/>
+                <path class="tool__svg-accent" d="M48 116 C34 112 24 100 26 86" stroke-width="5"/>
+                <path d="M152 112 C166 112 172 120 170 130" opacity=".5"/>
+              </g>
+            </svg>
+          </figure>
+          <div class="tool__body">
+            <p class="tool__copy">注ぎ口は、左に。</p>
+            <h3 class="tool__name">左利きの急須</h3>
+            <p class="tool__desc">左手で持って、そのまま注げる常滑焼。お茶の時間から「持ち替え」という工程がなくなります。</p>
+            <p class="tool__price"><span>¥</span>7,150</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== 体験: 押しているあいだだけ右利きの世界に戻れる ===== -->
+    <section class="mirror" aria-labelledby="mirror-title">
+      <div class="mirror__inner" data-reveal>
+        <p class="sec-label sec-label--light">小さな実験</p>
+        <h2 class="mirror__title" id="mirror-title">最後にもう一度だけ、<br>左利きの世界へ。</h2>
+        <p class="mirror__text" data-mirror-text>
+          ここにある文章は、左利きが毎日すれ違っている景色の比喩です。読めないわけじゃない。ただ、少しだけ余計な力がいる。その「少しだけ」を、道具は黙って引き受けられます。
+        </p>
+        <button class="mirror__btn" type="button" data-hold>
+          押しているあいだ、こちらの世界に戻ります
+        </button>
+        <p class="mirror__hint">※ ボタンを押しているあいだだけ文章が反転します</p>
+      </div>
+    </section>
+
+    <!-- ===== 定規ディバイダ2 ===== -->
+    <div class="ruler ruler--flip" aria-hidden="true">
+      <div class="ruler__ticks" id="ruler-2"></div>
+    </div>
+
+    <!-- ===== 店舗 ===== -->
+    <section class="shop" id="shop" aria-labelledby="shop-title">
+      <div class="shop__inner">
+        <div class="shop__info" data-reveal>
+          <p class="sec-label">店舗のご案内</p>
+          <h2 class="shop__title" id="shop-title">蔵前の路地、<br>左側の白い扉。</h2>
+          <p class="shop__body">
+            週に三日だけ開く、六坪の文房具店です。店内のペン立てには試し書き用の左利きペンだけが挿してあり、レジは店の左奥にあります。右利きの方も、どうぞ。10%の世界を見学していってください。
+          </p>
+          <dl class="shop__data">
+            <div><dt>所在地</dt><dd>東京都台東区蔵前 2-14-6 1F</dd></div>
+            <div><dt>開店日</dt><dd>木・金・土　12:00 — 19:00</dd></div>
+            <div><dt>最寄駅</dt><dd>都営大江戸線・浅草線「蔵前」より徒歩4分</dd></div>
+            <div><dt>支払い</dt><dd>現金・各種IC（タッチ端末は左側にあります）</dd></div>
+          </dl>
+          <a class="shop__cta" href="#top">
+            <span class="shop__cta-main">左手に、道具を。</span>
+            <span class="shop__cta-sub">オンラインストアは準備中 — 開店通知を受け取る</span>
+          </a>
+        </div>
+        <div class="shop__tate" data-reveal aria-hidden="true">
+          <p>矯正しない、という選択。</p>
+          <p>道具が、手に合わせればいい。</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p class="footer__logo">ヒダリ文具店</p>
+    <p class="footer__copy">© 2026 HIDARI stationery — このページは架空の店舗のデザインサンプルです</p>
+  </footer>
+
+  <script>
+    /* =========================================================
+       1. ヒーロー鏡文字: 初回は鏡文字で表示し、
+          ボタン押下 or 軽いスクロールで1行ずつ反転して戻る
+       ========================================================= */
+    (() => {
+      const flips = document.querySelectorAll('[data-flip]');
+      const btn = document.querySelector('[data-restore]');
+      const label = document.querySelector('[data-restore-label]');
+      const note = document.querySelector('[data-mirror-note]');
+      let restored = false;
+
+      const restore = () => {
+        if (restored) return;
+        restored = true;
+        flips.forEach((el, i) => {
+          setTimeout(() => el.classList.add('is-restored'), i * 180);
+        });
+        note.classList.add('is-faded');
+        label.textContent = 'おかえりなさい。これが、ふだんのあなたの世界';
+        btn.classList.add('is-done');
+      };
+
+      btn.addEventListener('click', restore);
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 120) restore();
+      }, { passive: true });
+    })();
+
+    /* =========================================================
+       2. ドット100個（100人）。10個だけ朱色（左利き）
+       ========================================================= */
+    (() => {
+      const wrap = document.getElementById('dots');
+      if (!wrap) return;
+      const lefties = [3, 17, 24, 38, 41, 56, 62, 75, 88, 93];
+      for (let i = 0; i < 100; i++) {
+        const dot = document.createElement('span');
+        if (lefties.includes(i)) dot.classList.add('is-left');
+        dot.style.transitionDelay = `${i * 12}ms`;
+        wrap.appendChild(dot);
+      }
+    })();
+
+    /* =========================================================
+       3. 定規ディバイダ: 30→0 の逆目盛りを生成
+       ========================================================= */
+    (() => {
+      ['ruler-1', 'ruler-2'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        for (let cm = 30; cm >= 0; cm--) {
+          const tick = document.createElement('span');
+          tick.className = 'ruler__tick';
+          if (cm % 5 === 0) {
+            tick.classList.add('is-major');
+            tick.dataset.num = cm;
+          }
+          el.appendChild(tick);
+        }
+      });
+    })();
+
+    /* =========================================================
+       4. スクロール連動の出現アニメーション
+       ========================================================= */
+    (() => {
+      const targets = document.querySelectorAll('[data-reveal]');
+      if (!('IntersectionObserver' in window)) {
+        targets.forEach((t) => t.classList.add('is-shown'));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-shown');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.18 });
+      targets.forEach((t) => io.observe(t));
+    })();
+
+    /* =========================================================
+       5. 体験セクション: ボタンを「押しているあいだだけ」
+          鏡文字が正しい向きに戻る
+       ========================================================= */
+    (() => {
+      const text = document.querySelector('[data-mirror-text]');
+      const btn = document.querySelector('[data-hold]');
+      if (!text || !btn) return;
+      const on = () => text.classList.add('is-readable');
+      const off = () => text.classList.remove('is-readable');
+      btn.addEventListener('pointerdown', (e) => { e.preventDefault(); on(); });
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) =>
+        btn.addEventListener(ev, off)
+      );
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); on(); }
+      });
+      btn.addEventListener('keyup', off);
+      btn.addEventListener('blur', off);
+    })();
+  </script>
+
+  <!-- ギャラリー一覧へ戻る（ポートフォリオ側の動線。LP本体のデザインとは独立） -->
+  <a class="gallery-return" href="../">
+    <span class="gallery-return__arrow" aria-hidden="true">&larr;</span>
+    Gallery
+    <time class="gallery-return__date" datetime="2026-06-11">2026.06.11</time>
+  </a>
+</body>
+</html>

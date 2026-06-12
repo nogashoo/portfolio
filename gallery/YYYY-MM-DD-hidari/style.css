@@ -1,0 +1,811 @@
+/* ============================================================
+   ヒダリ文具店 — 左利きのための文房具店LP
+   コンセプト: 「世界は右利き用にできている」を、鏡文字・逆目盛り・
+   左右反転レイアウトでページ全体に体験として埋め込む。
+   トーン: 墨 × 生成り × 朱のエディトリアル・マニフェスト
+   ============================================================ */
+
+:root {
+  --ink:        #1c1914;
+  --ink-soft:   #3a352c;
+  --paper:      #f3edDE;
+  --paper-deep: #e9e1cd;
+  --vermilion:  #cf3a23;
+  --mist:       #8b8472;
+  --line:       #d5cab1;
+  --line-dark:  rgba(243, 237, 222, 0.22);
+
+  --font-display: 'Shippori Mincho B1', 'Noto Serif JP', serif;
+  --font-text:    'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+
+  /* design-system.css のトークンを本LPのパレットへ上書き */
+  --color-primary: var(--ink);
+  --color-accent:  var(--vermilion);
+  --color-text:    var(--ink);
+  --color-bg:      var(--paper);
+  --font-heading:  var(--font-display);
+  --font-body:     var(--font-text);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  font-size: clamp(15px, 1.1vw, 17px);
+  line-height: 2;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--vermilion);
+  color: var(--paper);
+}
+
+img, svg { display: block; max-width: 100%; }
+
+.sp-only { display: none; }
+
+/* ------------------------------------------------------------
+   紙の質感（グレイン）
+   ------------------------------------------------------------ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------
+   左端レール — 常に「左」を意識させる縦書きサイン
+   ------------------------------------------------------------ */
+.rail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 44px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 96px;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  color: #e8e2d2;
+}
+.rail__line {
+  width: 1px;
+  height: 64px;
+  background: currentColor;
+  opacity: 0.55;
+  margin-bottom: 18px;
+}
+.rail__text {
+  writing-mode: vertical-rl;
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  opacity: 0.75;
+}
+
+/* ------------------------------------------------------------
+   Header — 世間と鏡写し（ナビが左・ロゴが右）
+   ------------------------------------------------------------ */
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: clamp(20px, 3vw, 36px) clamp(24px, 5vw, 72px);
+  color: var(--paper);
+}
+.header__nav ul {
+  display: flex;
+  gap: clamp(16px, 2.4vw, 36px);
+  list-style: none;
+}
+.header__nav a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease, opacity 0.3s ease;
+}
+.header__nav a:hover {
+  border-bottom-color: var(--vermilion);
+  opacity: 0.85;
+}
+.header__logo {
+  text-align: right;
+  text-decoration: none;
+  color: inherit;
+  line-height: 1.5;
+}
+.header__logo-en {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.header__logo-ja {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: 0.18em;
+}
+
+/* ------------------------------------------------------------
+   Hero — 鏡文字の見出し
+   ------------------------------------------------------------ */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(120px, 16vh, 180px) clamp(24px, 8vw, 110px) 110px;
+  background:
+    radial-gradient(1100px 600px at 85% -10%, rgba(207, 58, 35, 0.16), transparent 60%),
+    var(--ink);
+  color: var(--paper);
+  overflow: hidden;
+}
+
+.hero__note {
+  font-size: clamp(12px, 1.1vw, 14px);
+  letter-spacing: 0.16em;
+  line-height: 2.2;
+  color: var(--vermilion);
+  margin-bottom: clamp(28px, 4vh, 48px);
+  transition: opacity 0.8s ease;
+}
+.hero__note.is-faded { opacity: 0.4; }
+
+.hero__title {
+  color: var(--paper);  /* design-system.css の h1 色（墨）を暗背景用に明示上書き */
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(46px, 9.2vw, 124px);
+  line-height: 1.28;
+  letter-spacing: 0.04em;
+}
+.hero__line { display: block; }
+.hero__flip {
+  display: inline-block;
+  transform: scaleX(-1);  /* 初期状態は鏡文字 = 左利きの世界 */
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.hero__flip.is-restored { transform: scaleX(1); }
+
+.hero__restore {
+  margin-top: clamp(36px, 5vh, 56px);
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  border: 1px solid rgba(243, 237, 222, 0.45);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--paper);
+  font-family: var(--font-text);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.hero__restore:hover {
+  background: rgba(243, 237, 222, 0.08);
+  border-color: var(--paper);
+  transform: translateY(-2px);
+}
+.hero__restore-icon { font-size: 16px; color: var(--vermilion); }
+.hero__restore.is-done {
+  border-color: rgba(243, 237, 222, 0.2);
+  color: rgba(243, 237, 222, 0.6);
+  cursor: default;
+}
+.hero__restore.is-done:hover { background: transparent; transform: none; }
+
+.hero__tate {
+  position: absolute;
+  top: 50%;
+  right: clamp(20px, 4vw, 56px);
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(13px, 1.3vw, 17px);
+  letter-spacing: 0.5em;
+  color: rgba(243, 237, 222, 0.55);
+  border-right: 1px solid rgba(243, 237, 222, 0.25);
+  padding-right: 14px;
+}
+
+.hero__foot {
+  position: absolute;
+  left: clamp(24px, 8vw, 110px);
+  right: clamp(24px, 8vw, 110px);
+  bottom: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.hero__place {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+}
+.hero__scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+}
+.hero__scroll-bar {
+  width: 1px;
+  height: 44px;
+  background: var(--paper);
+  transform-origin: top;
+  animation: scrollPulse 2.2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%   { transform: scaleY(0); }
+  45%  { transform: scaleY(1); }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+
+/* ------------------------------------------------------------
+   共通: セクションラベル / 出現アニメーション
+   ------------------------------------------------------------ */
+.sec-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--vermilion);
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+.sec-label::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--vermilion);
+}
+.sec-label--light { color: #e2705c; }
+.sec-label--light::before { background: #e2705c; }
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+[data-reveal].is-shown {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ------------------------------------------------------------
+   10人に1人
+   ------------------------------------------------------------ */
+.minority {
+  padding: clamp(88px, 12vw, 150px) clamp(24px, 7vw, 96px);
+}
+.minority__inner {
+  max-width: 1160px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+}
+.minority__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.5;
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+.minority__title .num {
+  font-style: normal;
+  color: var(--vermilion);
+  font-size: 1.35em;
+  line-height: 1;
+}
+.minority__body {
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+  max-width: 36em;
+}
+.minority__body--strong {
+  font-weight: 700;
+  color: var(--ink);
+  border-left: 3px solid var(--vermilion);
+  padding-left: 16px;
+}
+
+.dots {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: clamp(8px, 1.2vw, 14px);
+  max-width: 360px;
+  margin-left: auto;
+}
+.dots span {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--line);
+  transform: scale(0.3);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.45s ease;
+}
+.dots span.is-left { background: var(--vermilion); }
+[data-reveal].is-shown .dots span {
+  transform: scale(1);
+  opacity: 1;
+}
+.dots__caption {
+  margin-top: 16px;
+  text-align: right;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--mist);
+}
+.dots__caption::first-letter { color: var(--vermilion); }
+
+/* ------------------------------------------------------------
+   定規ディバイダ（30 → 0 の逆目盛り）
+   ------------------------------------------------------------ */
+.ruler {
+  background: var(--paper-deep);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 10px clamp(16px, 4vw, 56px) 6px;
+}
+.ruler__ticks {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 40px;
+}
+.ruler__tick {
+  width: 1px;
+  height: 12px;
+  background: var(--ink-soft);
+  opacity: 0.55;
+  position: relative;
+}
+.ruler__tick.is-major {
+  height: 22px;
+  opacity: 0.9;
+}
+.ruler__tick.is-major::after {
+  content: attr(data-num);
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.ruler__caption {
+  text-align: right;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--mist);
+  padding: 6px 2px 8px;
+}
+.ruler--flip .ruler__ticks { transform: rotate(180deg); }
+.ruler--flip { padding-bottom: 12px; }
+
+/* ------------------------------------------------------------
+   観察記録（墨ベタのマニフェストセクション）
+   ------------------------------------------------------------ */
+.friction {
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(96px, 13vw, 170px) clamp(24px, 7vw, 96px);
+}
+.friction__head {
+  max-width: 1160px;
+  margin: 0 auto clamp(56px, 7vw, 96px);
+}
+.friction__title {
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(30px, 4.4vw, 58px);
+  line-height: 1.4;
+  margin-bottom: clamp(20px, 2.6vw, 30px);
+}
+.friction__lead {
+  color: rgba(243, 237, 222, 0.72);
+  max-width: 38em;
+}
+
+.friction__list {
+  max-width: 1160px;
+  margin-inline: auto;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(36px, 5vw, 72px) clamp(48px, 7vw, 120px);
+}
+/* 偶数項目を下げて、段差のある非対称リズムを作る */
+.friction__item:nth-child(even) { transform: translateY(26px); }
+.friction__item:nth-child(even).is-shown { transform: translateY(26px); }
+.friction__item {
+  border-top: 1px solid var(--line-dark);
+  padding-top: 22px;
+  position: relative;
+}
+.friction__num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(40px, 4.5vw, 64px);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(207, 58, 35, 0.85);
+  display: block;
+  margin-bottom: 10px;
+}
+.friction__name {
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 1.9vw, 26px);
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.friction__desc {
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 2.1;
+  color: rgba(243, 237, 222, 0.7);
+}
+
+/* ------------------------------------------------------------
+   道具
+   ------------------------------------------------------------ */
+.tools {
+  padding: clamp(96px, 13vw, 170px) clamp(24px, 7vw, 96px) clamp(120px, 14vw, 190px);
+}
+.tools__head {
+  max-width: 1160px;
+  margin: 0 auto clamp(56px, 7vw, 92px);
+}
+.tools__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(34px, 5vw, 66px);
+  line-height: 1.4;
+  margin-bottom: clamp(18px, 2.4vw, 28px);
+}
+.tools__lead {
+  color: var(--ink-soft);
+  max-width: 36em;
+}
+
+.tools__grid {
+  max-width: 1160px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px, 6vw, 88px) clamp(40px, 6vw, 96px);
+}
+.tool--offset { transform: translateY(56px); }
+.tool--offset.is-shown { transform: translateY(56px); }
+
+.tool {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) 1fr;
+  gap: clamp(20px, 2.6vw, 34px);
+  align-items: start;
+}
+.tool__fig {
+  background: var(--paper-deep);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px;
+  color: var(--ink);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.tool:hover .tool__fig {
+  transform: translateY(-4px) rotate(-1.2deg);
+  box-shadow: 0 14px 30px rgba(28, 25, 20, 0.12);
+}
+.tool__svg-accent { color: var(--vermilion); stroke: var(--vermilion); }
+.tool__copy {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--vermilion);
+  margin-bottom: 8px;
+}
+.tool__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(21px, 2vw, 27px);
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+.tool__desc {
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 2.1;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+.tool__price {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+.tool__price span {
+  font-size: 13px;
+  margin-right: 2px;
+  color: var(--mist);
+}
+
+/* ------------------------------------------------------------
+   体験 — 押しているあいだだけ読める鏡文字
+   ------------------------------------------------------------ */
+.mirror {
+  background: var(--vermilion);
+  color: var(--paper);
+  padding: clamp(96px, 12vw, 160px) clamp(24px, 7vw, 96px);
+}
+.mirror__inner {
+  max-width: 880px;
+  margin-inline: auto;
+  text-align: center;
+}
+.mirror .sec-label--light { color: rgba(243, 237, 222, 0.85); }
+.mirror .sec-label--light::before { background: rgba(243, 237, 222, 0.85); }
+.mirror__title {
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 50px);
+  line-height: 1.5;
+  margin-bottom: clamp(28px, 3.6vw, 44px);
+}
+.mirror__text {
+  display: block;
+  transform: scaleX(-1);  /* ふだんは鏡文字 */
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  font-size: clamp(14px, 1.2vw, 17px);
+  line-height: 2.3;
+  max-width: 40em;
+  margin-inline: auto;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+.mirror__text.is-readable { transform: scaleX(1); }
+.mirror__btn {
+  padding: 16px 36px;
+  border: none;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 8px 22px rgba(28, 25, 20, 0.3);
+}
+.mirror__btn:hover { transform: translateY(-2px); }
+.mirror__btn:active { transform: translateY(1px); box-shadow: 0 3px 10px rgba(28, 25, 20, 0.3); }
+.mirror__hint {
+  margin-top: 18px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  opacity: 0.75;
+}
+
+/* ------------------------------------------------------------
+   店舗
+   ------------------------------------------------------------ */
+.shop {
+  padding: clamp(96px, 13vw, 170px) clamp(24px, 7vw, 96px);
+  background: var(--paper);
+}
+.shop__inner {
+  max-width: 1160px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 8fr 3fr;
+  gap: clamp(40px, 6vw, 100px);
+}
+.shop__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(32px, 4.4vw, 56px);
+  line-height: 1.5;
+  margin-bottom: clamp(20px, 2.8vw, 32px);
+}
+.shop__body {
+  color: var(--ink-soft);
+  max-width: 36em;
+  margin-bottom: clamp(28px, 3.6vw, 44px);
+}
+.shop__data {
+  border-top: 1px solid var(--line);
+  margin-bottom: clamp(36px, 4.6vw, 56px);
+}
+.shop__data > div {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 20px;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(13px, 1vw, 15px);
+}
+.shop__data dt {
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--mist);
+}
+.shop__data dd { color: var(--ink-soft); }
+
+.shop__cta {
+  display: inline-block;
+  text-decoration: none;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 18px;
+  padding: clamp(22px, 2.6vw, 30px) clamp(28px, 3.4vw, 44px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 26px rgba(28, 25, 20, 0.18);
+}
+.shop__cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(28, 25, 20, 0.24);
+}
+.shop__cta-main {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 2vw, 26px);
+  letter-spacing: 0.14em;
+  margin-bottom: 6px;
+}
+.shop__cta-main::after {
+  content: "←";  /* 矢印も左向き */
+  margin-left: 14px;
+  color: var(--vermilion);
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.shop__cta:hover .shop__cta-main::after { transform: translateX(-5px); }
+.shop__cta-sub {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  opacity: 0.65;
+}
+
+.shop__tate {
+  display: flex;
+  justify-content: flex-end;
+  gap: 22px;
+}
+.shop__tate p {
+  writing-mode: vertical-rl;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(16px, 1.5vw, 21px);
+  letter-spacing: 0.34em;
+  color: var(--ink-soft);
+  border-right: 1px solid var(--line);
+  padding-right: 18px;
+  height: fit-content;
+}
+.shop__tate p:first-child { margin-top: 64px; color: var(--vermilion); border-right-color: var(--vermilion); }
+
+/* ------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------ */
+.footer {
+  background: var(--ink);
+  color: var(--paper);
+  text-align: center;
+  padding: clamp(48px, 6vw, 72px) 24px clamp(40px, 5vw, 56px);
+}
+.footer__logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.3em;
+  margin-bottom: 14px;
+}
+.footer__copy {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  opacity: 0.5;
+}
+
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
+@media (max-width: 1024px) {
+  .friction__item:nth-child(even),
+  .friction__item:nth-child(even).is-shown { transform: translateY(0); }
+  .tool--offset,
+  .tool--offset.is-shown { transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .sp-only { display: inline; }
+  .rail { display: none; }
+  .hero { padding-left: 24px; padding-right: 24px; }
+  .hero__tate { display: none; }
+  .hero__foot { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .hero__scroll { display: none; }
+  .header { padding: 20px 24px; }
+  .header__nav ul { gap: 14px; }
+  .header__nav a { font-size: 11px; letter-spacing: 0.08em; }
+
+  .minority__inner { grid-template-columns: 1fr; gap: 48px; }
+  .dots { margin-left: 0; max-width: 320px; }
+  .dots__caption { text-align: left; }
+
+  .friction__list { grid-template-columns: 1fr; gap: 40px; }
+  .tools__grid { grid-template-columns: 1fr; gap: 48px; }
+  .tool { grid-template-columns: 104px 1fr; gap: 18px; }
+
+  .shop__inner { grid-template-columns: 1fr; }
+  .shop__tate { justify-content: flex-start; }
+  .shop__tate p:first-child { margin-top: 0; }
+  .shop__data > div { grid-template-columns: 84px 1fr; gap: 12px; }
+
+  .ruler__tick:nth-child(2n) { display: none; }  /* SPは目盛りを間引く */
+}
+
+/* ------------------------------------------------------------
+   Reduced motion — 鏡文字の演出は概念の核なので残し、動きだけ止める
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  [data-reveal] { opacity: 1; transform: none; }
+  .dots span { opacity: 1; transform: scale(1); }
+}
