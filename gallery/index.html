@@ -1,162 +1,101 @@
 <!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="format-detection" content="telephone=no" />
-  <title>Gallery — Shota Nogami</title>
-  <meta name="description" content="デザインから実装まで手がけた制作物のギャラリー。LP・Web サイトのサンプルを実際のページとして公開しています。" />
-  <meta property="og:title" content="Gallery — Shota Nogami" />
-  <meta property="og:description" content="デザインから実装まで手がけた制作物のギャラリー。" />
-  <meta property="og:type" content="website" />
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        <meta name="format-detection" content="telephone=no" />
+        <title>Gallery — Shota Nogami</title>
+        <meta
+            name="description"
+            content="デザインから実装まで手がけた制作物のギャラリー。LP・Web サイトのサンプルを実際のページとして公開しています。"
+        />
+        <meta property="og:title" content="Gallery — Shota Nogami" />
+        <meta
+            property="og:description"
+            content="デザインから実装まで手がけた制作物のギャラリー。"
+        />
+        <meta property="og:type" content="website" />
 
-  <!-- Fonts: トップページと同一構成（Noto Serif JP / Noto Sans JP / DM Sans / JetBrains Mono） -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-  />
+        <!-- Fonts: トップページと同一構成（Noto Serif JP / Noto Sans JP / DM Sans / JetBrains Mono） -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        />
 
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="stylesheet" href="./gallery.css" />
-</head>
-<body>
-  <!-- 紙の質感を作るグレインオーバーレイ -->
-  <div class="grain" aria-hidden="true"></div>
+        <link rel="stylesheet" href="../style.css" />
+        <link rel="stylesheet" href="./gallery.css" />
+    </head>
+    <body>
+        <!-- 紙の質感を作るグレインオーバーレイ -->
+        <div class="grain" aria-hidden="true"></div>
 
-  <header class="site-header" data-header>
-    <a class="brand" href="../index.html">
-      <span class="brand__mark" aria-hidden="true"></span>
-      <span class="brand__name">Shota Nogami</span>
-    </a>
-    <nav class="nav" aria-label="primary">
-      <a href="../index.html">Home</a>
-      <a href="../index.html#works">Works</a>
-      <a href="../index.html#contact" class="nav__cta">Contact</a>
-    </nav>
-  </header>
+        <header class="site-header" data-header>
+            <a class="brand" href="../index.html">
+                <span class="brand__mark" aria-hidden="true"></span>
+                <span class="brand__name">Shota Nogami</span>
+            </a>
+            <nav class="nav" aria-label="primary">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#works">Works</a>
+                <a href="../index.html#contact" class="nav__cta">Contact</a>
+            </nav>
+        </header>
 
-  <main id="top">
-    <!-- ============== INTRO ============== -->
-    <section class="section gallery-intro" aria-labelledby="gallery-title">
-      <p class="eyebrow" data-anim="rise">Gallery</p>
-      <h1 id="gallery-title" class="h2" data-anim="rise">
-        <span class="h2__phrase">作ったものは、</span><span class="h2__phrase">触ってもらうのが早い。</span>
-      </h1>
-      <p class="section__lead" data-anim="rise">
-        デザインから実装まで手がけた制作物のサンプル集です。<br />
-        カードを選ぶと、実際のページがそのまま開きます。
-      </p>
-    </section>
+        <main id="top">
+            <!-- ============== INTRO ============== -->
+            <section
+                class="section gallery-intro"
+                aria-labelledby="gallery-title"
+            >
+                <p class="eyebrow" data-anim="rise">Gallery</p>
+                <h1 id="gallery-title" class="h2" data-anim="rise">
+                    <span class="h2__phrase">作ったものは、</span
+                    ><span class="h2__phrase">触ってもらうのが早い。</span>
+                </h1>
+                <p class="section__lead" data-anim="rise">
+                    デザインから実装まで手がけた制作物のサンプル集です。<br />
+                    カードを選ぶと、実際のページがそのまま開きます。
+                </p>
+            </section>
 
-    <!-- ============== GALLERY LIST ============== -->
-    <section class="section gallery-list" aria-label="制作物一覧">
-      <ol class="gallery-grid">
-        <!-- ============================================================
-             GALLERY ITEM — 制作物を追加するときはこのブロックをコピーして
-             src / href / URL表示 / タイトル / 説明 / タグ / 公開日(time) を編集する。
-             フォルダ名は「YYYY-MM-DD-作品名」（例: 2026-06-11-komugi）で揃える
-             ============================================================ -->
-        <li class="g-card" data-anim="rise">
-          <div class="g-card__preview" aria-hidden="true">
-            <div class="g-card__browser">
-              <div class="g-card__browser-bar">
-                <span class="g-card__browser-dots"><i></i><i></i><i></i></span>
-                <span class="g-card__browser-url">…/gallery/2026-06-11-komugi/</span>
-              </div>
-              <div class="g-card__thumb">
-                <iframe
-                  src="./2026-06-11-komugi/"
-                  title="こむぎの時間 プレビュー"
-                  loading="lazy"
-                  scrolling="no"
-                  tabindex="-1"
-                  inert
-                ></iframe>
-              </div>
+            <!-- ============== GALLERY LIST ============== -->
+            <!-- 作品カードは works.js のデータから gallery.js が自動生成する。
+                 作品を追加するときは works.js の配列の先頭にエントリを 1 つ足すだけ -->
+            <section class="section gallery-list" aria-label="制作物一覧">
+                <ol class="gallery-grid"></ol>
+                <noscript>
+                    <p>
+                        作品一覧の表示には JavaScript が必要です。
+                    </p>
+                </noscript>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="site-footer__inner">
+                <p class="site-footer__name">Shota Nogami</p>
+                <p class="site-footer__role">
+                    Frontend-focused Full-stack Engineer / Tokyo
+                </p>
+                <ul class="site-footer__links">
+                    <li><a href="../index.html#about">About</a></li>
+                    <li><a href="../index.html#works">Works</a></li>
+                    <li><a href="../index.html#tech">Skills</a></li>
+                    <li><a href="./">Gallery</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+                <p class="site-footer__copy">© 2026 Shota Nogami</p>
             </div>
-          </div>
-          <div class="g-card__body">
-            <div class="g-card__meta">
-              <p class="g-card__cat">Landing Page — Design &amp; Build</p>
-              <time class="g-card__date" datetime="2026-06-11">2026.06.11</time>
-            </div>
-            <h2 class="g-card__title">
-              <a class="g-card__link" href="./2026-06-11-komugi/">こむぎの時間 Bakery &amp; Morning</a>
-            </h2>
-            <p class="g-card__summary">
-              小さなまちのパン屋さんのLP。クラフト紙のやわらかなトーンで、こだわり・焼き上がり時間・店舗情報までを1ページに。
-            </p>
-            <ul class="g-card__tags" aria-label="使用技術">
-              <li>HTML</li><li>CSS</li><li>JavaScript</li>
-            </ul>
-            <span class="g-card__cta" aria-hidden="true">View Site <span class="g-card__arrow">→</span></span>
-          </div>
-        </li>
-        <!-- /GALLERY ITEM -->
-      </ol>
-    </section>
-  </main>
+        </footer>
 
-  <footer class="site-footer">
-    <div class="site-footer__inner">
-      <p class="site-footer__name">Shota Nogami</p>
-      <p class="site-footer__role">Frontend-focused Full-stack Engineer / Tokyo</p>
-      <ul class="site-footer__links">
-        <li><a href="../index.html#about">About</a></li>
-        <li><a href="../index.html#works">Works</a></li>
-        <li><a href="../index.html#tech">Skills</a></li>
-        <li><a href="./">Gallery</a></li>
-        <li><a href="../index.html#contact">Contact</a></li>
-      </ul>
-      <p class="site-footer__copy">© 2026 Shota Nogami</p>
-    </div>
-  </footer>
-
-  <script src="../main.js" defer></script>
-  <script defer>
-    /* サムネイル iframe を実ページ幅 1280px からカード幅に縮小フィットさせる */
-    (() => {
-      const BASE_WIDTH = 1280;
-      const fit = (thumb) => {
-        const frame = thumb.querySelector("iframe");
-        if (!frame) return;
-        frame.style.transform = `scale(${thumb.clientWidth / BASE_WIDTH})`;
-      };
-      /* プレビュー内では各LPの「← Gallery」フローティングリンクを隠す（同一オリジン前提） */
-      const hideReturnLink = (frame) => {
-        const doc = frame.contentDocument;
-        if (!doc || !doc.head) return;
-        const style = doc.createElement("style");
-        style.textContent = ".gallery-return{display:none!important}";
-        doc.head.appendChild(style);
-      };
-      const init = () => {
-        const thumbs = document.querySelectorAll(".g-card__thumb");
-        thumbs.forEach((t) => {
-          const frame = t.querySelector("iframe");
-          if (!frame) return;
-          frame.addEventListener("load", () => hideReturnLink(frame));
-          hideReturnLink(frame);
-        });
-        if ("ResizeObserver" in window) {
-          const ro = new ResizeObserver((entries) =>
-            entries.forEach((e) => fit(e.target))
-          );
-          thumbs.forEach((t) => ro.observe(t));
-        } else {
-          const fitAll = () => thumbs.forEach(fit);
-          window.addEventListener("resize", fitAll, { passive: true });
-          fitAll();
-        }
-      };
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", init, { once: true });
-      } else {
-        init();
-      }
-    })();
-  </script>
-</body>
+        <!-- 読み込み順が重要: works.js(データ) → gallery.js(カード生成) → main.js(アニメ監視) -->
+        <script src="./works.js" defer></script>
+        <script src="./gallery.js" defer></script>
+        <script src="../main.js" defer></script>
+    </body>
 </html>
