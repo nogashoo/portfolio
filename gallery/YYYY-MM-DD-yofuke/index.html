@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>喫茶よふけ — 眠れない夜のための喫茶店</title>
+  <meta name="description" content="スクロールが、そのまま「歩く」になる。夜の路地を134歩あるいて、架空の深夜喫茶「よふけ」にたどり着く体験型ランディングページ。" />
+  <meta property="og:title" content="喫茶よふけ — 眠れない夜のための喫茶店" />
+  <meta property="og:description" content="スクロール＝歩く。夜の路地のいちばん奥まで、134歩。" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700;900&family=Klee+One:wght@400;600&family=Azeret+Mono:wght@300;400&display=swap"
+  />
+
+  <link rel="stylesheet" href="../_shared/gallery-return.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body class="flat no-js">
+
+  <p class="visually-hidden">
+    このページは「スクロールすると夜の路地を歩いて店にたどり着く」体験型のランディングページです。
+    動きを減らす設定の方とスクリーンリーダーの方には、同じ内容を通常の縦並びでお届けします。
+  </p>
+
+  <!-- ===== 固定背景: 夜空 ===== -->
+  <div class="sky" aria-hidden="true">
+    <div class="sky__stars"></div>
+    <div class="sky__stars sky__stars--b"></div>
+    <div class="sky__moon"></div>
+  </div>
+
+  <div class="rain" aria-hidden="true"></div>
+
+  <!-- ===== HUD ===== -->
+  <header class="hud">
+    <p class="hud__brand">
+      喫茶よふけ
+      <span class="hud__brand-en">KISSA YOFUKE — open 22:00&ndash;05:00</span>
+    </p>
+    <div class="hud__controls">
+      <button type="button" class="hud__btn" id="rainBtn" aria-pressed="false">雨を降らせる</button>
+      <button type="button" class="hud__btn" id="modeBtn">平面で読む</button>
+    </div>
+  </header>
+
+  <p class="hint" id="hint" aria-hidden="true">
+    <span class="hint__chev">↓</span> スクロール ＝ 歩く
+  </p>
+
+  <p class="hud-steps" id="hudSteps" aria-hidden="true">
+    店まで あと <b id="stepsNum">134</b> 歩
+  </p>
+
+  <!-- ===== 3D シーン ===== -->
+  <main class="scene" id="scene">
+    <div class="camera" id="camera">
+      <div class="world" id="world">
+
+        <!-- 路地の地面（側溝・マンホールつき） -->
+        <div class="ground" aria-hidden="true">
+          <i class="drain"></i>
+          <i class="manhole" style="left: 58%; top: 3800px"></i>
+          <i class="manhole" style="left: 36%; top: 8500px"></i>
+        </div>
+
+        <!-- 両側の壁: 漆喰・煉瓦・トタン・タイルの建物区画 + 設備 -->
+        <div class="wall wall--left" aria-hidden="true">
+          <i class="wseg wseg--plaster" style="--wx: 0px; --ww: 2100px"></i>
+          <i class="wseg wseg--brick" style="--wx: 2100px; --ww: 1800px"></i>
+          <i class="wseg wseg--metal" style="--wx: 3900px; --ww: 1700px"></i>
+          <i class="wseg wseg--plaster2" style="--wx: 5600px; --ww: 2000px"></i>
+          <i class="wseg wseg--tile" style="--wx: 7600px; --ww: 4000px"></i>
+          <i class="pipe" style="--wx: 2088px"></i>
+          <i class="pipe" style="--wx: 5588px"></i>
+          <i class="pipe" style="--wx: 7588px"></i>
+          <i class="ac" style="--wx: 2750px; --wy: 410px"></i>
+          <i class="ac" style="--wx: 6350px; --wy: 360px"></i>
+          <i class="shutter" style="--wx: 4150px; --ww: 560px"></i>
+          <b class="painted" style="--wx: 1150px; --wy: 270px">駐車禁止</b>
+          <i class="win" style="--wx: 1000px; --wy: 260px"></i>
+          <i class="win win--dim" style="--wx: 3000px; --wy: 300px"></i>
+          <i class="win" style="--wx: 6900px; --wy: 340px"></i>
+          <i class="win win--dim" style="--wx: 8800px; --wy: 260px"></i>
+        </div>
+        <div class="wall wall--right" aria-hidden="true">
+          <i class="wseg wseg--tile" style="--wx: 0px; --ww: 1600px"></i>
+          <i class="wseg wseg--plaster2" style="--wx: 1600px; --ww: 2000px"></i>
+          <i class="wseg wseg--brick" style="--wx: 3600px; --ww: 1800px"></i>
+          <i class="wseg wseg--metal" style="--wx: 5400px; --ww: 1800px"></i>
+          <i class="wseg wseg--plaster" style="--wx: 7200px; --ww: 4400px"></i>
+          <i class="pipe" style="--wx: 1592px"></i>
+          <i class="pipe" style="--wx: 5392px"></i>
+          <i class="ac" style="--wx: 4250px; --wy: 300px"></i>
+          <i class="shutter" style="--wx: 6100px; --ww: 600px"></i>
+          <b class="painted" style="--wx: 4950px; --wy: 290px">火気厳禁</b>
+          <i class="win win--dim" style="--wx: 1900px; --wy: 280px"></i>
+          <i class="win" style="--wx: 4400px; --wy: 320px"></i>
+          <i class="win" style="--wx: 7600px; --wy: 230px"></i>
+        </div>
+
+        <!-- ===== 電柱 ===== -->
+        <div class="pos prop pole" data-d="700" style="--d: 700; --x: -625px; --y: -390px" aria-hidden="true"></div>
+        <div class="pos prop pole" data-d="6100" style="--d: 6100; --x: 628px; --y: -390px" aria-hidden="true"></div>
+
+        <!-- ===== スナック看板 ===== -->
+        <div class="pos prop snack" data-d="4600" style="--d: 4600; --x: 595px; --y: -90px" aria-hidden="true">スナック蘭</div>
+
+        <!-- ===== 入口の建物シルエット ===== -->
+        <div class="pos prop bldg" data-d="-150" style="--d: -150; --x: -1010px; --y: -420px" aria-hidden="true">
+          <i style="left: 120px; top: 320px"></i>
+          <i style="left: 420px; top: 540px"></i>
+        </div>
+        <div class="pos prop bldg bldg--r" data-d="-150" style="--d: -150; --x: 1010px; --y: -420px" aria-hidden="true">
+          <i style="left: 250px; top: 420px"></i>
+        </div>
+
+        <!-- ===== 電線 ===== -->
+        <div class="pos prop wires" data-d="700" style="--d: 700; --y: -816px" aria-hidden="true">
+          <svg viewBox="0 0 1700 240" preserveAspectRatio="none">
+            <path d="M0,40 Q 850,150 1700,30" />
+            <path d="M0,90 Q 850,210 1700,80" />
+          </svg>
+        </div>
+        <div class="pos prop wires" data-d="2900" style="--d: 2900; --y: -816px" aria-hidden="true">
+          <svg viewBox="0 0 1700 240" preserveAspectRatio="none">
+            <path d="M0,60 Q 850,180 1700,40" />
+          </svg>
+        </div>
+        <div class="pos prop wires" data-d="6100" style="--d: 6100; --y: -816px" aria-hidden="true">
+          <svg viewBox="0 0 1700 240" preserveAspectRatio="none">
+            <path d="M0,30 Q 850,140 1700,60" />
+            <path d="M0,95 Q 850,205 1700,110" />
+          </svg>
+        </div>
+
+        <!-- ===== ネオン看板 ===== -->
+        <div class="pos prop neon" data-d="180" style="--d: 180; --x: 470px; --y: -100px" aria-hidden="true">
+          <span>喫</span><span>茶</span><span class="neon__flicker">よ</span><span>ふ</span><span>け</span>
+        </div>
+
+        <!-- ===== 提灯 ===== -->
+        <div class="pos prop lantern" data-d="650" style="--d: 650; --x: -520px; --y: -145px" aria-hidden="true"><b>夜</b></div>
+        <div class="pos prop lantern lantern--slow" data-d="2600" style="--d: 2600; --x: 540px; --y: -145px" aria-hidden="true"><b>更</b></div>
+        <div class="pos prop lantern" data-d="4200" style="--d: 4200; --x: -545px; --y: -145px" aria-hidden="true"><b>か</b></div>
+        <div class="pos prop lantern lantern--slow" data-d="6050" style="--d: 6050; --x: 525px; --y: -145px" aria-hidden="true"><b>し</b></div>
+        <div class="pos prop lantern" data-d="7350" style="--d: 7350; --x: -440px; --y: -145px" aria-hidden="true"><b>よ</b></div>
+        <div class="pos prop lantern lantern--slow" data-d="7350" style="--d: 7350; --x: 440px; --y: -145px" aria-hidden="true"><b>ふ</b></div>
+
+        <!-- 地面の光だまり -->
+        <div class="pos prop puddle" data-d="2650" style="--d: 2650; --x: 430px" aria-hidden="true"></div>
+        <div class="pos prop puddle puddle--warm" data-d="7300" style="--d: 7300; --x: -340px" aria-hidden="true"></div>
+
+        <!-- ===== 自販機 ===== -->
+        <div class="pos prop vending" data-d="2300" style="--d: 2300; --x: -535px; --y: 180px" aria-hidden="true">
+          <span class="vending__face"></span>
+          <span class="vending__slot"></span>
+          <span class="vending__label">つめた〜い</span>
+        </div>
+
+        <!-- ===== 猫 ===== -->
+        <div class="pos prop catspot" data-d="3700" style="--d: 3700; --x: 480px; --y: 312px" aria-hidden="true">
+          <span class="cat">
+            <span class="cat__tail"></span>
+            <span class="cat__body"></span>
+            <span class="cat__head">
+              <span class="cat__ear cat__ear--l"></span>
+              <span class="cat__ear cat__ear--r"></span>
+              <span class="cat__eye cat__eye--l"></span>
+              <span class="cat__eye cat__eye--r"></span>
+            </span>
+          </span>
+          <span class="catspot__crate"></span>
+        </div>
+
+        <!-- ===== 鉢植え ===== -->
+        <div class="pos prop plants" data-d="5600" style="--d: 5600; --x: -510px; --y: 342px" aria-hidden="true">
+          <i></i><i></i><i></i>
+        </div>
+
+        <!-- ============================================================
+             STATION 1 — 路地の入口
+             ============================================================ -->
+        <section class="pos station" data-d="0" style="--d: 0; --x: -150px">
+          <p class="station__eyebrow">open at night / 22:00&ndash;05:00</p>
+          <h1 class="station__title">この路地の、<br />いちばん奥。</h1>
+          <p class="station__body">
+            眠れない夜のための喫茶店「よふけ」。
+            地図には載っていません。
+            歩いた人だけが、たどり着けます。
+          </p>
+          <p class="station__note">↓ スクロールが、そのまま「歩く」になります。</p>
+        </section>
+
+        <!-- STATION 2 — 店のかんがえ -->
+        <section class="pos station" data-d="1700" style="--d: 1700; --x: 185px">
+          <p class="station__eyebrow">about</p>
+          <h2 class="station__title">眠れない夜は、<br />悪くない。</h2>
+          <p class="station__body">
+            眠れないことを、直しに来なくていい。
+            本を一冊、ぬるいココア、つけっぱなしのラジオ。
+            よふけは、夜ふかしの味方をする店です。
+          </p>
+        </section>
+
+        <!-- STATION 3 — 品書き -->
+        <section class="pos station" data-d="3400" style="--d: 3400; --x: -195px">
+          <p class="station__eyebrow">night menu</p>
+          <h2 class="station__title">夜にだけ、<br />出せる味。</h2>
+          <dl class="station__menu">
+            <div><dt>月光ブレンド</dt><dd>650</dd></div>
+            <div><dt>よふけのプリン（固め）</dt><dd>580</dd></div>
+            <div><dt>夜食バタートースト</dt><dd>600</dd></div>
+            <div><dt>眠くなるココア</dt><dd>700</dd></div>
+            <div><dt>朝がこわい人のカレー</dt><dd>900</dd></div>
+          </dl>
+          <p class="station__note">※ 朝5時、最後の一杯はサービスです。</p>
+        </section>
+
+        <!-- STATION 4 — 店主 -->
+        <section class="pos station" data-d="5100" style="--d: 5100; --x: 190px">
+          <p class="station__eyebrow">master</p>
+          <h2 class="station__title">「いらっしゃい」とは、<br />言いません。</h2>
+          <p class="station__body">
+            店主はすこし無口です。
+            かわりに「おかえり」と言います。
+            二回目から、あなたの定位置ができます。
+          </p>
+        </section>
+
+        <!-- STATION 5 — 案内 -->
+        <section class="pos station" data-d="6600" style="--d: 6600; --x: -170px">
+          <p class="station__eyebrow">information</p>
+          <h2 class="station__title">夜のあいだ、<br />ずっと。</h2>
+          <dl class="station__info">
+            <div><dt>営業</dt><dd>22:00 &ndash; 05:00</dd></div>
+            <div><dt>定休</dt><dd>満月の夜（外を見たいので）</dd></div>
+            <div><dt>席</dt><dd>カウンター7席、すみっこ1席</dd></div>
+            <div><dt>設備</dt><dd>電源・Wi-Fiあり。会話は、なくても大丈夫。</dd></div>
+          </dl>
+        </section>
+
+        <!-- ============================================================
+             扉 — 路地の突き当たり
+             ============================================================ -->
+        <div class="pos facade" data-d="8000" data-near0="-150" data-near1="-40" style="--d: 8000; --y: -350px" id="facade" aria-hidden="true">
+          <i class="fw fw--l"></i>
+          <i class="fw fw--r"></i>
+          <i class="fw fw--t"></i>
+          <div class="facade__eaves"></div>
+          <p class="facade__sign">喫茶よふけ</p>
+          <p class="facade__plate">ノックは、いりません</p>
+          <div class="doorway">
+            <span class="doorway__glow" data-d="8110" data-near0="-20" data-near1="90"></span>
+            <span class="door door--l"><i class="door__pane"></i><i class="door__knob"></i></span>
+            <span class="door door--r"><i class="door__pane"></i><i class="door__knob"></i></span>
+          </div>
+          <div class="facade__pool"></div>
+        </div>
+
+        <!-- 店内の灯り -->
+        <div class="pos prop roomglow" data-d="9350" aria-hidden="true" style="--d: 9350"></div>
+
+        <!-- ============================================================
+             店内 — 到着
+             ============================================================ -->
+        <section class="pos station station--interior" data-d="9000" style="--d: 9000; --y: -16px">
+          <p class="station__eyebrow">welcome</p>
+          <h2 class="station__title">着きました。<br />よふけです。</h2>
+          <p class="station__body">
+            ここまで、ちょうど134歩。
+            今夜はゆっくりしていってください。
+            雨の日は、ちゃんと雨の音がします。
+          </p>
+          <dl class="station__info station__info--interior">
+            <div><dt>ばしょ</dt><dd>夜長町 2-9 この路地のいちばん奥</dd></div>
+            <div><dt>じかん</dt><dd>22:00 &ndash; 05:00</dd></div>
+          </dl>
+          <button type="button" class="again" id="againBtn">☾ もう一度、夜道を歩く</button>
+          <p class="station__foot">
+            この店は架空です — scroll&nbsp;=&nbsp;walk の体験実験として作ったポートフォリオ作品。
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="fog" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- スクロール距離をつくる透明トラック -->
+  <div class="track" aria-hidden="true"></div>
+
+  <a class="gallery-return" href="../">
+    <span class="gallery-return__arrow" aria-hidden="true">&larr;</span>
+    Gallery
+    <time class="gallery-return__date" datetime="2026-06-12">2026.06.12</time>
+  </a>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
