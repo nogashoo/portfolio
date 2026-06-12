@@ -15,8 +15,7 @@
   --color-border:    #E9DED6;  /* 罫線ベージュ */
   --color-white:     #FFFDFC;  /* カード白（純白は使わない） */
   --color-line:      #38B24E;  /* LINEグリーン（design.png 実測） */
-  --color-frame:     #E3C5C8;  /* 問い合わせ枠の二重線（外） */
-  --color-frame-in:  #EDD9DB;  /* 問い合わせ枠の二重線（内） */
+  --color-frame:     #E2C2C5;  /* 問い合わせ枠のヘアライン（design.png 実測） */
   --color-star:      #FFC107;  /* 評価の星 */
 
   --font-heading: 'Noto Serif JP', Georgia, serif;
@@ -729,21 +728,39 @@ body {
 /* ------------------------------------------------------------
    ご予約・お問い合わせ
    ------------------------------------------------------------ */
-/* カンプ実測: 二重の細ピンク線（外やや濃・内淡、間隔4px）、角は直角 */
+/* カンプ実測: 各辺が極細2本線（間隔3px）。縦横の線が角でクロスして
+   箱の端まで延びる（::before=横4本 / ::after=縦4本 をグラデーションで描画） */
 .contact__frame {
   position: relative;
   background: var(--color-white);
-  border: 1px solid var(--color-frame);
   padding: clamp(36px, 5vw, 56px) var(--space-4) clamp(32px, 4vw, 48px);
   text-align: center;
 }
 
-.contact__frame::before {
+.contact__frame::before,
+.contact__frame::after {
   content: "";
   position: absolute;
-  inset: 4px;
-  border: 1px solid var(--color-frame-in);
+  inset: 0;
   pointer-events: none;
+  background-repeat: no-repeat;
+  background-image:
+    linear-gradient(var(--color-frame), var(--color-frame)),
+    linear-gradient(var(--color-frame), var(--color-frame)),
+    linear-gradient(var(--color-frame), var(--color-frame)),
+    linear-gradient(var(--color-frame), var(--color-frame));
+}
+
+.contact__frame::before {
+  /* 横線: 上下とも 4px / 9px 位置、左右端まで貫通 */
+  background-position: 0 4px, 0 9px, 0 calc(100% - 4px), 0 calc(100% - 9px);
+  background-size: 100% 1px;
+}
+
+.contact__frame::after {
+  /* 縦線: 左右とも 4px / 9px 位置、上下端まで貫通 */
+  background-position: 4px 0, 9px 0, calc(100% - 4px) 0, calc(100% - 9px) 0;
+  background-size: 1px 100%;
 }
 
 .contact__sprig {
