@@ -189,11 +189,14 @@ em, .num, time, .work__cat, .service__num, .process__num, .eyebrow {
 }
 .brand:hover { color: var(--bg-kinari); }
 .brand__mark {
-  width: 10px;
-  height: 10px;
-  background: var(--bg-kinari);
-  border-radius: 50%;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  color: var(--bg-kinari);
+}
+.brand__mark svg {
+  height: 22px;
+  width: auto;
+  display: block;
 }
 .brand__name { font-family: var(--font-latin); font-size: 15px; }
 

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="120" viewBox="0 0 600 120" role="img" aria-label="Shota Nogami">
+  <g transform="translate(8,11) scale(0.234375)">
+    <path d="M 224 216 C 178 204, 116 211, 72 249 C 31 285, 18 337, 46 373 C 74 409, 133 408, 186 376 C 237 345, 272 290, 306 226 L 350 142 C 386 76, 435 33, 493 29 C 540 26, 581 51, 596 88 C 614 132, 594 184, 549 220 C 504 256, 435 272, 363 253"
+          fill="none" stroke="#173f31" stroke-width="36" stroke-linecap="butt" stroke-linejoin="round"/>
+  </g>
+  <text x="188" y="81" font-family="'Noto Serif JP','Yu Mincho','Hiragino Mincho ProN',serif" font-size="58" font-weight="600" letter-spacing="0.5" fill="#173f31">Shota Nogami</text>
+</svg>
