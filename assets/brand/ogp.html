@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600&family=Noto+Sans+JP:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" />
+<style>
+  :root{--green:#173f31;--green-deep:#102b21;--kinari:#f4eede;--terracotta:#d99478;--muted:rgba(244,238,222,.62)}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1200px;height:630px}
+  body{position:relative;background:
+      radial-gradient(120% 140% at 78% 18%, #1d4a3a 0%, var(--green) 42%, var(--green-deep) 100%);
+    color:var(--kinari);font-family:"Noto Sans JP",sans-serif;overflow:hidden;
+    -webkit-font-smoothing:antialiased}
+  .grain{position:absolute;inset:0;opacity:.06;mix-blend-mode:overlay;pointer-events:none;
+    background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size:200px 200px}
+  .frame{position:absolute;inset:40px;border:1px solid rgba(244,238,222,.16);border-radius:18px}
+  .eyebrow,.topright,.foot{position:absolute;font-family:"JetBrains Mono",monospace;font-size:20px;
+    letter-spacing:.18em;color:var(--muted)}
+  .eyebrow{top:78px;left:88px;display:flex;align-items:center;gap:12px;text-transform:uppercase}
+  .dot{width:11px;height:11px;border-radius:50%;background:var(--terracotta);display:inline-block}
+  .topright{top:78px;right:88px;letter-spacing:.14em}
+  .foot{bottom:74px;left:0;width:100%;text-align:center;font-size:19px;letter-spacing:.16em;color:rgba(244,238,222,.5)}
+  .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+  .mark{width:230px;height:151px;color:var(--kinari)}
+  .mark svg{width:100%;height:100%;display:block;overflow:visible}
+  .name{font-family:"Noto Serif JP",serif;font-weight:600;font-size:92px;letter-spacing:.01em;line-height:1.05;margin-top:14px}
+  .rule{width:56px;height:2px;background:var(--terracotta);margin:26px 0 22px}
+  .role{font-family:"JetBrains Mono",monospace;font-weight:500;font-size:23px;letter-spacing:.34em;
+    text-transform:uppercase;color:rgba(244,238,222,.8)}
+</style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="frame"></div>
+
+  <div class="eyebrow"><span class="dot"></span>PORTFOLIO</div>
+  <div class="topright">Tokyo, Japan</div>
+
+  <div class="center">
+    <div class="mark">
+      <svg viewBox="0 0 640 420" fill="none" stroke="currentColor" stroke-width="36" stroke-linecap="butt" stroke-linejoin="round">
+        <path d="M 224 216 C 178 204, 116 211, 72 249 C 31 285, 18 337, 46 373 C 74 409, 133 408, 186 376 C 237 345, 272 290, 306 226 L 350 142 C 386 76, 435 33, 493 29 C 540 26, 581 51, 596 88 C 614 132, 594 184, 549 220 C 504 256, 435 272, 363 253" />
+      </svg>
+    </div>
+    <div class="name">Shota Nogami</div>
+    <div class="rule"></div>
+    <div class="role">Frontend-focused Full-stack Engineer</div>
+  </div>
+
+  <div class="foot">nogashoo.github.io/portfolio</div>
+</body>
+</html>
