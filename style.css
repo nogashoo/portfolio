@@ -233,9 +233,116 @@ em, .num, time, .work__cat, .service__num, .process__num, .eyebrow {
 .nav__cta:hover { background: #ffffff; color: var(--green-deeper) !important; }
 .nav__cta::after { display: none; }
 
+/* Hamburger toggle — hidden on desktop, shown on SP */
+.nav-toggle {
+  display: none;
+  position: relative;
+  z-index: 101;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--bg-kinari);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-toggle__box {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.nav-toggle__bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+/* Scrim behind the open panel */
+.nav-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(9, 20, 15, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-fast) var(--ease-out),
+    visibility var(--dur-fast) var(--ease-out);
+}
+
 @media (max-width: 640px) {
-  .nav { gap: var(--s-4); font-size: 12px; }
-  .nav a:not(.nav__cta) { display: none; }
+  .nav-toggle { display: block; }
+
+  /* Turn the nav into a dropdown panel under the header */
+  .nav {
+    position: fixed;
+    inset: var(--header-h) 0 auto 0;
+    z-index: 100;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--s-4) var(--pad-x) var(--s-5);
+    background: rgba(21, 41, 31, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(244, 238, 222, 0.12);
+    font-size: 16px;
+    /* Hidden by default; revealed when the header carries data-nav-open */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out),
+      visibility var(--dur-fast) var(--ease-out);
+  }
+  .nav a {
+    padding: 14px 2px;
+    border-bottom: 1px solid rgba(244, 238, 222, 0.1);
+  }
+  .nav a::after { display: none; }
+  .nav__cta {
+    margin-top: var(--s-4);
+    padding: 14px 18px !important;
+    text-align: center;
+    border-bottom: 0;
+  }
+
+  .site-header[data-nav-open="true"] .nav {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .site-header[data-nav-open="true"] ~ .nav-scrim {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Animate the icon into an X */
+  .site-header[data-nav-open="true"] .nav-toggle__bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .site-header[data-nav-open="true"] .nav-toggle__bar:nth-child(2) {
+    opacity: 0;
+  }
+  .site-header[data-nav-open="true"] .nav-toggle__bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+/* Lock background scroll while the menu is open */
+html.is-nav-open,
+html.is-nav-open body {
+  overflow: hidden;
 }
 
 /* --------------------------------------------------------------------------
@@ -269,10 +376,10 @@ em, .num, time, .work__cat, .service__num, .process__num, .eyebrow {
 .eyebrow {
   font-family: var(--font-latin);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--green-deep);
+  color: var(--terracotta);
   margin-bottom: var(--s-5);
 }
 
@@ -333,6 +440,17 @@ em, .num, time, .work__cat, .service__num, .process__num, .eyebrow {
 }
 .btn--ghost:hover { background: var(--ink); color: var(--bg-kinari); }
 .btn--full { width: 100%; }
+/* 公式LINE導線。LINEブランドグリーンでチャネルを一目で伝える */
+.btn--line {
+  background: #06c755;
+  color: #fff;
+  border-color: #06c755;
+}
+.btn--line:hover {
+  background: #05b249;
+  border-color: #05b249;
+  color: #fff;
+}
 
 /* --------------------------------------------------------------------------
    Hero — Centered display, mask-reveal per character
@@ -640,21 +758,17 @@ em, .num, time, .work__cat, .service__num, .process__num, .eyebrow {
     flex-direction: row;
     align-items: flex-start;
     gap: var(--s-4);
-    /* Lock the layout height to the compact-card state. The hovered card
-       grows BEYOND this box visually via overflow; the row itself stays
-       this tall, so the boundary below #services never shifts. */
-    height: 300px;
+    /* 高さは固定しない。ホバーでカードが開くと行の高さが伸び、
+       下の要素（目玉カード）が押し下げられて開く自然なフローにする。 */
     overflow: visible;
   }
 }
-@media (min-width: 1024px) {
-  .services__list { height: 320px; }
-}
 
-/* Reserve extra room in the section so the hovered card's visual overflow
-   stays within #services and doesn't visually crash into #process. */
+/* かつては #process への食い込み防止に大きな下余白を確保していたが、
+   ホバーは scale(1.04) の微小な拡大のみで、下には目玉カードが入ったため、
+   標準セクション余白に揃える（Works とのギャップを他セクションと統一）。 */
 @media (min-width: 768px) {
-  .section.services { padding-bottom: var(--s-11); }
+  .section.services { padding-bottom: var(--s-8); }
 }
 
 .service {
@@ -773,9 +887,7 @@ em, .num, time, .work__cat, .service__num, .process__num, .eyebrow {
 }
 
 /* Desktop: hover smoothly grows the card with max-height reveal.
-   The list height is locked above (height: 300/320px), so the visual
-   growth overflows downward into the section's bottom padding — the
-   boundary line below #services never moves. */
+   行の高さは固定していないので、開いた分だけ下の要素が押し下がる（フロー展開）。 */
 @media (min-width: 768px) {
   .service { align-self: start; }
 
@@ -1300,3 +1412,81 @@ select {
   }
   [data-anim="rise"] { opacity: 1; transform: none; }
 }
+
+/* ============== SERVICES: 目玉プロダクトカード ============== */
+.service-featured {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--s-7);
+  /* 下のサービスカード3つの並び（.services__list）と横幅・中央寄せを揃える */
+  max-width: 1080px;
+  margin-top: var(--s-4);
+  margin-bottom: var(--s-6);
+  margin-inline: auto;
+  padding: var(--s-7);
+  border-radius: 20px;
+  background: var(--green-deep);
+  color: #fff;
+  text-decoration: none;
+  transition: box-shadow var(--dur-base) var(--ease-out);
+}
+.service-featured__text { display: block; }
+@media (max-width: 760px) {
+  .service-featured { grid-template-columns: 1fr; gap: var(--s-5); }
+  .service-featured__cta { justify-self: start; }
+}
+.service-featured:hover {
+  box-shadow: 0 16px 38px -26px rgba(16, 43, 33, 0.5);
+}
+.service-featured__tag {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--terracotta-soft);
+  margin-bottom: var(--s-3);
+}
+.service-featured__title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.35;
+  margin-bottom: var(--s-3);
+  color: #fff;
+}
+.service-featured__lead {
+  display: block;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.9;
+  max-width: none;
+  margin-bottom: 0;
+}
+.service-featured__cta {
+  display: inline-flex;
+  align-items: center;
+  align-self: end;
+  gap: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--bg-kinari);
+  color: var(--green-deeper);
+  padding: 11px 20px;
+  border-radius: 999px;
+}
+@media (max-width: 760px) {
+  /* SP: 押しやすい全幅ボタンにする */
+  .service-featured__cta {
+    align-self: stretch;
+    justify-content: center;
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 15px;
+  }
+}
+/* 3カラムの上に置く導入文。直後の目玉カードに寄せる。 */
+.services__product-lead { margin-top: var(--s-4); margin-bottom: var(--s-3); }
+/* PCでは指定文を改行させない（狭い画面では通常折り返し） */
+.nowrap-pc { white-space: nowrap; }
+@media (max-width: 640px) { .nowrap-pc { white-space: normal; } }

@@ -19,6 +19,39 @@
   onHeaderScroll();
 
   /* ------------------------------------------------------------------
+     Mobile nav: hamburger toggles the dropdown panel
+  ------------------------------------------------------------------ */
+  const navToggle = document.querySelector("[data-nav-toggle]");
+  const nav = document.querySelector("#site-nav");
+  const navScrim = document.querySelector("[data-nav-scrim]");
+
+  if (header && navToggle && nav) {
+    const setNav = (open) => {
+      header.dataset.navOpen = open ? "true" : "false";
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      navToggle.setAttribute("aria-label", open ? "メニューを閉じる" : "メニューを開く");
+      document.documentElement.classList.toggle("is-nav-open", open);
+    };
+    const closeNav = () => setNav(false);
+
+    navToggle.addEventListener("click", () => {
+      setNav(header.dataset.navOpen !== "true");
+    });
+
+    // Close when a link is chosen, when the scrim is tapped, or on Escape
+    nav.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeNav));
+    if (navScrim) navScrim.addEventListener("click", closeNav);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && header.dataset.navOpen === "true") closeNav();
+    });
+
+    // Reset if the viewport grows past the SP breakpoint while open
+    window.matchMedia("(min-width: 641px)").addEventListener("change", (e) => {
+      if (e.matches) closeNav();
+    });
+  }
+
+  /* ------------------------------------------------------------------
      Reveal-on-scroll (rise) — per-section sequential cascade.
      When a section enters the viewport, its [data-anim='rise'] children
      animate in DOM order (= top-to-bottom for stacked text, left-to-right

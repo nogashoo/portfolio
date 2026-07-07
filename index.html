@@ -47,17 +47,31 @@
       </span>
       <span class="brand__name">Shota Nogami</span>
     </a>
-    <nav class="nav" aria-label="primary">
+    <nav class="nav" id="site-nav" aria-label="primary">
       <a href="#about">About</a>
-      <!-- 今後展開する可能性があるためコメントアウト保持 -->
-      <!-- <a href="#services">Services</a> -->
+      <a href="#services">Services</a>
       <!-- <a href="#process">Process</a> -->
       <a href="#works">Works</a>
       <a href="#tech">Skills</a>
       <a href="./gallery/">Gallery</a>
       <a href="#contact" class="nav__cta">Contact</a>
     </nav>
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-label="メニューを開く"
+      aria-controls="site-nav"
+      aria-expanded="false"
+      data-nav-toggle
+    >
+      <span class="nav-toggle__box" aria-hidden="true">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </span>
+    </button>
   </header>
+  <div class="nav-scrim" data-nav-scrim aria-hidden="true"></div>
 
   <main id="top">
     <!-- ============== HERO ============== -->
@@ -137,8 +151,7 @@
       </div>
     </section>
 
-    <!-- ============== SERVICES（今後展開する可能性があるためコメントアウト保持。復活時はナビのコメントも戻す） ============== -->
-    <!--
+    <!-- ============== SERVICES ============== -->
     <section class="section services" id="services" aria-labelledby="services-title">
       <p class="eyebrow" data-anim="rise">Services</p>
       <h2 id="services-title" class="h2" data-anim="rise">
@@ -146,23 +159,37 @@
       </h2>
       <p class="section__lead" data-anim="rise">
         大きなプロジェクトでなくて大丈夫です。<br />
-        スポットの困りごとから、月数時間の継続まで、必要な分だけご一緒します。
+        <span class="nowrap-pc">スポットの困りごとから、月数時間の継続まで、必要な分だけご一緒します。</span>
       </p>
+
+      <!-- 具体的なサービス（提供中のプロダクト）への導入文 -->
+      <p class="section__lead services__product-lead" data-anim="rise">
+        具体的なサービスとして、こんなプロダクトを提供しています。
+      </p>
+
+      <a class="service-featured" href="./line-update/" data-anim="rise">
+        <span class="service-featured__text">
+          <span class="service-featured__tag">Product — 提供中</span>
+          <span class="service-featured__title">LINEで更新できるLP</span>
+          <span class="service-featured__lead">お店のホームページを、LINEで送るだけで数秒で更新。管理画面もパソコンも不要。<br />飲食・美容・治療院などの小規模店舗向けに、制作から「更新のしくみ」までまるごと。<br />実際に動かせるデモを公開中です。</span>
+        </span>
+        <span class="service-featured__cta">デモを見る・詳しく →</span>
+      </a>
 
       <ol class="services__list">
         <li class="service" data-anim="rise">
           <span class="service__num">01</span>
           <div class="service__body">
             <h3 class="service__title">
-              業務効率化
-              <span class="service__title-en">Workflow Automation</span>
+              伴走型DX支援
+              <span class="service__title-en">Hands-on DX</span>
             </h3>
             <p class="service__lead">
-              手作業で時間を取られている業務を、仕組みで解く。スプレッドシートの自動化から AI エージェントの導入支援まで、小さく始めて効きどころを増やします。
+              「何から手をつけるか」から一緒に。業務を棚卸しして、効くところから GAS や AI エージェントで仕組み化します。導入して終わりではなく、定着まで並走します。
             </p>
             <ul class="service__bullets">
-              <li>GAS</li>
-              <li>AI導入支援</li>
+              <li>業務棚卸し / DX設計</li>
+              <li>GAS / AI導入</li>
             </ul>
           </div>
         </li>
@@ -202,7 +229,6 @@
         </li>
       </ol>
     </section>
-    -->
 
     <!-- ============== PROCESS（今後展開する可能性があるためコメントアウト保持） ============== -->
     <!--
@@ -606,11 +632,19 @@
 
     <!-- ============== CONTACT ============== -->
     <section class="section contact" id="contact" aria-labelledby="contact-title">
-      <p class="eyebrow" id="contact-title" data-anim="rise">Contact</p>
+      <p class="eyebrow" data-anim="rise">Contact</p>
+      <h2 id="contact-title" class="h2" data-anim="rise">
+        <span class="h2__phrase">お気軽にどうぞ。</span>
+      </h2>
+
+      <p class="section__lead" data-anim="rise">
+        <span class="nowrap-pc">LINEなら、デモを触りながらそのままご相談いただけます。</span><br />
+        <span class="nowrap-pc">制作・運用の小さな相談から歓迎です。</span>
+      </p>
 
       <div class="contact__channels" data-anim="rise">
-        <a class="btn btn--primary" href="https://github.com/nogashoo" target="_blank" rel="noopener">
-          GitHub
+        <a class="btn btn--primary btn--line" href="https://lin.ee/SVRxHPY" target="_blank" rel="noopener">
+          LINEで相談する
         </a>
         <a class="btn btn--ghost" href="mailto:contact.shota.dev@gmail.com">
           メールで連絡する
@@ -632,7 +666,7 @@
         <div class="field">
           <label for="f-type">ご相談の種類</label>
           <select id="f-type" name="type">
-            <option value="automation">業務効率化（GAS / AI Agent など）</option>
+            <option value="automation">伴走型DX支援（業務棚卸し / GAS / AI導入）</option>
             <option value="lp">LP制作</option>
             <option value="maintenance">保守・改善伴走</option>
             <option value="other">その他・まだ決まっていない</option>
