@@ -1,0 +1,3592 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        <meta name="format-detection" content="telephone=no" />
+        <title>LINEで、ホームページ更新 — 送るだけでサイトが変わる</title>
+        <meta
+            name="description"
+            content="「本日のおすすめ」「お知らせ」「キャンペーン」——お店のホームページを、スマホのLINEから数秒で更新。専用アプリも、管理画面のログインも、パソコンも必要ありません。"
+        />
+        <meta property="og:title" content="LINEで、ホームページ更新" />
+        <meta
+            property="og:description"
+            content="LINEで送るだけでLPが数秒で書き換わる自作システム。このページから実際に試せます。"
+        />
+        <meta property="og:type" content="website" />
+        <meta name="robots" content="noindex" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+        />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="../assets/brand/favicon.svg"
+        />
+
+        <style>
+            /* ===================================================================
+         line-update — Desktop-1 デザイン忠実再現（自己完結）
+         接頭辞: lu-
+      =================================================================== */
+            :root {
+                --green: #06b04a; /* アクセント緑（見出しの強調語・アイコン） */
+                --green-deep: #04562f; /* ヒーローの深緑・濃い見出し */
+                --cta: #09a644; /* CTAボタンの緑 */
+                --line: #06c755; /* LINEブランド緑 */
+                --cta-dark: #0b3a2a; /* 締めCTA帯の濃緑背景 */
+                --ink: #232a26; /* 基本テキスト（濃） */
+                --ink-soft: #636a64; /* 補助テキスト（グレー） */
+                --bg: #faf6ee; /* ページ背景（温かいクリーム） */
+                --card: #ffffff;
+                --border: #ece5d8;
+                --muted: #7e7f78;
+                --shadow: 0 18px 40px -24px rgba(40, 46, 38, 0.28);
+                --radius: 16px;
+                --maxw: 1140px;
+                --pad-x: 24px;
+                --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+                scroll-padding-top: 88px;
+            }
+            body {
+                margin: 0;
+                font-family:
+                    "Noto Sans JP",
+                    system-ui,
+                    -apple-system,
+                    sans-serif;
+                color: var(--ink);
+                background: var(--bg);
+                line-height: 1.85;
+                -webkit-font-smoothing: antialiased;
+                font-feature-settings: "palt";
+            }
+            img {
+                max-width: 100%;
+                display: block;
+            }
+            a {
+                color: inherit;
+            }
+            .lu-wrap {
+                max-width: var(--maxw);
+                margin: 0 auto;
+                padding: 0 var(--pad-x);
+            }
+            .lu-em {
+                color: var(--green);
+            }
+
+            /* ===== ボタン ===== */
+            .lu-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                font-weight: 700;
+                font-size: 15px;
+                line-height: 1;
+                text-decoration: none;
+                padding: 15px 28px;
+                border-radius: 999px;
+                border: 0;
+                cursor: pointer;
+                transition:
+                    transform 0.2s var(--ease),
+                    box-shadow 0.2s var(--ease),
+                    background 0.2s;
+                white-space: nowrap;
+            }
+            .lu-btn--cta {
+                background: var(--cta);
+                color: #fff;
+                box-shadow: 0 10px 22px -10px rgba(9, 166, 68, 0.7);
+            }
+            .lu-btn--cta:hover {
+                background: #08913b;
+                transform: translateY(-2px);
+            }
+            .lu-btn--ghost {
+                background: #fff;
+                color: var(--ink);
+                border: 1px solid var(--border);
+            }
+            /* デモを見る：連携が成立するまで非表示 */
+            .lu-demo-link {
+                display: none;
+            }
+            .lu-demo-link.is-ready {
+                display: inline-flex;
+            }
+            .lu-btn--ghost:hover {
+                transform: translateY(-2px);
+                border-color: #d7cfbf;
+            }
+            .lu-btn--sm {
+                padding: 11px 20px;
+                font-size: 14px;
+            }
+            .lu-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+            .lu-btn__line {
+                display: inline-grid;
+                place-items: center;
+                width: 24px;
+                height: 24px;
+                border-radius: 7px;
+                background: #fff;
+                margin-right: 2px;
+            }
+            .lu-btn__line svg {
+                width: 17px;
+                height: 17px;
+                color: var(--line);
+            }
+
+            /* ===== ヘッダー ===== */
+            .lu-header {
+                position: fixed;
+                inset: 0 0 auto 0;
+                z-index: 100;
+                height: 76px;
+                display: flex;
+                align-items: center;
+                background: rgba(250, 246, 238, 0.86);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(236, 229, 216, 0.8);
+            }
+            .lu-header .lu-wrap {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+            }
+            .lu-logo {
+                font-weight: 900;
+                font-size: 20px;
+                letter-spacing: 0.01em;
+                text-decoration: none;
+                color: var(--ink);
+            }
+            .lu-logo b {
+                color: var(--green);
+                font-weight: 900;
+            }
+            .lu-nav {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+            }
+            .lu-nav a {
+                text-decoration: none;
+                font-size: 14.5px;
+                font-weight: 500;
+                color: #45504a;
+                transition: color 0.2s;
+            }
+            .lu-nav a:hover {
+                color: var(--green);
+            }
+            .lu-nav .lu-btn {
+                margin-left: 6px;
+            }
+            .lu-nav .lu-btn--cta {
+                color: #fff;
+            }
+            .lu-burger {
+                display: none;
+                background: none;
+                border: 0;
+                cursor: pointer;
+                padding: 8px;
+            }
+
+            /* ===== ヒーロー ===== */
+            .lu-hero {
+                padding: calc(76px + 64px) 0 70px;
+            }
+            .lu-hero__grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 48px;
+                align-items: center;
+            }
+            .lu-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 12.5px;
+                font-weight: 500;
+                color: var(--ink-soft);
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 999px;
+                padding: 7px 16px 7px 12px;
+                margin-bottom: 26px;
+            }
+            .lu-badge .dot {
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: var(--line);
+                position: relative;
+            }
+            .lu-badge .dot::after {
+                content: "";
+                position: absolute;
+                inset: -4px;
+                border-radius: 50%;
+                background: var(--line);
+                opacity: 0.35;
+                animation: lu-pulse 1.8s infinite;
+            }
+            .lu-badge .live {
+                font-weight: 700;
+                color: #b07d18;
+                letter-spacing: 0.08em;
+            }
+            /* 連携状態でドット・ラベル色を切替（既定=連携待ちアンバー／連携済み=緑） */
+            .lu-badge .dot,
+            .lu-badge .dot::after {
+                background: #d39a32;
+            }
+            .lu-badge.is-live .dot,
+            .lu-badge.is-live .dot::after {
+                background: var(--line);
+            }
+            .lu-badge.is-live .live {
+                color: var(--green);
+            }
+            @keyframes lu-pulse {
+                0% {
+                    transform: scale(1);
+                    opacity: 0.4;
+                }
+                70%,
+                100% {
+                    transform: scale(2.4);
+                    opacity: 0;
+                }
+            }
+
+            .lu-hero h1 {
+                font-family:
+                    "Noto Sans JP",
+                    system-ui,
+                    -apple-system,
+                    sans-serif;
+                font-size: clamp(34px, 4.9vw, 58px);
+                font-weight: 900;
+                line-height: 1.3;
+                letter-spacing: 0.01em;
+                margin: 0 0 24px;
+                color: var(--ink);
+                white-space: nowrap;
+            }
+            .lu-hero h1 .lu-em {
+                color: var(--green);
+            }
+            .lu-hero__lead {
+                font-size: 16px;
+                line-height: 2.05;
+                color: #4d544e;
+                max-width: 30em;
+                margin: 0 0 32px;
+            }
+            .lu-hero__cta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 14px;
+            }
+            .lu-hero__feats {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                margin-top: 34px;
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                overflow: hidden;
+            }
+            .lu-hero__feat {
+                text-align: center;
+                padding: 15px 6px;
+            }
+            .lu-hero__feat + .lu-hero__feat {
+                border-left: 1px solid var(--border);
+            }
+            .lu-hero__feat .ic {
+                color: var(--green);
+                margin-bottom: 7px;
+            }
+            .lu-hero__feat .ic svg {
+                width: 44px;
+                height: 44px;
+            }
+            .lu-hero__feat span {
+                font-size: 12px;
+                font-weight: 700;
+                color: #45504a;
+            }
+
+            /* ヒーロー右：スマホ（実サイト iframe）を主役に */
+            .lu-hero__visual {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .lu-hero__phonecol {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .lu-hero__phonecol .lu-badge {
+                margin-bottom: 20px;
+            }
+
+            .lu-phone {
+                position: relative;
+                width: 366px;
+                flex: 0 0 auto;
+                border: 11px solid #1f2421;
+                border-radius: 52px;
+                background: #1f2421;
+                box-shadow: 0 40px 78px -32px rgba(31, 41, 36, 0.6);
+                overflow: hidden;
+            }
+            .lu-phone__notch {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 112px;
+                height: 22px;
+                background: #1f2421;
+                border-radius: 0 0 16px 16px;
+                z-index: 4;
+            }
+            .lu-phone__screen {
+                background: #fff;
+                border-radius: 36px;
+                overflow: hidden;
+            }
+            /* 実サイトを埋め込む場合の iframe（src を本番URLに差し替え） */
+            .lu-phone__frame {
+                display: block;
+                width: 100%;
+                height: 540px;
+                border: 0;
+                background: #fff;
+            }
+            /* ヒーローのスマホ下：LINE連携パネル（この画面をあなたのLINEで動かす） */
+            .lu-pair {
+                margin-top: 18px;
+                width: 366px;
+                max-width: 100%;
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                box-shadow: var(--shadow);
+                padding: 16px 18px;
+            }
+            .lu-pair__lead {
+                margin: 0 0 12px;
+                font-size: 13px;
+                font-weight: 700;
+                color: var(--ink);
+            }
+            .lu-pair__lead b {
+                color: var(--cta);
+            }
+            .lu-pair__row {
+                display: flex;
+                gap: 14px;
+                align-items: center;
+            }
+            .lu-pair__qr {
+                flex: 0 0 auto;
+                width: 84px;
+                height: 84px;
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 5px;
+            }
+            .lu-pair__qr svg {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            .lu-pair__main {
+                flex: 1;
+                min-width: 0;
+            }
+            .lu-pair__steps {
+                margin: 0 0 6px;
+                font-size: 12px;
+                line-height: 1.7;
+                color: var(--muted);
+            }
+            .lu-pair__code {
+                font-family: ui-monospace, "SF Mono", monospace;
+                font-size: 16px;
+                letter-spacing: 0.14em;
+                color: var(--ink);
+            }
+            .lu-pair__status {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                margin: 0 0 10px;
+                font-size: 12px;
+                color: var(--muted);
+            }
+            .lu-pair__status .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--muted);
+            }
+            .lu-pair.is-paired .lu-pair__status {
+                color: var(--cta);
+                font-weight: 700;
+            }
+            .lu-pair.is-paired .lu-pair__status .dot {
+                background: var(--cta);
+            }
+            .lu-pair .lu-btn--sm {
+                padding: 9px 16px;
+                font-size: 13px;
+            }
+            .lu-phone__status {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 12px 18px 6px;
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--ink);
+            }
+            .lu-phone__status .sig {
+                letter-spacing: 1px;
+            }
+            .lu-phone__bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 6px 16px 12px;
+                border-bottom: 1px solid #f0ece4;
+            }
+            .lu-phone__bar b {
+                font-size: 15px;
+                font-weight: 900;
+            }
+            .lu-phone__bar .mn {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+            }
+            .lu-phone__bar .mn i {
+                display: block;
+                width: 18px;
+                height: 2px;
+                background: #2c322e;
+                border-radius: 2px;
+            }
+            .lu-phone__hero {
+                position: relative;
+            }
+            .lu-phone__hero img {
+                width: 100%;
+                height: 232px;
+                object-fit: cover;
+            }
+            .lu-phone__new {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: #f0833e;
+                color: #fff;
+                font-size: 9px;
+                font-weight: 700;
+                padding: 3px 8px;
+                border-radius: 6px;
+            }
+            .lu-phone__item {
+                padding: 12px 16px 6px;
+            }
+            .lu-phone__tag {
+                font-size: 10px;
+                color: var(--muted);
+            }
+            .lu-phone__row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 2px;
+            }
+            .lu-phone__row b {
+                font-size: 13px;
+                font-weight: 700;
+            }
+            .lu-phone__row .pr {
+                font-size: 13px;
+                font-weight: 900;
+                color: var(--green-deep);
+            }
+            .lu-phone__upd {
+                display: inline-block;
+                font-size: 9px;
+                color: var(--green);
+                border: 1px solid #bfe6cd;
+                background: #f0f9f3;
+                border-radius: 999px;
+                padding: 1px 7px;
+                margin: 4px 16px 0;
+            }
+            .lu-phone__note {
+                padding: 8px 16px 16px;
+            }
+            .lu-phone__note .nt {
+                font-size: 10px;
+                color: var(--muted);
+            }
+            .lu-phone__note b {
+                display: block;
+                font-size: 12px;
+                margin-top: 1px;
+            }
+
+            /* ===== フロー帯（独立した角丸ブロック） ===== */
+            .lu-flow {
+                background: var(--bg);
+                padding: 8px 0 28px;
+            }
+            .lu-flow__block {
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 22px;
+                box-shadow: var(--shadow);
+                padding: 34px 38px;
+            }
+            .lu-flow__intro {
+                min-width: 0;
+            }
+            .lu-flow__title {
+                margin: 0;
+                font-size: 24px;
+                font-weight: 900;
+                line-height: 1.45;
+                letter-spacing: 0;
+            }
+            .lu-flow__lead {
+                margin: 10px 0 0;
+                max-width: 42em;
+                font-size: 14px;
+                line-height: 1.8;
+                color: var(--ink-soft);
+            }
+            .lu-flow__steps {
+                display: grid;
+                grid-template-columns:
+                    minmax(0, 2fr) minmax(0, 1fr) 22px repeat(2, minmax(0, 1fr))
+                    22px minmax(0, 1fr);
+                align-items: start;
+                gap: 18px 14px;
+                margin-top: 22px;
+            }
+            .lu-flow__node {
+                min-width: 0;
+                align-self: start;
+            }
+            .lu-flow__head {
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                min-height: 24px;
+            }
+            .lu-flow__num {
+                display: inline-grid;
+                width: 24px;
+                height: 24px;
+                flex: 0 0 24px;
+                place-items: center;
+                border-radius: 50%;
+                background: var(--green);
+                color: #fff;
+                font-size: 12px;
+                font-weight: 900;
+                line-height: 1;
+            }
+            .lu-flow__step-title {
+                display: block;
+                font-size: 13.5px;
+                font-weight: 900;
+                color: var(--ink);
+                white-space: nowrap;
+            }
+            .lu-flow__text {
+                margin: 7px 0 10px;
+                min-height: 3.2em;
+                font-size: 12px;
+                line-height: 1.6;
+                color: var(--ink-soft);
+            }
+            .lu-flow__shot {
+                display: block;
+                width: auto;
+                max-width: 160px;
+                height: 250px;
+                object-fit: contain;
+                margin: 0 auto;
+                border: 1px solid var(--border);
+                border-radius: 18px;
+            }
+            .lu-flow__shot--qr {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-evenly;
+                gap: 10px;
+                width: 140px;
+                background: #fff;
+                padding: 14px 12px;
+            }
+            .lu-flow__qr {
+                width: 100%;
+                max-width: 118px;
+                aspect-ratio: 1;
+            }
+            .lu-flow__qr svg {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            .lu-flow__qr-code {
+                margin: 0;
+                font-family: ui-monospace, "SF Mono", monospace;
+                font-size: 16px;
+                letter-spacing: 0.14em;
+                font-weight: 700;
+                color: var(--ink);
+            }
+            .lu-flow__qr-btn {
+                width: 100%;
+            }
+            .lu-flow__shotpair {
+                display: flex;
+                align-items: stretch;
+                justify-content: center;
+                gap: 12px;
+            }
+            .lu-flow__shotpair > .lu-flow__shot {
+                flex: 0 0 auto;
+                margin: 0;
+            }
+            .lu-flow__cap {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 9px auto 0;
+                max-width: 160px;
+                min-height: 2.7em;
+                font-size: 11.5px;
+                line-height: 1.45;
+                font-weight: 900;
+                text-align: center;
+                color: var(--muted);
+            }
+            .lu-flow__cap--send {
+                color: #3b6fd4;
+            }
+            .lu-flow__arrow {
+                align-self: center;
+                justify-self: center;
+                color: var(--green);
+                font-size: 28px;
+                font-weight: 900;
+                line-height: 1;
+            }
+            .lu-flow__banner {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                margin-top: 22px;
+                padding: 16px 20px;
+                border: 1px solid #dcefdc;
+                border-radius: 16px;
+                background: #eef7ee;
+            }
+            .lu-flow__gift {
+                display: block;
+                width: 44px;
+                height: 44px;
+                flex: 0 0 44px;
+            }
+            .lu-flow__gift svg {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            .lu-flow__gift .g-box {
+                fill: var(--green);
+            }
+            .lu-flow__gift .g-lid {
+                fill: var(--green-deep);
+            }
+            .lu-flow__gift .g-ribbon {
+                fill: #b9ebcf;
+            }
+            .lu-flow__gift .g-knot {
+                fill: #b9ebcf;
+            }
+            .lu-flow__gift .g-spark {
+                fill: #f5c33b;
+            }
+            .lu-flow__banner-title {
+                margin: 0;
+                font-size: 14px;
+                font-weight: 900;
+                color: var(--green-deep);
+            }
+            .lu-flow__banner-text {
+                margin: 3px 0 0;
+                font-size: 12.5px;
+                line-height: 1.65;
+                color: var(--ink-soft);
+            }
+
+            /* ===== セクション共通 ===== */
+            .lu-sec {
+                padding: 80px 0;
+                background: #fff;
+            }
+            .lu-sec--tint {
+                background: var(--bg);
+            }
+            .lu-head {
+                text-align: center;
+                margin-bottom: 48px;
+            }
+            .lu-head h2 {
+                font-size: clamp(26px, 3.6vw, 36px);
+                font-weight: 900;
+                margin: 0 0 16px;
+                letter-spacing: 0.01em;
+            }
+            .lu-head p {
+                font-size: 15px;
+                color: var(--ink-soft);
+                margin: 0;
+            }
+            .lu-head .lu-uline {
+                display: inline-block;
+                width: 44px;
+                height: 4px;
+                border-radius: 4px;
+                background: var(--green);
+                margin-top: 18px;
+            }
+
+            /* ===== お悩み ===== */
+            .lu-pains {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 18px;
+            }
+            .lu-pain {
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 30px 20px 24px;
+                text-align: center;
+                position: relative;
+                box-shadow: 0 10px 30px -26px rgba(40, 46, 38, 0.35);
+            }
+            .lu-pain__ic {
+                width: 62px;
+                height: 62px;
+                margin: 0 auto 18px;
+                border-radius: 50%;
+                background: #f3f8f4;
+                display: grid;
+                place-items: center;
+                color: var(--green);
+            }
+            .lu-pain__ic svg {
+                width: 30px;
+                height: 30px;
+            }
+            .lu-pain h3 {
+                font-size: 15px;
+                font-weight: 700;
+                margin: 0 0 10px;
+                line-height: 1.6;
+            }
+            .lu-pain p {
+                font-size: 12.5px;
+                color: var(--ink-soft);
+                line-height: 1.85;
+                margin: 0 0 14px;
+            }
+            .lu-pain__no {
+                font-size: 22px;
+                font-weight: 900;
+                color: #ece6da;
+                letter-spacing: 0.06em;
+            }
+
+            .lu-bridge {
+                position: relative;
+                display: grid;
+                place-items: center;
+                margin: -105px 0 52px;
+            }
+            .lu-bridge::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 50%;
+                height: 1px;
+                background: var(--border);
+            }
+            .lu-bridge__circle {
+                position: relative;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background: #fff;
+                border: 1px solid var(--border);
+                box-shadow: 0 12px 24px -14px rgba(40, 46, 38, 0.4);
+                display: grid;
+                place-items: center;
+                color: var(--green);
+            }
+            .lu-bridge__circle svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            /* ===== だから、LINEで完結 ===== */
+            .lu-benefits {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+            }
+            .lu-benefit {
+                position: relative;
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 44px 30px 32px;
+                text-align: center;
+                box-shadow: var(--shadow);
+            }
+            .lu-benefit__no {
+                position: absolute;
+                top: 18px;
+                left: 18px;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background: var(--green);
+                color: #fff;
+                font-size: 13px;
+                font-weight: 900;
+                display: grid;
+                place-items: center;
+            }
+            .lu-benefit__ic {
+                width: 84px;
+                height: 84px;
+                margin: 6px auto 20px;
+                background: none;
+                border-radius: 0;
+                display: grid;
+                place-items: center;
+                color: var(--green);
+            }
+            .lu-benefit__ic svg {
+                width: 56px;
+                height: 56px;
+            }
+            .lu-benefit h3 {
+                font-size: 20px;
+                font-weight: 900;
+                margin: 0 0 16px;
+            }
+            .lu-benefit h3::after {
+                content: "";
+                display: block;
+                width: 30px;
+                height: 2px;
+                border-radius: 2px;
+                background: var(--green);
+                margin: 14px auto 0;
+            }
+            .lu-benefit p {
+                font-size: 13.5px;
+                color: var(--ink-soft);
+                line-height: 1.95;
+                margin: 0 0 22px;
+            }
+            .lu-benefit__pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 12.5px;
+                font-weight: 700;
+                color: var(--green);
+                background: #eef8f1;
+                border-radius: 999px;
+                padding: 8px 18px;
+            }
+            .lu-benefit__pill svg {
+                width: 15px;
+                height: 15px;
+            }
+
+            /* ===== 業種（アイコン＋写真＋更新通知カード） ===== */
+            .lu-fields {
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                gap: 16px;
+                align-items: stretch;
+            }
+            .lu-field {
+                display: flex;
+                flex-direction: column;
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 26px 16px 16px;
+                box-shadow: 0 14px 34px -26px rgba(40, 46, 38, 0.4);
+                transition:
+                    transform 0.25s var(--ease),
+                    box-shadow 0.25s var(--ease);
+            }
+            .lu-field:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 22px 44px -24px rgba(40, 46, 38, 0.45);
+            }
+            .lu-field__ic {
+                color: var(--green);
+                margin: 0 auto 14px;
+            }
+            .lu-field__ic svg {
+                width: 38px;
+                height: 38px;
+            }
+            .lu-field__ttl {
+                text-align: center;
+                font-size: 15.5px;
+                font-weight: 800;
+                margin: 0 0 9px;
+            }
+            .lu-field__desc {
+                text-align: center;
+                font-size: 12.5px;
+                color: var(--ink-soft);
+                line-height: 1.8;
+                margin: 0 0 16px;
+                min-height: 4.5em;
+            }
+            .lu-field__post {
+                margin-top: auto;
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 10px 22px -16px rgba(40, 46, 38, 0.45);
+            }
+            .lu-field__img {
+                aspect-ratio: 16 / 11;
+            }
+            .lu-field__img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+            .lu-field__upd {
+                padding: 12px 13px 14px;
+            }
+            .lu-field__tag {
+                display: block;
+                font-size: 10.5px;
+                color: var(--ink-soft);
+                margin-bottom: 5px;
+            }
+            .lu-field__msg {
+                display: block;
+                font-size: 13px;
+                font-weight: 700;
+                line-height: 1.45;
+                color: var(--ink);
+            }
+            .lu-field__foot {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 8px;
+            }
+            .lu-field__time {
+                font-size: 10.5px;
+                color: var(--green);
+                white-space: nowrap;
+            }
+
+            /* ===== LINEひとつで ===== */
+            .lu-one {
+                background: var(--bg);
+                padding-top: 0;
+                margin-top: -44px;
+            }
+            .lu-one__block {
+                display: flex;
+                align-items: center;
+                gap: 32px;
+                background: #f1f4f1;
+                border: 1px solid #e6eae5;
+                border-radius: 24px;
+                padding: 40px 44px;
+            }
+            .lu-one__left {
+                flex: 0 0 auto;
+                display: flex;
+                align-items: center;
+                gap: 24px;
+                max-width: 460px;
+            }
+            .lu-one__phone {
+                flex: 0 0 auto;
+                display: flex;
+                justify-content: center;
+            }
+            .lu-one__phoneimg {
+                width: 120px;
+                height: auto;
+                object-fit: contain;
+            }
+            .lu-one__intro h2 {
+                font-size: clamp(20px, 2.2vw, 25px);
+                font-weight: 900;
+                line-height: 1.5;
+                margin: 0;
+            }
+            .lu-one__div {
+                display: block;
+                width: 44px;
+                height: 3px;
+                border-radius: 2px;
+                background: #b9ddc8;
+                margin: 18px 0;
+            }
+            .lu-one__lead {
+                font-size: 13px;
+                color: var(--ink-soft);
+                line-height: 1.9;
+                margin: 0;
+            }
+            .lu-one__cols {
+                flex: 1 1 auto;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .lu-one__col {
+                padding: 0 15px;
+                border-left: 1px solid #e1e6e1;
+                text-align: center;
+            }
+            .lu-one__col:first-child {
+                border-left: none;
+            }
+            .lu-one__col__ic {
+                width: 68px;
+                height: 68px;
+                border-radius: 18px;
+                background: #e6f1ea;
+                display: grid;
+                place-items: center;
+                color: var(--green);
+                margin: 0 auto 16px;
+            }
+            .lu-one__col__ic svg {
+                width: 34px;
+                height: 34px;
+            }
+            .lu-one__col b {
+                display: block;
+                font-size: 13.5px;
+                font-weight: 900;
+                margin-bottom: 10px;
+                white-space: nowrap;
+            }
+            .lu-one__col p {
+                font-size: 12.5px;
+                color: var(--ink-soft);
+                line-height: 1.85;
+                margin: 0;
+            }
+
+            /* ===== 3ステップ ===== */
+            .lu-steps {
+                display: grid;
+                grid-template-columns: 1fr auto 1fr auto 1fr;
+                gap: 12px;
+                align-items: stretch;
+            }
+            .lu-step {
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 26px 28px 34px;
+                box-shadow: var(--shadow);
+                position: relative;
+                display: flex;
+                flex-direction: column;
+            }
+            .lu-step__no {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--green);
+                color: #fff;
+                font-size: 13px;
+                font-weight: 900;
+                display: grid;
+                place-items: center;
+                margin-bottom: 18px;
+            }
+            .lu-step__row {
+                display: flex;
+                align-items: flex-start;
+                gap: 18px;
+                flex: 1 1 auto;
+            }
+            .lu-step__ic {
+                flex: 0 0 auto;
+                width: 56px;
+                height: 56px;
+                background: none;
+                display: grid;
+                place-items: center;
+                color: var(--green);
+            }
+            .lu-step__ic svg {
+                width: 40px;
+                height: 40px;
+            }
+            .lu-step__txt {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+            .lu-step h3 {
+                font-size: 17px;
+                font-weight: 900;
+                margin: 0 0 10px;
+            }
+            .lu-step p {
+                font-size: 13px;
+                color: var(--ink-soft);
+                line-height: 1.9;
+                margin: 0;
+            }
+            .lu-step__tag {
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                transform: translate(-50%, 50%);
+                background: #e9efe6;
+                color: var(--green-deep);
+                font-size: 12px;
+                font-weight: 700;
+                padding: 7px 18px;
+                border-radius: 999px;
+                white-space: nowrap;
+            }
+            .lu-steps__arrow {
+                display: grid;
+                place-items: center;
+                color: #9a948a;
+            }
+            .lu-steps__arrow svg {
+                width: 26px;
+                height: 26px;
+            }
+
+            .lu-support {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+                flex-wrap: wrap;
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 32px 40px;
+                margin-top: 36px;
+                box-shadow: var(--shadow);
+            }
+            .lu-support__lead {
+                display: flex;
+                align-items: center;
+                gap: 22px;
+                flex: 1 1 360px;
+            }
+            .lu-support__avatar {
+                flex: 0 0 auto;
+                width: 120px;
+                height: 120px;
+                background: none;
+                display: grid;
+                place-items: center;
+                color: var(--green-deep);
+            }
+            .lu-support__avatar svg {
+                width: 58px;
+                height: 58px;
+            }
+            .lu-support__lead h3 {
+                font-size: 18px;
+                font-weight: 900;
+                margin: 0 0 8px;
+            }
+            .lu-support__lead p {
+                font-size: 13px;
+                color: var(--ink-soft);
+                line-height: 1.85;
+                margin: 0;
+            }
+            .lu-support__items {
+                display: flex;
+                gap: 28px;
+                flex-wrap: wrap;
+            }
+            .lu-support__item {
+                text-align: center;
+                color: var(--ink-soft);
+            }
+            .lu-support__item .ic {
+                width: 62px;
+                height: 62px;
+                border: 1.5px solid var(--border);
+                border-radius: 50%;
+                display: grid;
+                place-items: center;
+                margin: 0 auto 8px;
+                color: var(--ink);
+            }
+            .lu-support__item .ic svg {
+                width: 30px;
+                height: 30px;
+            }
+            .lu-support__item span {
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--ink);
+            }
+
+            /* ===== FAQ ===== */
+            .lu-faq {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px 24px;
+            }
+            .lu-faq details {
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 0 22px;
+                align-self: start;
+            }
+            .lu-faq summary {
+                list-style: none;
+                cursor: pointer;
+                padding: 20px 30px 20px 0;
+                font-size: 14.5px;
+                font-weight: 700;
+                position: relative;
+            }
+            .lu-faq summary::-webkit-details-marker {
+                display: none;
+            }
+            .lu-faq summary::after {
+                content: "+";
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--green);
+                font-size: 22px;
+                font-weight: 400;
+            }
+            .lu-faq details[open] summary::after {
+                content: "−";
+            }
+            .lu-faq p {
+                margin: 0 0 20px;
+                font-size: 13px;
+                color: var(--ink-soft);
+                line-height: 1.95;
+            }
+
+            /* ===== 締めCTA（コンテナ幅の角丸カード） ===== */
+            .lu-ctawrap {
+                padding: 16px 0 72px;
+            }
+            .lu-cta__card {
+                background: var(--cta-dark);
+                color: #fff;
+                border-radius: 24px;
+                display: grid;
+                grid-template-columns: auto minmax(0, 1fr) auto;
+                align-items: center;
+                gap: 34px;
+                padding: 42px 48px;
+                box-shadow: 0 30px 60px -34px rgba(11, 58, 42, 0.6);
+            }
+            .lu-cta__illus {
+                flex: 0 0 auto;
+                display: flex;
+                align-items: center;
+                gap: 14px;
+            }
+            .lu-cta__chip {
+                width: 70px;
+                height: 124px;
+                border-radius: 14px;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                display: grid;
+                place-items: center;
+            }
+            .lu-cta__chip svg {
+                width: 34px;
+                height: 34px;
+            }
+            .lu-cta__chip--browser {
+                width: 132px;
+            }
+            .lu-cta__arrow {
+                color: rgba(255, 255, 255, 0.5);
+                letter-spacing: -2px;
+            }
+            .lu-cta__body {
+                min-width: 0;
+            }
+            .lu-cta__body h2 {
+                font-size: clamp(22px, 2.6vw, 29px);
+                font-weight: 900;
+                margin: 0 0 12px;
+                color: #fff;
+                line-height: 1.4;
+                white-space: nowrap;
+            }
+            .lu-cta__body p {
+                font-size: 14px;
+                line-height: 1.95;
+                color: rgba(255, 255, 255, 0.78);
+                margin: 0;
+                max-width: 40em;
+            }
+            .lu-cta__actions {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+            .lu-cta__actions .lu-btn--ghost {
+                background: #fff;
+            }
+
+            /* ===== フッター（クリーム背景） ===== */
+            .lu-footer {
+                background: var(--bg);
+                color: var(--ink-soft);
+                border-top: 1px solid var(--border);
+            }
+            .lu-footer .lu-wrap {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 26px var(--pad-x);
+                flex-wrap: wrap;
+                gap: 12px;
+                font-size: 12.5px;
+            }
+            .lu-footer a {
+                color: var(--green-deep);
+                text-decoration: none;
+                font-weight: 700;
+            }
+            .lu-footer a:hover {
+                text-decoration: underline;
+            }
+
+            /* ===== 画像アイコン（お悩み・3ステップはカンプ実画像PNG） ===== */
+            .lu-pain__ic.is-img {
+                background: none;
+            }
+            .lu-pain__ic.is-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+            .lu-step__ic.is-img img {
+                width: 56px;
+                height: 56px;
+                object-fit: contain;
+            }
+            .lu-support__avatar.is-img {
+                overflow: hidden;
+            }
+            .lu-support__avatar.is-img img {
+                width: 80%;
+                height: 80%;
+                object-fit: contain;
+            }
+            .lu-cta__pic {
+                display: block;
+                height: 92px;
+                width: auto;
+            }
+
+            /* SP専用の改行（PCでは非表示） */
+            .lu-sp-br {
+                display: none;
+            }
+
+            /* ===== フォーカスリング（a11y） ===== */
+            .lu-btn:focus-visible,
+            .lu-nav a:focus-visible,
+            .lu-logo:focus-visible,
+            .lu-faq summary:focus-visible,
+            .lu-footer a:focus-visible,
+            .lu-burger:focus-visible {
+                outline: 3px solid var(--green-deep);
+                outline-offset: 3px;
+                border-radius: 6px;
+            }
+
+            /* ===== レスポンシブ ===== */
+            @media (max-width: 1000px) {
+                .lu-hero__grid {
+                    grid-template-columns: 1fr;
+                    gap: 40px;
+                }
+                .lu-hero__visual {
+                    justify-content: center;
+                }
+                .lu-one__block {
+                    flex-direction: column;
+                    align-items: stretch;
+                    gap: 36px;
+                    padding: 40px 36px;
+                }
+                .lu-one__left {
+                    max-width: none;
+                }
+                .lu-flow__block {
+                    padding: 30px 28px;
+                }
+                .lu-flow__title {
+                    font-size: 22px;
+                }
+                .lu-pains {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .lu-fields {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+                .lu-steps {
+                    grid-template-columns: 1fr;
+                }
+                .lu-steps__arrow {
+                    transform: rotate(90deg);
+                }
+                .lu-faq {
+                    grid-template-columns: 1fr;
+                }
+            }
+            @media (max-width: 860px) {
+                .lu-cta__card {
+                    grid-template-columns: 1fr;
+                    text-align: center;
+                    gap: 26px;
+                    justify-items: center;
+                }
+                .lu-cta__actions {
+                    width: 100%;
+                    max-width: 360px;
+                }
+                .lu-cta__body p {
+                    margin: 0 auto;
+                }
+                .lu-cta__body h2 {
+                    white-space: normal;
+                }
+            }
+            @media (max-width: 760px) {
+                .lu-nav {
+                    display: none;
+                }
+                .lu-burger {
+                    display: block;
+                }
+                .lu-one__cols {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 30px 20px;
+                }
+                .lu-one__col {
+                    border-left: none;
+                    padding: 0;
+                }
+            }
+            @media (max-width: 620px) {
+                .lu-hero h1 {
+                    white-space: normal;
+                }
+                .lu-fields {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .lu-hero__feats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .lu-hero__feat:nth-child(3) {
+                    border-left: 0;
+                }
+                .lu-hero__feat:nth-child(n + 3) {
+                    border-top: 1px solid var(--border);
+                }
+            }
+            @media (max-width: 480px) {
+                .lu-cta__card {
+                    padding: 36px 24px;
+                }
+            }
+
+            /* モバイルメニュー */
+            .lu-mnav {
+                display: none;
+                position: fixed;
+                inset: 76px 0 auto 0;
+                z-index: 99;
+                background: rgba(250, 246, 238, 0.98);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid var(--border);
+                padding: 12px var(--pad-x) 20px;
+                flex-direction: column;
+                gap: 4px;
+            }
+            .lu-mnav.is-open {
+                display: flex;
+            }
+            .lu-mnav a {
+                padding: 13px 8px;
+                text-decoration: none;
+                font-weight: 700;
+                color: #45504a;
+                border-bottom: 1px solid var(--border);
+            }
+            .lu-mnav a:last-child {
+                border-bottom: 0;
+            }
+
+            /* フロー帯：6ステップ一列フロー */
+            .lu-flow__intro {
+                min-width: 0;
+            }
+            .lu-flow__intro .lu-flow__steps {
+                margin-top: 22px;
+            }
+            .lu-flow__aside {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                width: 232px;
+            }
+            .lu-try {
+                flex: 0 0 auto;
+                width: 100%;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 18px;
+                text-align: center;
+            }
+            .lu-flow__tip {
+                display: flex;
+                align-items: flex-start;
+                gap: 9px;
+                padding: 14px 16px;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+            }
+            .lu-flow__tip-ic {
+                font-size: 15px;
+                line-height: 1.4;
+            }
+            .lu-flow__tip-title {
+                margin: 0 0 2px;
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--ink);
+            }
+            .lu-flow__tip-text {
+                margin: 0;
+                font-size: 11.5px;
+                line-height: 1.6;
+                color: var(--ink-soft);
+            }
+            .lu-try__label {
+                margin: 0 0 4px;
+                font-size: 11px;
+                letter-spacing: 0.1em;
+                color: var(--muted);
+            }
+            .lu-try__code {
+                margin: 0 0 12px;
+                font-family: ui-monospace, "SF Mono", monospace;
+                font-size: 24px;
+                letter-spacing: 0.16em;
+                font-weight: 700;
+                color: var(--ink);
+            }
+            .lu-try__qr {
+                width: 110px;
+                height: 110px;
+                margin: 0 auto 12px;
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 6px;
+            }
+            .lu-try__qr svg {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            .lu-try__actions {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .lu-try__actions .lu-btn {
+                justify-content: center;
+            }
+            .lu-try__status {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                margin: 10px 0 0;
+                font-size: 12px;
+                color: var(--muted);
+            }
+            .lu-try__status .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--muted);
+            }
+            .lu-try__status.is-paired {
+                color: var(--cta);
+                font-weight: 700;
+            }
+            .lu-try__status.is-paired .dot {
+                background: var(--cta);
+            }
+            @media (max-width: 1024px) {
+                .lu-flow__block {
+                    gap: 28px;
+                }
+                .lu-flow__steps {
+                    grid-template-columns: repeat(3, minmax(132px, 1fr));
+                    align-items: start;
+                }
+                .lu-flow__arrow {
+                    display: none;
+                }
+                .lu-flow__shot {
+                    max-width: 150px;
+                }
+                .lu-flow__node--wide {
+                    grid-column: 1 / -1;
+                }
+            }
+            @media (max-width: 860px) {
+                .lu-flow__block {
+                    grid-template-columns: 1fr;
+                    gap: 26px;
+                    justify-items: stretch;
+                    text-align: left;
+                }
+                .lu-flow__steps {
+                    grid-template-columns: repeat(2, minmax(132px, 1fr));
+                }
+                .lu-flow__shot,
+                .lu-flow__cap {
+                    max-width: 156px;
+                }
+                .lu-flow__aside {
+                    width: 100%;
+                }
+            }
+            @media (max-width: 560px) {
+                .lu-flow__block {
+                    padding: 28px 18px;
+                }
+                .lu-flow__title {
+                    font-size: 21px;
+                }
+                .lu-flow__steps {
+                    grid-template-columns: 1fr;
+                    gap: 20px;
+                }
+                .lu-flow__node {
+                    display: grid;
+                    grid-template-columns: 1fr minmax(112px, 42%);
+                    grid-template-rows: auto auto auto 1fr;
+                    gap: 0 14px;
+                    align-items: start;
+                }
+                .lu-flow__node--wide {
+                    display: block;
+                }
+                /* ステップ1：中央寄せのQR＋スマホに合わせてステータスも中央へ */
+                .lu-flow__node--wide .lu-flow__cap {
+                    justify-content: center;
+                    text-align: center;
+                }
+                .lu-flow__shotpair > .lu-flow__shot {
+                    max-width: 132px;
+                }
+                .lu-flow__head,
+                .lu-flow__text,
+                .lu-flow__cap {
+                    grid-column: 1;
+                }
+                .lu-flow__shot {
+                    grid-column: 2;
+                    grid-row: 1 / span 4;
+                    width: 100%;
+                    max-width: 138px;
+                    height: auto;
+                    aspect-ratio: 0.56;
+                }
+                .lu-flow__cap {
+                    margin: 6px 0 0;
+                    text-align: left;
+                    min-height: 0;
+                    justify-content: flex-start;
+                }
+                .lu-flow__text {
+                    min-height: 0;
+                }
+                .lu-flow__banner {
+                    align-items: flex-start;
+                    padding: 14px;
+                }
+            }
+
+            /* ===================================================================
+               スマホ最適化：縦の冗長さを圧縮（2列カード・1行表示・横スクロール）
+               ※ ソース順で後勝ちさせるため、既存ブレークポイントより後ろに置く
+            =================================================================== */
+            @media (max-width: 600px) {
+                /* セクション余白を圧縮 */
+                .lu-sec {
+                    padding: 56px 0;
+                }
+                .lu-one {
+                    padding-top: 0;
+                }
+                .lu-head {
+                    margin-bottom: 30px;
+                }
+                .lu-head h2 {
+                    font-size: 23px;
+                    margin-bottom: 12px;
+                    text-wrap: balance;
+                }
+                .lu-head p {
+                    font-size: 13.5px;
+                    text-wrap: balance;
+                }
+
+                /* ── ファーストビュー：スマホ枠の固定幅でグリッド列が広がり、
+                      右パディングが消えて全体が右寄りになるのを修正 ── */
+                .lu-hero__text,
+                .lu-hero__visual,
+                .lu-hero__phonecol {
+                    min-width: 0;
+                    max-width: 100%;
+                }
+                .lu-phone {
+                    width: 100%;
+                    max-width: 366px;
+                }
+                /* PC向けの強制改行を解除し、SPで自然に折り返す */
+                .lu-hero__lead br {
+                    display: none;
+                }
+                /* 「連携待ち」バッジ：ラベルが途中改行して崩れるのを修正
+                   （説明文は複数行になるため、ドット・ラベルは上下中央揃え）*/
+                .lu-badge {
+                    align-items: center;
+                    gap: 8px;
+                }
+                .lu-badge .dot {
+                    flex: 0 0 auto;
+                }
+                .lu-badge .live {
+                    flex: 0 0 auto;
+                    white-space: nowrap;
+                }
+
+                /* ── お悩み：横長カード（数字を左に・アイコン・テキスト右）── */
+                .lu-pains {
+                    grid-template-columns: 1fr;
+                    gap: 12px;
+                }
+                /* セクション余白の縮小に合わせ、ブリッジの丸を境界中央にまたがせる */
+                .lu-bridge {
+                    margin: -81px 0 30px;
+                }
+                .lu-pain {
+                    display: grid;
+                    grid-template-columns: auto auto 1fr;
+                    grid-template-rows: auto auto;
+                    align-content: center;
+                    align-items: center;
+                    min-height: 92px;
+                    column-gap: 14px;
+                    text-align: left;
+                    padding: 16px 18px;
+                }
+                .lu-pain__no {
+                    grid-column: 1;
+                    grid-row: 1 / span 2;
+                    align-self: center;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background: var(--green);
+                    color: #fff;
+                    display: grid;
+                    place-items: center;
+                    font-size: 13px;
+                    font-weight: 900;
+                    letter-spacing: 0;
+                }
+                .lu-pain__ic {
+                    grid-column: 2;
+                    grid-row: 1 / span 2;
+                    align-self: center;
+                    width: 46px;
+                    height: 46px;
+                    margin: 0;
+                }
+                .lu-pain h3 {
+                    grid-column: 3;
+                    grid-row: 1;
+                    align-self: end;
+                    min-width: 0;
+                    font-size: 13px;
+                    line-height: 1.4;
+                    margin: 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .lu-pain h3 br {
+                    display: none;
+                }
+                .lu-pain p {
+                    grid-column: 3;
+                    grid-row: 2;
+                    align-self: start;
+                    min-width: 0;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    font-size: 12px;
+                    line-height: 1.6;
+                    margin: 3px 0 0;
+                }
+
+                /* ── だから、LINEで完結：横並びの行カード（アイコン左・テキスト右）── */
+                .lu-benefits {
+                    grid-template-columns: 1fr;
+                    gap: 12px;
+                }
+                .lu-benefit {
+                    display: grid;
+                    grid-template-columns: 58px 1fr;
+                    column-gap: 16px;
+                    align-items: center;
+                    text-align: left;
+                    padding: 18px 20px;
+                    border-radius: 16px;
+                }
+                .lu-benefit__no {
+                    display: none;
+                }
+                .lu-benefit__ic {
+                    grid-column: 1;
+                    grid-row: 1 / span 3;
+                    align-self: center;
+                    width: 58px;
+                    height: 58px;
+                    margin: 0;
+                }
+                .lu-benefit__ic svg {
+                    width: 42px;
+                    height: 42px;
+                }
+                .lu-benefit h3 {
+                    grid-column: 2;
+                    grid-row: 1;
+                    align-self: end;
+                    font-size: 16px;
+                    line-height: 1.4;
+                    margin: 0;
+                }
+                .lu-benefit h3::after {
+                    display: none;
+                }
+                .lu-benefit p {
+                    grid-column: 2;
+                    grid-row: 2;
+                    align-self: start;
+                    font-size: 12.5px;
+                    line-height: 1.7;
+                    margin: 4px 0 0;
+                }
+                .lu-benefit p br {
+                    display: none;
+                }
+                .lu-benefit__pill {
+                    grid-column: 2;
+                    grid-row: 3;
+                    justify-self: start;
+                    margin-top: 11px;
+                    font-size: 11px;
+                    padding: 6px 14px;
+                }
+
+                /* ── 様々な業種：横スクロール（画面端まで・次カードをのぞかせる）── */
+                .lu-fields {
+                    display: flex;
+                    grid-template-columns: none;
+                    overflow-x: auto;
+                    gap: 14px;
+                    scroll-snap-type: x mandatory;
+                    -webkit-overflow-scrolling: touch;
+                    margin: 0 calc(var(--pad-x) * -1);
+                    padding: 4px var(--pad-x) 14px;
+                    scrollbar-width: none;
+                }
+                .lu-fields::-webkit-scrollbar {
+                    display: none;
+                }
+                .lu-field {
+                    flex: 0 0 70%;
+                    max-width: 280px;
+                    scroll-snap-align: center;
+                }
+                .lu-field__desc {
+                    min-height: 0;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+
+                /* ── LINEひとつで：4項目を2×2のまま維持しコンパクトに ── */
+                .lu-one__block {
+                    padding: 28px 18px;
+                    gap: 28px;
+                }
+                /* SPではLINEの装飾画像を非表示 */
+                .lu-one__phone {
+                    display: none;
+                }
+                .lu-one__cols {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 26px 16px;
+                }
+                .lu-one__col {
+                    border-left: none;
+                    padding: 0;
+                }
+                .lu-one__col__ic {
+                    width: 56px;
+                    height: 56px;
+                    border-radius: 14px;
+                    margin-bottom: 12px;
+                }
+                .lu-one__col__ic svg {
+                    width: 28px;
+                    height: 28px;
+                }
+                .lu-one__col b {
+                    white-space: normal;
+                }
+
+                /* ── 3ステップ：番号・アイコン・テキストを1行に並べて余白を圧縮 ── */
+                .lu-step {
+                    display: grid;
+                    grid-template-columns: auto auto 1fr;
+                    align-items: center;
+                    column-gap: 13px;
+                    padding: 18px 20px 30px;
+                }
+                .lu-step__no {
+                    margin: 0;
+                    width: 26px;
+                    height: 26px;
+                    font-size: 12px;
+                }
+                .lu-step__row {
+                    display: contents;
+                }
+                .lu-step__ic {
+                    width: 44px;
+                    height: 44px;
+                }
+                .lu-step__ic.is-img img {
+                    width: 44px;
+                    height: 44px;
+                }
+                .lu-step__txt {
+                    min-width: 0;
+                }
+                .lu-step h3 {
+                    font-size: 15.5px;
+                    margin: 0 0 4px;
+                }
+                .lu-step p {
+                    font-size: 12.5px;
+                    line-height: 1.65;
+                }
+                .lu-step p br {
+                    display: none;
+                }
+
+                /* ── 導入から運用までサポート：縦積み＋アイコンを2×2に整える ── */
+                .lu-support {
+                    flex-direction: column;
+                    align-items: stretch;
+                    gap: 24px;
+                    padding: 28px 22px;
+                    margin-top: 30px;
+                }
+                .lu-support__lead {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    gap: 14px;
+                    flex: 1 1 auto;
+                }
+                /* SPではサポーターの装飾画像を非表示 */
+                .lu-support__avatar {
+                    display: none;
+                }
+                .lu-support__lead h3 {
+                    font-size: 17px;
+                }
+                .lu-sp-br {
+                    display: inline;
+                }
+                .lu-support__lead p {
+                    font-size: 13px;
+                    line-height: 1.8;
+                }
+                .lu-support__lead p br {
+                    display: none;
+                }
+                .lu-support__items {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 22px 12px;
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ===================== ヘッダー ===================== -->
+        <header class="lu-header">
+            <div class="lu-wrap">
+                <a class="lu-logo" href="#top"
+                    ><b>LINE</b>で、ホームページ更新</a
+                >
+                <nav class="lu-nav">
+                    <a href="#features">機能紹介</a>
+                    <a href="#how">使い方</a>
+                    <a href="#fields">導入事例</a>
+                    <a href="#steps">料金プラン</a>
+                    <a href="#faq">よくあるご質問</a>
+                    <a class="lu-btn lu-btn--cta lu-btn--sm" href="#features"
+                        >無料で試してみる</a
+                    >
+                </nav>
+                <button
+                    class="lu-burger"
+                    id="lu-burger"
+                    aria-label="メニューを開く"
+                    aria-controls="lu-mnav"
+                    aria-expanded="false"
+                >
+                    <svg
+                        width="26"
+                        height="26"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#232a26"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    >
+                        <path d="M3 6h18M3 12h18M3 18h18" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+        <nav class="lu-mnav" id="lu-mnav">
+            <a href="#features">機能紹介</a>
+            <a href="#how">使い方</a>
+            <a href="#fields">導入事例</a>
+            <a href="#steps">料金プラン</a>
+            <a href="#faq">よくあるご質問</a>
+            <a href="#features">無料で試してみる</a>
+        </nav>
+
+        <main id="top">
+            <!-- ===================== ヒーロー ===================== -->
+            <section class="lu-hero">
+                <div class="lu-wrap lu-hero__grid">
+                    <div class="lu-hero__text">
+                        <h1>
+                            <span class="lu-em">LINE</span
+                            >で、<br />ホームページ更新
+                        </h1>
+                        <p class="lu-hero__lead">
+                            「本日のおすすめ」「お知らせ」「キャンペーン」などの<br />ホームページを、スマホのLINEから簡単に更新できます。<br />
+                            専用アプリも、管理画面のログインも、パソコンも必要ありません。
+                        </p>
+                        <div class="lu-hero__cta">
+                            <a class="lu-btn lu-btn--cta" href="#features">
+                                <span class="lu-btn__line"
+                                    ><svg
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        role="img"
+                                        aria-label="LINE"
+                                    >
+                                        <path
+                                            d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"
+                                        /></svg
+                                ></span>
+                                LINEで今すぐ試す（無料）
+                            </a>
+                            <a
+                                class="lu-btn lu-btn--ghost lu-demo-link"
+                                href="../demo/?t=decafedecafe"
+                                target="_blank"
+                                rel="noopener"
+                                >デモを見る</a
+                            >
+                        </div>
+                        <div class="lu-hero__feats">
+                            <div class="lu-hero__feat">
+                                <div class="ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <rect
+                                            x="6"
+                                            y="2"
+                                            width="12"
+                                            height="20"
+                                            rx="3"
+                                        />
+                                        <path d="M11 18h2" />
+                                    </svg>
+                                </div>
+                                <span>スマホだけでOK</span>
+                            </div>
+                            <div class="lu-hero__feat">
+                                <div class="ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <rect
+                                            x="4"
+                                            y="10"
+                                            width="16"
+                                            height="11"
+                                            rx="2"
+                                        />
+                                        <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                                    </svg>
+                                </div>
+                                <span>ログイン不要</span>
+                            </div>
+                            <div class="lu-hero__feat">
+                                <div class="ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <circle cx="12" cy="12" r="9" />
+                                        <path d="M12 7v5l3.5 2" />
+                                    </svg>
+                                </div>
+                                <span>すぐに反映</span>
+                            </div>
+                            <div class="lu-hero__feat">
+                                <div class="ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"
+                                        />
+                                    </svg>
+                                </div>
+                                <span>専門知識不要</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lu-hero__visual">
+                        <div class="lu-hero__phonecol">
+                            <span class="lu-badge" id="lu-badge">
+                                <span class="dot"></span
+                                ><span class="live" id="lu-badge-label"
+                                    >連携待ち</span
+                                >
+                                <span id="lu-badge-desc"
+                                    >LINEを連携すると、この画面がリアルタイムに変わります</span
+                                >
+                            </span>
+                            <!-- スマホ（screen 内を本番サイトの iframe に差し替え予定） -->
+                            <div class="lu-phone">
+                                <span class="lu-phone__notch"></span>
+                                <div class="lu-phone__screen">
+                                    <iframe
+                                        class="lu-phone__frame"
+                                        id="lu-demo-frame"
+                                        src="../demo/?t=decafedecafe"
+                                        title="LINEで更新されるデモサイト"
+                                        loading="lazy"
+                                    ></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== フロー帯（独立ブロック） ===================== -->
+            <section class="lu-flow" id="features">
+                <div class="lu-wrap">
+                    <div class="lu-flow__block">
+                        <div class="lu-flow__intro">
+                            <p class="lu-flow__title">
+                                LINEを送るだけで、<br />ホームページが<span
+                                    class="lu-em"
+                                    >リアルタイムに更新</span
+                                >されます
+                            </p>
+                            <p class="lu-flow__lead">
+                                連携すると、あなたのLINEからメッセージを送るだけで、デモサイトの内容がすぐに反映されます。
+                            </p>
+                            <div class="lu-flow__steps">
+                                <div class="lu-flow__node lu-flow__node--wide">
+                                    <div class="lu-flow__head">
+                                        <span class="lu-flow__num">1</span>
+                                        <span class="lu-flow__step-title"
+                                            >友だち追加</span
+                                        >
+                                    </div>
+                                    <p class="lu-flow__text">
+                                        QRコードを読み取るか、ボタンから友だち追加します。
+                                    </p>
+                                    <div class="lu-flow__shotpair">
+                                        <div
+                                            class="lu-flow__shot lu-flow__shot--qr"
+                                        >
+                                            <div
+                                                class="lu-flow__qr"
+                                                id="lu-pair-qr"
+                                            ></div>
+                                            <p
+                                                class="lu-flow__qr-code"
+                                                id="lu-pair-code"
+                                            >
+                                                ------
+                                            </p>
+                                            <a
+                                                class="lu-btn lu-btn--sm lu-btn--cta lu-flow__qr-btn"
+                                                id="lu-add2"
+                                                href="#"
+                                                target="_blank"
+                                                rel="noopener"
+                                                >友だち追加</a
+                                            >
+                                        </div>
+                                        <img
+                                            class="lu-flow__shot"
+                                            src="./assets/img/screens/step1.png"
+                                            alt="友だち追加画面"
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                    <p
+                                        class="lu-try__status lu-flow__cap"
+                                        id="lu-pair-status"
+                                    >
+                                        <span class="dot"></span>連携待ち…
+                                    </p>
+                                </div>
+                                <div class="lu-flow__node">
+                                    <div class="lu-flow__head">
+                                        <span class="lu-flow__num">2</span>
+                                        <span class="lu-flow__step-title"
+                                            >コードを送る</span
+                                        >
+                                    </div>
+                                    <p class="lu-flow__text">
+                                        連携コードをLINEに送信します。
+                                    </p>
+                                    <img
+                                        class="lu-flow__shot"
+                                        src="./assets/img/screens/step2.png"
+                                        alt="連携コードをLINEに送る画面"
+                                        loading="lazy"
+                                    />
+                                    <p class="lu-flow__cap lu-flow__cap--send">
+                                        連携コードを送信
+                                    </p>
+                                </div>
+                                <span class="lu-flow__arrow">→</span>
+                                <div class="lu-flow__node">
+                                    <div class="lu-flow__head">
+                                        <span class="lu-flow__num">3</span>
+                                        <span class="lu-flow__step-title"
+                                            >連携完了</span
+                                        >
+                                    </div>
+                                    <p class="lu-flow__text">
+                                        デモサイトとLINEがつながります。
+                                    </p>
+                                    <img
+                                        class="lu-flow__shot"
+                                        src="./assets/img/screens/step3.png"
+                                        alt="連携完了後のデモサイト"
+                                        loading="lazy"
+                                    />
+                                    <p class="lu-flow__cap">
+                                        連携後、リアルタイム更新中に変わります。
+                                    </p>
+                                </div>
+                                <div class="lu-flow__node">
+                                    <div class="lu-flow__head">
+                                        <span class="lu-flow__num">4</span>
+                                        <span class="lu-flow__step-title"
+                                            >メッセージを送る</span
+                                        >
+                                    </div>
+                                    <p class="lu-flow__text">
+                                        更新したい内容をLINEで送ります。
+                                    </p>
+                                    <img
+                                        class="lu-flow__shot"
+                                        src="./assets/img/screens/step4.png"
+                                        alt="更新内容をLINEで送る画面"
+                                        loading="lazy"
+                                    />
+                                    <p class="lu-flow__cap lu-flow__cap--send">
+                                        例)「今月5%OFF！」と送信
+                                    </p>
+                                </div>
+                                <span class="lu-flow__arrow">→</span>
+                                <div class="lu-flow__node">
+                                    <div class="lu-flow__head">
+                                        <span class="lu-flow__num">5</span>
+                                        <span class="lu-flow__step-title"
+                                            >サイトが更新！</span
+                                        >
+                                    </div>
+                                    <p class="lu-flow__text">
+                                        送った内容がすぐにサイトに反映されます。
+                                    </p>
+                                    <img
+                                        class="lu-flow__shot"
+                                        src="./assets/img/screens/step5.png"
+                                        alt="更新後のデモサイト"
+                                        loading="lazy"
+                                    />
+                                    <p class="lu-flow__cap">
+                                        数秒〜数十秒でサイトに反映されます。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="lu-flow__banner">
+                                <span class="lu-flow__gift" aria-hidden="true">
+                                    <svg
+                                        viewBox="0 0 48 48"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <!-- キラキラ -->
+                                        <path
+                                            class="g-spark"
+                                            d="M9 7c.4 1.7.9 2.2 2.6 2.6-1.7.4-2.2.9-2.6 2.6-.4-1.7-.9-2.2-2.6-2.6C8.1 9.2 8.6 8.7 9 7Z"
+                                        />
+                                        <path
+                                            class="g-spark"
+                                            d="M40 12c.3 1.3.7 1.7 2 2-1.3.3-1.7.7-2 2-.3-1.3-.7-1.7-2-2 1.3-.3 1.7-.7 2-2Z"
+                                        />
+                                        <!-- リボン（ふた） -->
+                                        <rect
+                                            class="g-lid"
+                                            x="9"
+                                            y="20"
+                                            width="30"
+                                            height="8"
+                                            rx="2"
+                                        />
+                                        <!-- 箱本体 -->
+                                        <rect
+                                            class="g-box"
+                                            x="11"
+                                            y="27"
+                                            width="26"
+                                            height="14"
+                                            rx="2"
+                                        />
+                                        <!-- 縦リボン -->
+                                        <rect
+                                            class="g-ribbon"
+                                            x="21"
+                                            y="20"
+                                            width="6"
+                                            height="21"
+                                        />
+                                        <!-- 蝶結び -->
+                                        <path
+                                            class="g-ribbon"
+                                            d="M24 19c-1.5-3-3.5-5-6-5-2 0-3 1.3-3 2.8 0 1.8 1.7 2.8 4 3 1.7.1 3.5-.3 5-.8Zm0 0c1.5-3 3.5-5 6-5 2 0 3 1.3 3 2.8 0 1.8-1.7 2.8-4 3-1.7.1-3.5-.3-5-.8Z"
+                                        />
+                                        <circle
+                                            class="g-knot"
+                                            cx="24"
+                                            cy="19"
+                                            r="2.2"
+                                        />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="lu-flow__banner-title">
+                                        デモサイトで実際にお試しください
+                                    </p>
+                                    <p class="lu-flow__banner-text">
+                                        あなたのLINEから操作して、リアルタイム更新を体験できます。<br />
+                                        送信した内容は、通常数秒〜数十秒でデモサイトに反映されます。<br />
+                                        当サイトを更新すると連携が切れます。切れた場合は新たに表示された連携コードの送信を行ってください。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== お悩み ===================== -->
+            <section class="lu-sec lu-sec--tint">
+                <div class="lu-wrap">
+                    <div class="lu-head">
+                        <h2>
+                            こんな<span class="lu-em">お悩み</span
+                            >、ありませんか？
+                        </h2>
+                    </div>
+                    <div class="lu-pains">
+                        <div class="lu-pain">
+                            <div class="lu-pain__ic is-img">
+                                <img
+                                    src="./assets/img/cutouts/device-lock.png"
+                                    alt=""
+                                    loading="lazy"
+                                />
+                            </div>
+                            <h3>更新したいけど<br />ログインが面倒</h3>
+                            <p>IDやパスワードを探すのが手間で後回しに…</p>
+                            <div class="lu-pain__no">01</div>
+                        </div>
+                        <div class="lu-pain">
+                            <div class="lu-pain__ic is-img">
+                                <img
+                                    src="./assets/img/cutouts/laptop.png"
+                                    alt=""
+                                    loading="lazy"
+                                />
+                            </div>
+                            <h3>パソコンがないと<br />更新できない</h3>
+                            <p>スマホだけでサクッと更新したい…</p>
+                            <div class="lu-pain__no">02</div>
+                        </div>
+                        <div class="lu-pain">
+                            <div class="lu-pain__ic is-img">
+                                <img
+                                    src="./assets/img/cutouts/message-clock.png"
+                                    alt=""
+                                    loading="lazy"
+                                />
+                            </div>
+                            <h3>更新方法が<br />わからない</h3>
+                            <p>操作が複雑で、更新を頼める人がいない…</p>
+                            <div class="lu-pain__no">03</div>
+                        </div>
+                        <div class="lu-pain">
+                            <div class="lu-pain__ic is-img">
+                                <img
+                                    src="./assets/img/cutouts/megaphone.png"
+                                    alt=""
+                                    loading="lazy"
+                                />
+                            </div>
+                            <h3>タイムリーな<br />情報発信ができない</h3>
+                            <p>キャンペーンやお知らせをすぐに出したい…</p>
+                            <div class="lu-pain__no">04</div>
+                        </div>
+                        <div class="lu-pain">
+                            <div class="lu-pain__ic is-img">
+                                <img
+                                    src="./assets/img/cutouts/user-check.png"
+                                    alt=""
+                                    loading="lazy"
+                                />
+                            </div>
+                            <h3>制作会社に<br />依頼している</h3>
+                            <p>ちょっとした更新でも費用がかかる…</p>
+                            <div class="lu-pain__no">05</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== だから、LINEで完結 ===================== -->
+            <section class="lu-sec" id="how">
+                <div class="lu-wrap">
+                    <div class="lu-bridge">
+                        <span class="lu-bridge__circle"
+                            ><svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.4"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="m6 9 6 6 6-6" /></svg
+                        ></span>
+                    </div>
+                    <div class="lu-head">
+                        <h2>だから、<span class="lu-em">LINE</span>で完結。</h2>
+                        <p>
+                            いつでも、どこでも、だれでも簡単に。最新の情報を届け。
+                        </p>
+                    </div>
+                    <div class="lu-benefits">
+                        <div class="lu-benefit">
+                            <div class="lu-benefit__no">01</div>
+                            <div class="lu-benefit__ic">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M22 2 11 13" />
+                                    <path d="M22 2 15 22l-4-9-9-4 20-7z" />
+                                </svg>
+                            </div>
+                            <h3>LINEで送るだけ</h3>
+                            <p>
+                                専用アプリも、ログインも不要。<br />思いついたらすぐに情報を更新。
+                            </p>
+                            <span class="lu-benefit__pill"
+                                ><svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2.4"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M20 6 9 17l-5-5" /></svg
+                                >スマホだけでOK！</span
+                            >
+                        </div>
+                        <div class="lu-benefit">
+                            <div class="lu-benefit__no">02</div>
+                            <div class="lu-benefit__ic">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <circle cx="12" cy="12" r="9" />
+                                    <path d="M12 7v5l3.5 2" />
+                                </svg>
+                            </div>
+                            <h3>リアルタイムに反映</h3>
+                            <p>
+                                送信した内容がすぐにサイトに反映。<br />最新情報を素早く届けられます。
+                            </p>
+                            <span class="lu-benefit__pill"
+                                ><svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2.4"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M20 6 9 17l-5-5" /></svg
+                                >反映まで数秒！</span
+                            >
+                        </div>
+                        <div class="lu-benefit">
+                            <div class="lu-benefit__no">03</div>
+                            <div class="lu-benefit__ic">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <rect
+                                        x="6"
+                                        y="2"
+                                        width="12"
+                                        height="20"
+                                        rx="3"
+                                    />
+                                    <path d="M11 18h2" />
+                                    <path d="m9.5 9 2 2 3.5-3.5" />
+                                </svg>
+                            </div>
+                            <h3>スマホ1つで完結</h3>
+                            <p>
+                                スマホだけで、文章も画像も送信可能。<br />すべてLINE上で完結します。
+                            </p>
+                            <span class="lu-benefit__pill"
+                                ><svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2.4"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M20 6 9 17l-5-5" /></svg
+                                >どこからでも簡単！</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== 業種 ===================== -->
+            <section class="lu-sec lu-sec--tint" id="fields">
+                <div class="lu-wrap">
+                    <div class="lu-head">
+                        <h2>
+                            <span class="lu-em">様々な業種</span
+                            >でご利用いただけます
+                        </h2>
+                        <p>
+                            飲食店・美容室・クリニックなど、あらゆる業種の情報発信をもっと簡単に。
+                        </p>
+                        <span class="lu-uline"></span>
+                    </div>
+                    <div class="lu-fields">
+                        <div class="lu-field">
+                            <div class="lu-field__ic">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"
+                                    />
+                                    <path d="M7 2v20" />
+                                    <path
+                                        d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"
+                                    />
+                                </svg>
+                            </div>
+                            <h3 class="lu-field__ttl">飲食店・カフェ</h3>
+                            <p class="lu-field__desc">
+                                日替わりメニューや営業時間の変更もすぐに更新。
+                            </p>
+                            <div class="lu-field__post">
+                                <div class="lu-field__img">
+                                    <img
+                                        src="./assets/img/photos/food.jpg"
+                                        alt="飲食店・カフェ"
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div class="lu-field__upd">
+                                    <span class="lu-field__tag"
+                                        >本日のおすすめ</span
+                                    >
+                                    <span class="lu-field__msg"
+                                        >ベリーのパンケーキ</span
+                                    >
+                                    <div class="lu-field__foot">
+                                        <span class="lu-field__time"
+                                            >2分前に更新</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lu-field">
+                            <div class="lu-field__ic">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <circle cx="6" cy="6" r="3" />
+                                    <circle cx="6" cy="18" r="3" />
+                                    <path d="M20 4 8.12 15.88" />
+                                    <path d="M14.47 14.48 20 20" />
+                                    <path d="M8.12 8.12 12 12" />
+                                </svg>
+                            </div>
+                            <h3 class="lu-field__ttl">美容室・サロン</h3>
+                            <p class="lu-field__desc">
+                                キャンペーンや空き状況をスピーディーに配信。
+                            </p>
+                            <div class="lu-field__post">
+                                <div class="lu-field__img">
+                                    <img
+                                        src="./assets/img/photos/salon.jpg"
+                                        alt="美容室・サロン"
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div class="lu-field__upd">
+                                    <span class="lu-field__tag">お知らせ</span>
+                                    <span class="lu-field__msg"
+                                        >6月限定キャンペーン開催中！</span
+                                    >
+                                    <div class="lu-field__foot">
+                                        <span class="lu-field__time"
+                                            >3分前に更新</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lu-field">
+                            <div class="lu-field__ic">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"
+                                    />
+                                    <path d="M3 6h18" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg>
+                            </div>
+                            <h3 class="lu-field__ttl">小売・物販</h3>
+                            <p class="lu-field__desc">
+                                新商品や入荷情報を手軽にお知らせ。
+                            </p>
+                            <div class="lu-field__post">
+                                <div class="lu-field__img">
+                                    <img
+                                        src="./assets/img/photos/retail.jpg"
+                                        alt="小売・物販"
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div class="lu-field__upd">
+                                    <span class="lu-field__tag"
+                                        >新商品入荷</span
+                                    >
+                                    <span class="lu-field__msg"
+                                        >夏の新作アイテムが入荷しました</span
+                                    >
+                                    <div class="lu-field__foot">
+                                        <span class="lu-field__time"
+                                            >5分前に更新</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lu-field">
+                            <div class="lu-field__ic">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"
+                                    />
+                                    <path d="M8 15v1a6 6 0 0 0 12 0v-4" />
+                                    <circle cx="20" cy="10" r="2" />
+                                </svg>
+                            </div>
+                            <h3 class="lu-field__ttl">病院・クリニック</h3>
+                            <p class="lu-field__desc">
+                                診療時間や休診情報をシンプルに共有。
+                            </p>
+                            <div class="lu-field__post">
+                                <div class="lu-field__img">
+                                    <img
+                                        src="./assets/img/photos/clinic.jpg"
+                                        alt="病院・クリニック"
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div class="lu-field__upd">
+                                    <span class="lu-field__tag">お知らせ</span>
+                                    <span class="lu-field__msg"
+                                        >6/1（月）は午後休診となります</span
+                                    >
+                                    <div class="lu-field__foot">
+                                        <span class="lu-field__time"
+                                            >10分前に更新</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lu-field">
+                            <div class="lu-field__ic">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M12 7v14" />
+                                    <path
+                                        d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+                                    />
+                                </svg>
+                            </div>
+                            <h3 class="lu-field__ttl">スクール・教室</h3>
+                            <p class="lu-field__desc">
+                                レッスンやイベント情報をタイムリーに配信。
+                            </p>
+                            <div class="lu-field__post">
+                                <div class="lu-field__img">
+                                    <img
+                                        src="./assets/img/photos/school.jpg"
+                                        alt="スクール・教室"
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div class="lu-field__upd">
+                                    <span class="lu-field__tag"
+                                        >レッスン情報</span
+                                    >
+                                    <span class="lu-field__msg"
+                                        >体験レッスン受付中！</span
+                                    >
+                                    <div class="lu-field__foot">
+                                        <span class="lu-field__time"
+                                            >12分前に更新</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lu-field">
+                            <div class="lu-field__ic">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M10 12h4" />
+                                    <path d="M10 8h4" />
+                                    <path d="M14 21v-3a2 2 0 0 0-4 0v3" />
+                                    <path
+                                        d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"
+                                    />
+                                    <path
+                                        d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"
+                                    />
+                                </svg>
+                            </div>
+                            <h3 class="lu-field__ttl">不動産・施設</h3>
+                            <p class="lu-field__desc">
+                                空室情報やイベント情報をすぐにお知らせ。
+                            </p>
+                            <div class="lu-field__post">
+                                <div class="lu-field__img">
+                                    <img
+                                        src="./assets/img/photos/estate.jpg"
+                                        alt="不動産・施設"
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div class="lu-field__upd">
+                                    <span class="lu-field__tag">空室情報</span>
+                                    <span class="lu-field__msg"
+                                        >新しいお部屋が空きました</span
+                                    >
+                                    <div class="lu-field__foot">
+                                        <span class="lu-field__time"
+                                            >15分前に更新</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== LINEひとつで ===================== -->
+            <section class="lu-sec lu-one">
+                <div class="lu-wrap">
+                    <div class="lu-one__block">
+                        <div class="lu-one__left">
+                            <div class="lu-one__phone">
+                                <img
+                                    class="lu-one__phoneimg"
+                                    src="./assets/icons/line-bubble.svg"
+                                    alt="LINE"
+                                    loading="lazy"
+                                />
+                            </div>
+                            <div class="lu-one__intro">
+                                <h2>
+                                    <span class="lu-em">LINE</span
+                                    >ひとつで、<br />すべての情報発信を。
+                                </h2>
+                                <span class="lu-one__div"></span>
+                                <p class="lu-one__lead">
+                                    特別なスキルや知識は不要。<br />いつものLINEで、あなたのホームページを<br />かんたんに最新の状態に保てます。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="lu-one__cols">
+                            <div class="lu-one__col">
+                                <div class="lu-one__col__ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M12 9.5V21m0-11.5L6 3m6 6.5L18 3"
+                                        />
+                                        <path d="M6 15h12" />
+                                        <path d="M6 11h12" />
+                                    </svg>
+                                </div>
+                                <b>コストを削減</b>
+                                <p>
+                                    専用アプリや管理画面の利用は一切不要です。
+                                </p>
+                            </div>
+                            <div class="lu-one__col">
+                                <div class="lu-one__col__ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <circle cx="12" cy="12" r="9" />
+                                        <path d="M12 7v5l3.5 2" />
+                                    </svg>
+                                </div>
+                                <b>時間を節約</b>
+                                <p>更新作業の手間を大幅に削減できます。</p>
+                            </div>
+                            <div class="lu-one__col">
+                                <div class="lu-one__col__ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3z"
+                                        />
+                                        <path d="m9 12 2 2 4-4" />
+                                    </svg>
+                                </div>
+                                <b>安心・安全</b>
+                                <p>
+                                    LINE公式の認証システムで安心してご利用いただけます。
+                                </p>
+                            </div>
+                            <div class="lu-one__col">
+                                <div class="lu-one__col__ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M5 21v-6" />
+                                        <path d="M12 21V9" />
+                                        <path d="M19 21V3" />
+                                    </svg>
+                                </div>
+                                <b>売上アップに貢献</b>
+                                <p>
+                                    最新情報を素早く届けて、機会損失を防ぎます。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== 3ステップ ===================== -->
+            <section class="lu-sec" id="steps">
+                <div class="lu-wrap">
+                    <div class="lu-head">
+                        <h2>
+                            導入はかんたん、<span class="lu-em"
+                                >最短3ステップ</span
+                            >
+                        </h2>
+                        <p>
+                            専門知識や難しい設定は不要。すぐにLINE連携をはじめられます。
+                        </p>
+                    </div>
+                    <div class="lu-steps">
+                        <div class="lu-step">
+                            <div class="lu-step__no">1</div>
+                            <div class="lu-step__row">
+                                <div class="lu-step__ic is-img">
+                                    <img
+                                        src="./assets/img/cutouts/smartphone-line.png"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div class="lu-step__txt">
+                                    <h3>ご相談・ヒアリング</h3>
+                                    <p>
+                                        ご要望や運用方法をヒアリング。<br />最適なプランをご提案します。
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="lu-step__tag">無料相談OK</span>
+                        </div>
+                        <div class="lu-steps__arrow">
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="9 6 15 12 9 18" />
+                            </svg>
+                        </div>
+                        <div class="lu-step">
+                            <div class="lu-step__no">2</div>
+                            <div class="lu-step__row">
+                                <div class="lu-step__ic is-img">
+                                    <img
+                                        src="./assets/img/cutouts/window-check.png"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div class="lu-step__txt">
+                                    <h3>アカウント発行・設定</h3>
+                                    <p>
+                                        専用アカウントを発行し、<br />LINEとホームページを連携。<br />初期設定はこちらでサポートします。
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="lu-step__tag"
+                                >初期設定サポートあり</span
+                            >
+                        </div>
+                        <div class="lu-steps__arrow">
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="9 6 15 12 9 18" />
+                            </svg>
+                        </div>
+                        <div class="lu-step">
+                            <div class="lu-step__no">3</div>
+                            <div class="lu-step__row">
+                                <div class="lu-step__ic is-img">
+                                    <img
+                                        src="./assets/img/cutouts/smartphone-sparkle.png"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div class="lu-step__txt">
+                                    <h3>ご利用開始</h3>
+                                    <p>
+                                        その日からLINEで更新スタート！<br />すぐに最新情報を発信できます。
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="lu-step__tag"
+                                >最短当日から利用可能</span
+                            >
+                        </div>
+                    </div>
+
+                    <div class="lu-support">
+                        <div class="lu-support__lead">
+                            <div class="lu-support__avatar is-img">
+                                <img
+                                    src="./assets/img/cutouts/headset.png"
+                                    alt=""
+                                    loading="lazy"
+                                />
+                            </div>
+                            <div>
+                                <h3>
+                                    導入から運用まで、<br
+                                        class="lu-sp-br"
+                                    />しっかりサポートします
+                                </h3>
+                                <p>
+                                    「何を送ればいいの？」「うまく反映されない…」そんな時も安心。<br />導入後も私が丁寧にフォローします。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="lu-support__items">
+                            <div class="lu-support__item">
+                                <div class="ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 7v14" />
+                                        <path
+                                            d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+                                        />
+                                    </svg>
+                                </div>
+                                <span>使い方ガイド完備</span>
+                            </div>
+                            <div class="lu-support__item">
+                                <div class="ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"
+                                        />
+                                        <path d="M8 12h.01" />
+                                        <path d="M12 12h.01" />
+                                        <path d="M16 12h.01" />
+                                    </svg>
+                                </div>
+                                <span>チャットサポート</span>
+                            </div>
+                            <div class="lu-support__item">
+                                <div class="ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <rect
+                                            width="20"
+                                            height="14"
+                                            x="2"
+                                            y="3"
+                                            rx="2"
+                                        />
+                                        <line x1="8" x2="16" y1="21" y2="21" />
+                                        <line x1="12" x2="12" y1="17" y2="21" />
+                                    </svg>
+                                </div>
+                                <span>運用サポート</span>
+                            </div>
+                            <div class="lu-support__item">
+                                <div class="ic">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"
+                                        />
+                                    </svg>
+                                </div>
+                                <span>安心のサポート体制</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== FAQ ===================== -->
+            <section class="lu-sec lu-sec--tint" id="faq">
+                <div class="lu-wrap">
+                    <div class="lu-head">
+                        <h2>よくあるご質問</h2>
+                        <span class="lu-uline"></span>
+                    </div>
+                    <div class="lu-faq">
+                        <details>
+                            <summary>
+                                デザインはカスタマイズできますか？
+                            </summary>
+                            <p>
+                                はい。更新できる場所を「お知らせ」「本日の情報」などの決まった枠に限定しているため、レイアウトを保ったまま中身だけを差し替えられます。デザイン自体もご要望に合わせてお作りします。
+                            </p>
+                        </details>
+                        <details>
+                            <summary>セキュリティは大丈夫ですか？</summary>
+                            <p>
+                                更新できる人を限定し、なりすましを防ぐ仕組み（署名検証）を実装しています。お店ごとにデータも分離しているため、他店の情報と混ざることはありません。
+                            </p>
+                        </details>
+                        <details>
+                            <summary>
+                                今あるホームページに組み込めますか？
+                            </summary>
+                            <p>
+                                はい。お知らせ枠などの部品を、既存のサイトに組み込む形で導入できます。新しくページをお作りすることも可能です。
+                            </p>
+                        </details>
+                        <details>
+                            <summary>管理画面のログインは必要ですか？</summary>
+                            <p>
+                                不要です。普段お使いのLINEから送るだけで更新できます。IDやパスワードの管理は一切ありません。
+                            </p>
+                        </details>
+                        <details>
+                            <summary>スタッフ追加はできますか？</summary>
+                            <p>
+                                できます。更新できる人を限定でき、権限の細かな管理も今後対応していきます。
+                            </p>
+                        </details>
+                        <details>
+                            <summary>もしLINEが使えなくなったら？</summary>
+                            <p>
+                                将来的にメール投稿など、LINE以外の更新手段も追加できるよう設計しています。特定のサービスに縛られすぎない構成です。
+                            </p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ===================== 締めCTA ===================== -->
+        <section class="lu-ctawrap" id="cta">
+            <div class="lu-wrap">
+                <div class="lu-cta__card">
+                    <div class="lu-cta__illus" aria-hidden="true">
+                        <img
+                            class="lu-cta__pic"
+                            src="./assets/img/cutouts/cat-iphone.png"
+                            alt=""
+                        />
+                        <span class="lu-cta__arrow">▸▸▸</span>
+                        <img
+                            class="lu-cta__pic"
+                            src="./assets/img/cutouts/cat-pc.png"
+                            alt=""
+                        />
+                    </div>
+                    <div class="lu-cta__body">
+                        <h2>まずは、触って試してみてください。</h2>
+                        <p>
+                            このデモは、あなたのLINEで実際にお試しできます。<br />気になったら、いつでもご相談ください。
+                        </p>
+                    </div>
+                    <div class="lu-cta__actions">
+                        <a
+                            class="lu-btn lu-btn--ghost lu-demo-link"
+                            href="../demo/?t=decafedecafe"
+                            target="_blank"
+                            rel="noopener"
+                            >デモを見る</a
+                        >
+                        <a class="lu-btn lu-btn--cta" href="#features">
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                role="img"
+                                aria-label="LINE"
+                            >
+                                <path
+                                    d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"
+                                />
+                            </svg>
+                            LINEで今すぐ試してみる（無料）
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="lu-footer">
+            <div class="lu-wrap">
+                <span>© 2026 Shota Nogami — LINEで、ホームページ更新</span>
+                <a href="../">← ポートフォリオに戻る</a>
+            </div>
+        </footer>
+
+        <script>
+            (function () {
+                "use strict";
+                // モバイルメニュー開閉
+                var burger = document.getElementById("lu-burger");
+                var mnav = document.getElementById("lu-mnav");
+                function closeMenu() {
+                    mnav.classList.remove("is-open");
+                    burger.setAttribute("aria-expanded", "false");
+                    burger.setAttribute("aria-label", "メニューを開く");
+                }
+                if (burger && mnav) {
+                    burger.addEventListener("click", function () {
+                        var open = mnav.classList.toggle("is-open");
+                        burger.setAttribute(
+                            "aria-expanded",
+                            open ? "true" : "false",
+                        );
+                        burger.setAttribute(
+                            "aria-label",
+                            open ? "メニューを閉じる" : "メニューを開く",
+                        );
+                    });
+                    mnav.querySelectorAll("a").forEach(function (a) {
+                        a.addEventListener("click", closeMenu);
+                    });
+                }
+            })();
+        </script>
+
+        <!-- LINE連携デモ（ペアリング）：コード送信でヒーローのiframeが自分のLPに切り替わる -->
+        <script src="./qrcode.min.js"></script>
+        <script>
+            (function () {
+                "use strict";
+                var WORKER_BASE =
+                    "https://line-update-demo.shota-dev.workers.dev";
+                var SHOWCASE_TENANT = "decafedecafe";
+                var LINE_BASIC_ID = "@197zxqib";
+
+                var frame = document.getElementById("lu-demo-frame");
+                var codeEl = document.getElementById("lu-pair-code");
+                var sendEl = document.getElementById("lu-pair-send");
+                var statusEl = document.getElementById("lu-pair-status");
+                var pairBox = document.getElementById("lu-pair");
+                var qrEl = document.getElementById("lu-pair-qr");
+                var badge = document.getElementById("lu-badge");
+                var badgeLabel = document.getElementById("lu-badge-label");
+                var badgeDesc = document.getElementById("lu-badge-desc");
+                if (!frame || !codeEl) return;
+
+                function genCode() {
+                    var chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+                    var s = "",
+                        rnd = new Uint32Array(6);
+                    (window.crypto || window.msCrypto).getRandomValues(rnd);
+                    for (var i = 0; i < 6; i++)
+                        s += chars[rnd[i] % chars.length];
+                    return s;
+                }
+                var code = genCode();
+                codeEl.textContent = code;
+
+                var oa =
+                    "https://line.me/R/oaMessage/" +
+                    encodeURIComponent(LINE_BASIC_ID) +
+                    "/?" +
+                    encodeURIComponent(code);
+                if (sendEl) sendEl.href = oa;
+                var add2b = document.getElementById("lu-add2");
+                if (add2b) add2b.href = "https://lin.ee/SVRxHPY";
+
+                var DEMO_BASE = "../demo/"; // 本物デモサイト（?t=テナントID で表示を切替）
+                var demoLinks = document.querySelectorAll(".lu-demo-link");
+                function setDemoLinks(tenantId) {
+                    var url = DEMO_BASE + "?t=" + tenantId;
+                    for (var i = 0; i < demoLinks.length; i++) {
+                        demoLinks[i].href = url;
+                    }
+                }
+                setDemoLinks(SHOWCASE_TENANT);
+                if (typeof qrcode !== "undefined" && qrEl) {
+                    var qr = qrcode(0, "M");
+                    qr.addData(oa);
+                    qr.make();
+                    qrEl.innerHTML = qr.createSvgTag({
+                        cellSize: 4,
+                        margin: 0,
+                    });
+                }
+
+                function setStatus(text, paired) {
+                    statusEl.innerHTML = '<span class="dot"></span>' + text;
+                    statusEl.classList.toggle("is-paired", !!paired);
+                }
+
+                var paired = false;
+                function poll() {
+                    if (paired || document.hidden) return;
+                    fetch(WORKER_BASE + "/api/pair/" + code, {
+                        cache: "no-store",
+                    })
+                        .then(function (r) {
+                            return r.json();
+                        })
+                        .then(function (d) {
+                            if (d && d.paired && d.tenantId) {
+                                paired = true;
+                                frame.src = DEMO_BASE + "?t=" + d.tenantId;
+                                setDemoLinks(d.tenantId);
+                                for (var j = 0; j < demoLinks.length; j++) {
+                                    demoLinks[j].classList.add("is-ready");
+                                }
+                                setStatus("連携済み！", true);
+                                if (badge) badge.classList.add("is-live");
+                                if (badgeLabel)
+                                    badgeLabel.textContent =
+                                        "リアルタイム更新中";
+                                if (badgeDesc)
+                                    badgeDesc.textContent =
+                                        "あなたのLINEの操作が反映されています";
+                            }
+                        })
+                        .catch(function () {});
+                }
+                var timer = setInterval(poll, 2000);
+                document.addEventListener("visibilitychange", function () {
+                    if (!document.hidden) poll();
+                });
+                setTimeout(
+                    function () {
+                        clearInterval(timer);
+                    },
+                    20 * 60 * 1000,
+                );
+            })();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>お知らせ一覧 — Sample Coffee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@600;700&display=swap">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="demo-ribbon">
+    これは「LINEで更新できるサイト」のデモです・
+    <a href="../line-update/">サービス詳細</a>
+  </div>
+
+  <header class="page-head">
+    <div class="hero__bar"><span class="live"><span class="dot"></span>リアルタイム更新中</span></div>
+    <div class="page-head__inner">
+      <a class="back" href="./" data-keep-t>← トップへ戻る</a>
+      <h1 class="serif">お知らせ一覧</h1>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- ▼ お知らせ（LINE更新・蓄積型。一覧ページは全件表示） -->
+    <section class="card">
+      <div data-lu-tenant="decafedecafe" data-lu-slots="notice" data-lu-limit="all"></div>
+    </section>
+
+    <p class="foot">
+      <span class="note"><span class="d"></span>過去のお知らせも、お店のLINEから蓄積・更新されています。</span><br>
+      <a class="more-link" href="./" data-keep-t>← トップへ戻る</a><br>
+      © Sample Coffee
+    </p>
+  </main>
+
+  <script src="./demo.js"></script>
+  <script src="https://line-update-demo.shota-dev.workers.dev/widget.js"></script>
+</body>
+</html>
