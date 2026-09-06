@@ -59,12 +59,30 @@
                 </span>
                 <span class="brand__name">Shota Nogami</span>
             </a>
-            <nav class="nav" aria-label="primary">
+            <nav class="nav" id="site-nav" aria-label="primary">
                 <a href="../index.html">Home</a>
                 <a href="../index.html#works">Works</a>
+                <a href="../lab/">Lab</a>
                 <a href="../index.html#contact" class="nav__cta">Contact</a>
             </nav>
+            <!-- 640px 以下では style.css が .nav をドロップダウンパネルに変えるため、
+                 このトグルが無いとナビが開けなくなる -->
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="メニューを開く"
+                aria-controls="site-nav"
+                aria-expanded="false"
+                data-nav-toggle
+            >
+                <span class="nav-toggle__box" aria-hidden="true">
+                    <span class="nav-toggle__bar"></span>
+                    <span class="nav-toggle__bar"></span>
+                    <span class="nav-toggle__bar"></span>
+                </span>
+            </button>
         </header>
+        <div class="nav-scrim" data-nav-scrim aria-hidden="true"></div>
 
         <main id="top">
             <!-- ============== INTRO ============== -->
@@ -107,6 +125,7 @@
                     <li><a href="../index.html#works">Works</a></li>
                     <li><a href="../index.html#tech">Skills</a></li>
                     <li><a href="./">Gallery</a></li>
+                    <li><a href="../lab/">Lab</a></li>
                     <li><a href="../index.html#contact">Contact</a></li>
                 </ul>
                 <p class="site-footer__copy">© 2026 Shota Nogami</p>
