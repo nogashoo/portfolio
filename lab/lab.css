@@ -1,0 +1,883 @@
+/* ==========================================================================
+   Lab — サイト構築カタログのコンソール
+
+   ここはポートフォリオ本体（../style.css）の editorial なテイストを**意図的に
+   引き継がない**。Lab は読み物ではなく道具で、見比べて選ぶことが目的なので、
+   管理画面の作法（固定サイドバー・白い面・明快な罫線・詰めた行間）に寄せる。
+   本体から借りるのは色と書体の定義、それにリセットだけ。
+   ========================================================================== */
+
+/* トークンは :root に置く。詳細パネルのように .lab-app の外へ出す要素
+   （fixed で全画面を覆うもの）があり、そこでも同じ色を使うため。
+   lab.css は Lab のページでしか読まないので、本体を汚す心配はない */
+:root {
+  /* 面と線 — 白いカードを地から浮かせる。地は生成りを一段落とした色 */
+  --app-bg: #f1ede4;
+  --app-surface: #ffffff;
+  --app-surface-2: #faf8f3;
+  --app-line: #e5e0d3;
+  --app-line-2: #cfc8b6;
+
+  /* 文字は本体より一段濃く。升目の中の見本と競合させない */
+  --app-ink: #23231f;
+  --app-ink-2: #5f5d55;
+  --app-ink-3: #8d887c;
+
+  /* 主役の色は深緑。強調・バッジはテラコッタ */
+  --app-accent: #1f3a2e;
+  --app-accent-ink: #f4eede;
+  --app-accent-soft: #e9eeea;
+  --app-mark: #b85c3a;
+  --app-mark-soft: #f8ece6;
+
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --sh-1: 0 1px 2px rgba(35, 35, 31, 0.05);
+  --sh-2: 0 6px 20px rgba(35, 35, 31, 0.09);
+
+  --nav-w: 248px;
+}
+
+/* 本体のヘッダー・フッター・グレインは Lab では使わない。
+   ナビはサイドバーが持ち、地の質感は情報の邪魔になる */
+body.lab-body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--app-ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+   Shell — 固定サイドバー + スクロールする本文
+   -------------------------------------------------------------------------- */
+
+.lab-app {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+}
+@media (min-width: 900px) {
+  .lab-app {
+    grid-template-columns: var(--nav-w) 1fr;
+  }
+}
+
+.lab-main {
+  min-width: 0; /* 中身の横スクロールが列幅を押し広げないように */
+  display: flex;
+  flex-direction: column;
+}
+
+.lab-content {
+  padding: 20px 28px 96px;
+}
+@media (max-width: 899px) {
+  .lab-content {
+    padding: 16px 16px 80px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar
+   -------------------------------------------------------------------------- */
+
+.lab-nav {
+  background: var(--app-surface);
+  border-right: 1px solid var(--app-line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 12px 12px;
+}
+@media (min-width: 900px) {
+  .lab-nav {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+}
+
+.lab-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 14px;
+  text-decoration: none;
+  color: inherit;
+}
+.lab-nav__mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: var(--app-accent);
+  color: var(--app-accent-ink);
+}
+.lab-nav__mark svg {
+  width: 20px;
+  height: 20px;
+}
+.lab-nav__name {
+  font-family: var(--font-latin);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+.lab-nav__sub {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 400;
+  color: var(--app-ink-3);
+  letter-spacing: 0.02em;
+}
+
+.lab-nav__group + .lab-nav__group {
+  margin-top: 14px;
+}
+.lab-nav__head {
+  font-family: var(--font-latin);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--app-ink-3);
+  margin: 0 0 6px;
+  padding: 0 10px;
+}
+.lab-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lab-navlink {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  color: var(--app-ink-2);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.lab-navlink:hover {
+  background: var(--app-surface-2);
+  color: var(--app-ink);
+}
+/* いまいる層 / 区画は、左の縦棒ではなく面で示す（管理画面の作法に合わせる） */
+.lab-navlink[aria-current="true"],
+.lab-navlink[aria-current="page"] {
+  background: var(--app-accent-soft);
+  color: var(--app-accent);
+  font-weight: 600;
+}
+.lab-navlink__step {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--app-ink-3);
+  width: 1.1em;
+  flex: 0 0 auto;
+}
+.lab-navlink[aria-current="true"] .lab-navlink__step,
+.lab-navlink[aria-current="page"] .lab-navlink__step {
+  color: var(--app-mark);
+}
+.lab-navlink__label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.lab-navlink__n {
+  font-family: var(--font-latin);
+  font-size: 11px;
+  color: var(--app-ink-3);
+  flex: 0 0 auto;
+}
+/* 準備中の層は押せない。数字の代わりに理由を置く */
+.lab-navlink--soon {
+  color: var(--app-ink-3);
+  cursor: default;
+}
+.lab-navlink--soon:hover {
+  background: transparent;
+  color: var(--app-ink-3);
+}
+.lab-navlink__soon {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--app-ink-3);
+  border: 1px solid var(--app-line);
+  border-radius: 3px;
+  padding: 1px 5px;
+  flex: 0 0 auto;
+}
+
+.lab-nav__foot {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--app-line);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lab-nav__foot .lab-btn {
+  justify-content: flex-start;
+}
+
+/* --------------------------------------------------------------------------
+   Top bar
+   -------------------------------------------------------------------------- */
+
+.lab-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--app-surface);
+  border-bottom: 1px solid var(--app-line);
+  padding: 14px 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+}
+@media (max-width: 899px) {
+  .lab-top {
+    padding: 12px 16px;
+  }
+}
+.lab-top__title {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+.lab-top__title h1 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin: 0;
+  line-height: 1.4;
+}
+.lab-top__title p {
+  font-size: 12px;
+  color: var(--app-ink-3);
+  margin: 2px 0 0;
+  line-height: 1.6;
+}
+.lab-top__tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 検索は管理画面で最初に手が伸びる場所。幅を確保して常時出す */
+.lab-search {
+  position: relative;
+  flex: 0 1 300px;
+  min-width: 180px;
+}
+.lab-search input {
+  width: 100%;
+  padding: 8px 12px 8px 32px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--app-ink);
+  background: var(--app-surface-2);
+  border: 1px solid var(--app-line);
+  border-radius: var(--r-sm);
+}
+.lab-search input::placeholder {
+  color: var(--app-ink-3);
+}
+.lab-search input:focus {
+  outline: none;
+  border-color: var(--app-accent);
+  background: var(--app-surface);
+}
+.lab-search__icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  color: var(--app-ink-3);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons / segmented / chips
+   -------------------------------------------------------------------------- */
+
+.lab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-family: inherit;
+  font-size: 12.5px;
+  color: var(--app-ink-2);
+  background: var(--app-surface);
+  border: 1px solid var(--app-line);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.lab-btn:hover {
+  border-color: var(--app-line-2);
+  color: var(--app-ink);
+}
+/* トグルの入切は面を反転させず、点の色だけで示す。
+   サイドバー下端の常設ボタンが塗りつぶされると、主役の操作に見えてしまう */
+.lab-btn__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--app-ink-3);
+}
+.lab-btn[aria-pressed="true"] .lab-btn__dot {
+  background: var(--app-accent);
+}
+
+/* 排他の切り替え（幅・動き方）。ボタンを並べず 1 枚の帯に見せる */
+.lab-seg {
+  display: inline-flex;
+  background: var(--app-surface-2);
+  border: 1px solid var(--app-line);
+  border-radius: var(--r-sm);
+  padding: 2px;
+  gap: 2px;
+}
+.lab-seg button {
+  padding: 5px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--app-ink-2);
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.lab-seg button:hover {
+  color: var(--app-ink);
+}
+.lab-seg button[aria-pressed="true"] {
+  background: var(--app-surface);
+  color: var(--app-ink);
+  box-shadow: var(--sh-1);
+  font-weight: 600;
+}
+
+/* 区画の絞り込み。数が多いので横に流す（端が切れて続きがあると分かる） */
+.lab-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--app-bg);
+  padding: 14px 28px 12px;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--app-line);
+}
+.lab-bar::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 899px) {
+  .lab-bar {
+    padding: 12px 16px;
+  }
+}
+.lab-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 12.5px;
+  color: var(--app-ink-2);
+  background: var(--app-surface);
+  border: 1px solid var(--app-line);
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.lab-chip:hover {
+  border-color: var(--app-line-2);
+  color: var(--app-ink);
+}
+.lab-chip[aria-pressed="true"] {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+  color: var(--app-accent-ink);
+}
+.lab-chip__n {
+  font-family: var(--font-latin);
+  font-size: 11px;
+  opacity: 0.65;
+}
+
+/* --------------------------------------------------------------------------
+   Group — kind ごとの区画
+   -------------------------------------------------------------------------- */
+
+.lab-group {
+  scroll-margin-top: 128px;
+}
+.lab-group + .lab-group {
+  margin-top: 36px;
+}
+.lab-group__head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.lab-group__title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+.lab-group__n {
+  font-family: var(--font-latin);
+  font-size: 12px;
+  color: var(--app-ink-3);
+}
+.lab-group__note {
+  font-size: 12px;
+  color: var(--app-ink-3);
+  margin: 0 0 0 auto;
+  text-align: right;
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
+  gap: 16px;
+}
+
+.lab-empty {
+  padding: 48px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--app-ink-3);
+}
+
+/* --------------------------------------------------------------------------
+   Card
+   -------------------------------------------------------------------------- */
+
+.lab-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--app-surface);
+  border: 1px solid var(--app-line);
+  border-radius: var(--r-lg);
+  overflow: hidden; /* プレビューの角をカードの丸みで切り落とす */
+  scroll-margin-top: 128px;
+  box-shadow: var(--sh-1);
+  transition:
+    box-shadow var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+  /* 画面外カードの描画をスキップ。auto なら初回描画後の実寸を覚えるので
+     ハッシュジャンプの着地位置がずれにくい */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 227px;
+}
+/* カード自体は浮かせない。中のホバー演出とぶつかって、
+   どちらに反応したのか読めなくなる */
+.lab-card:hover {
+  border-color: var(--app-line-2);
+  box-shadow: var(--sh-2);
+}
+.lab-card:target {
+  border-color: var(--app-accent);
+  box-shadow: 0 0 0 3px rgba(31, 58, 46, 0.12);
+}
+
+/* パーツを載せる台 */
+.lab-preview {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  aspect-ratio: 16 / 10;
+  border-bottom: 1px solid var(--app-line);
+  overflow: hidden;
+  /* パーツの overflow が枠外へ出ない / パーツ内の @container が
+     ビューポートではなくカード幅を見る / blend 系パーツの巻き添え防止 */
+  contain: layout paint;
+  container-type: inline-size;
+  isolation: isolate;
+}
+.lab-preview > * {
+  max-width: 100%;
+}
+.lab-preview[data-bg="paper"] {
+  background: var(--bg-paper-bright);
+  color: var(--ink);
+}
+.lab-preview[data-bg="kinari"] {
+  background: var(--bg-kinari);
+  color: var(--ink);
+}
+.lab-preview[data-bg="deep"] {
+  background: var(--green-deeper);
+  color: var(--bg-kinari);
+}
+
+/* 画面外、または訪問者がモーションを止めているあいだは全アニメーションを停止。
+   ループ系パーツを何十個も回し続けないための省電力措置 */
+.lab-preview[data-playing="0"] *,
+html[data-motion="off"] .lab-preview * {
+  animation-play-state: paused !important;
+}
+
+/* ただし「一度きりの登場」は止めずに最後のコマへ飛ばす。止めると最初のコマ
+   （opacity:0 や translateY）で固まり、登場するはずの中身が消えてしまう。
+   回り続けるパーツに data-play は付かないので、これで選り分けられる */
+html[data-motion="off"] .lab-preview [data-play="1"],
+html[data-motion="off"] .lab-preview [data-play="1"] *,
+html[data-motion="off"] .lab-preview [data-play="1"] *::before,
+html[data-motion="off"] .lab-preview [data-play="1"] *::after {
+  animation-play-state: running !important;
+  animation-delay: 0ms !important;
+  animation-duration: 1ms !important;
+}
+
+/* プレビューと、その上に重ねるもの（しるし・操作ボタン）の台 */
+.lab-card__stage {
+  position: relative;
+}
+
+/* 操作ボタンは本文ではなくプレビューに重ねる。
+   本文に置くと、ボタンのある / ない でカードの高さが揃わない */
+.lab-card__ctrl {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+}
+.lab-card__ctrl .lab-btn {
+  padding: 5px 10px;
+  font-size: 11.5px;
+  box-shadow: var(--sh-1);
+}
+
+/* 動き方のしるし。プレビューの右上に小さく重ねる */
+.lab-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  font-family: var(--font-latin);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-line);
+  color: var(--app-ink-2);
+  box-shadow: var(--sh-1);
+}
+.lab-badge[data-trigger="replay"] {
+  background: var(--app-mark-soft);
+  border-color: transparent;
+  color: var(--app-mark);
+}
+.lab-badge[data-trigger="hover"] {
+  background: var(--app-accent-soft);
+  border-color: transparent;
+  color: var(--app-accent);
+}
+
+.lab-card__body {
+  display: flex;
+  flex-direction: column;
+  padding: 9px 12px 10px;
+  flex: 1 1 auto;
+}
+/* 英名を題の上に置く。横に並べると題に残る幅が足りず、
+   長い題だけ 2 行になってカードの高さが揃わない */
+.lab-card__en {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-latin);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--app-ink-3);
+  margin: 0 0 1px;
+}
+.lab-card__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile — サイドバーは引き出しにする
+   -------------------------------------------------------------------------- */
+
+.lab-navtoggle {
+  display: inline-flex;
+}
+@media (min-width: 900px) {
+  .lab-navtoggle {
+    display: none;
+  }
+}
+@media (max-width: 899px) {
+  .lab-nav {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(280px, 84vw);
+    z-index: 60;
+    transform: translateX(-100%);
+    transition: transform var(--dur-fast) var(--ease-out);
+    box-shadow: var(--sh-2);
+  }
+  html[data-labnav="open"] .lab-nav {
+    transform: translateX(0);
+  }
+  .lab-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(35, 35, 31, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+  html[data-labnav="open"] .lab-scrim {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+@media (min-width: 900px) {
+  .lab-scrim {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Dashboard — 入口（/lab/）の層カード
+   -------------------------------------------------------------------------- */
+
+/* 「上から順に決めていく」が主張なので、入口だけは流れを一枚で見せる */
+.lab-lead {
+  background: var(--app-surface);
+  border: 1px solid var(--app-line);
+  border-radius: var(--r-lg);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--sh-1);
+}
+.lab-lead h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+.lab-lead p {
+  font-size: 13px;
+  line-height: 2;
+  color: var(--app-ink-2);
+  margin: 0;
+  max-width: 68ch;
+}
+.lab-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--app-line);
+}
+.lab-flow__step {
+  font-family: var(--font-latin);
+  font-size: 12px;
+  color: var(--app-ink-2);
+  background: var(--app-surface-2);
+  border: 1px solid var(--app-line);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+.lab-flow__step[data-state="ready"] {
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+  font-weight: 600;
+}
+.lab-flow__arrow {
+  color: var(--app-ink-3);
+  font-size: 11px;
+}
+
+.lab-layers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* li は伸びてもカードは伸びない。同じ行のカードの下端を揃える */
+.lab-layers > li {
+  display: flex;
+}
+.lab-layercard {
+  flex: 1 1 auto;
+}
+.lab-layercard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px 16px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+  text-decoration: none;
+  color: inherit;
+}
+a.lab-layercard:hover {
+  border-color: var(--app-line-2);
+  box-shadow: var(--sh-2);
+}
+.lab-layercard[data-state="soon"] {
+  background: transparent;
+  box-shadow: none;
+}
+.lab-layercard__top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lab-layercard__step {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  border-radius: 7px;
+  font-family: var(--font-latin);
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--app-surface-2);
+  border: 1px solid var(--app-line);
+  color: var(--app-ink-3);
+}
+.lab-layercard[data-state="ready"] .lab-layercard__step {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+  color: var(--app-accent-ink);
+}
+.lab-layercard__name {
+  font-size: 15px;
+  font-weight: 600;
+}
+.lab-layercard__en {
+  font-family: var(--font-latin);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--app-ink-3);
+  margin-left: 6px;
+}
+.lab-layercard__note {
+  font-size: 12.5px;
+  line-height: 1.9;
+  color: var(--app-ink-2);
+  margin: 0;
+}
+.lab-layercard__scope {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--app-ink-3);
+  margin: 0;
+}
+.lab-layercard__foot {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--app-line);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.lab-layercard__n {
+  font-family: var(--font-latin);
+  font-size: 20px;
+  font-weight: 600;
+}
+.lab-layercard__unit {
+  font-size: 10.5px;
+  color: var(--app-ink-3);
+  margin-left: 3px;
+}
+.lab-layercard__go {
+  font-size: 12px;
+  color: var(--app-accent);
+  font-weight: 600;
+}
+.lab-layercard__soon {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--app-ink-3);
+}
+
+/* --------------------------------------------------------------------------
+   Select — 下地の切り替えなど、選択肢が 4 つ前後になるもの
+   -------------------------------------------------------------------------- */
+
+.lab-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px 4px 10px;
+  background: var(--app-surface-2);
+  border: 1px solid var(--app-line);
+  border-radius: var(--r-sm);
+}
+.lab-select__label {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-family: var(--font-latin);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--app-ink-3);
+}
+.lab-select select {
+  font-family: inherit;
+  font-size: 12.5px;
+  color: var(--app-ink);
+  background: transparent;
+  border: 0;
+  padding: 2px 0;
+  cursor: pointer;
+}
+.lab-select select:focus {
+  outline: none;
+  color: var(--app-accent);
+}

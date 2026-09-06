@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        <meta name="format-detection" content="telephone=no" />
+        <title>Lab — サイト構築カタログ | Shota Nogami</title>
+        <meta
+            name="description"
+            content="Web サイトを組み立てるための部品を、下地・骨格・場面・部品・動きの 5 層に分けて並べたカタログ。上から順に選んでいけばサイトの姿が決まります。"
+        />
+        <meta property="og:title" content="Lab — サイト構築カタログ | Shota Nogami" />
+        <meta
+            property="og:description"
+            content="下地・骨格・場面・部品・動きの 5 層。上から順に選んでいけばサイトの姿が決まるカタログです。"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+            property="og:url"
+            content="https://nogashoo.github.io/portfolio/lab/"
+        />
+        <meta
+            property="og:image"
+            content="https://nogashoo.github.io/portfolio/assets/brand/ogp.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Lab — サイト構築カタログ | Shota Nogami" />
+        <meta
+            name="twitter:description"
+            content="下地・骨格・場面・部品・動きの 5 層で並べたサイト構築カタログ。"
+        />
+        <meta
+            name="twitter:image"
+            content="https://nogashoo.github.io/portfolio/assets/brand/ogp.png"
+        />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        />
+
+        <!-- 本体からは色・書体・リセットだけ借りる。見た目は lab.css が全部持つ -->
+        <link rel="stylesheet" href="../style.css" />
+        <link rel="stylesheet" href="./lab.css" />
+
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="../assets/brand/favicon.svg"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="../assets/brand/icons/icon-32.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            href="../assets/brand/icons/apple-touch-icon.png"
+        />
+    </head>
+    <body class="lab-body">
+        <div class="lab-app">
+            <!-- ============== SIDEBAR ==============
+                 層のリストは data/layers.js から lab-core.js が組み立てる -->
+            <aside class="lab-nav" aria-label="Lab のナビゲーション">
+                <a class="lab-nav__brand" href="./">
+                    <span class="lab-nav__mark" aria-hidden="true">
+                        <svg viewBox="0 0 640 420" fill="none" stroke="currentColor" stroke-width="52" stroke-linecap="butt" stroke-linejoin="round">
+                            <path d="M 224 216 C 178 204, 116 211, 72 249 C 31 285, 18 337, 46 373 C 74 409, 133 408, 186 376 C 237 345, 272 290, 306 226 L 350 142 C 386 76, 435 33, 493 29 C 540 26, 581 51, 596 88 C 614 132, 594 184, 549 220 C 504 256, 435 272, 363 253" />
+                        </svg>
+                    </span>
+                    <span>
+                        <span class="lab-nav__name">Lab</span>
+                        <span class="lab-nav__sub">サイト構築カタログ</span>
+                    </span>
+                </a>
+
+                <nav class="lab-nav__group" aria-label="層">
+                    <p class="lab-nav__head">Layers</p>
+                    <ul class="lab-nav__list" data-lab-layers></ul>
+                </nav>
+
+                <div class="lab-nav__foot">
+                    <button class="lab-btn" type="button" data-motion-toggle aria-pressed="true">
+                        <span class="lab-btn__dot" aria-hidden="true"></span>
+                        <span data-motion-label>アニメーション オン</span>
+                    </button>
+                    <a class="lab-btn" href="../index.html">← ポートフォリオへ</a>
+                    <a class="lab-btn" href="../gallery/">Gallery を見る</a>
+                </div>
+            </aside>
+            <div class="lab-scrim" aria-hidden="true"></div>
+
+            <div class="lab-main">
+                <header class="lab-top">
+                    <button class="lab-btn lab-navtoggle" type="button" data-nav-open aria-label="メニューを開く">☰</button>
+                    <div class="lab-top__title">
+                        <h1>サイト構築カタログ</h1>
+                        <p>下地・骨格・場面・部品・動きを組み合わせてサイトを構築します</p>
+                    </div>
+                </header>
+
+                <div class="lab-content">
+                    <section class="lab-lead" aria-labelledby="lead-title">
+                        <h2 id="lead-title">サイトは、上から順に決まっていく</h2>
+                        <p>
+                            上の層は下の層で出来ています。場面は部品でできていて、部品には動きが乗る。
+                            だから上から決めていくと、決める範囲がだんだん狭まっていきます。
+                            下地でサイトの人格を決め、骨格で開いた瞬間を決め、場面を並べて形を作り、
+                            部品を選び、最後に動きを乗せる。
+                        </p>
+                        <div class="lab-flow" data-lab-flow aria-hidden="true"></div>
+                    </section>
+
+                    <ol class="lab-layers" data-lab-cards></ol>
+
+                    <noscript>
+                        <p class="lab-empty">層の一覧の表示には JavaScript が必要です。</p>
+                    </noscript>
+                </div>
+            </div>
+        </div>
+
+        <script src="./lab-core.js" defer></script>
+        <script src="./data/layers.js" defer></script>
+        <script src="./index.js" defer></script>
+    </body>
+</html>

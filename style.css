@@ -233,6 +233,12 @@ em, .num, time, .work__cat, .service__num, .process__num, .eyebrow {
 .nav__cta:hover { background: #ffffff; color: var(--green-deeper) !important; }
 .nav__cta::after { display: none; }
 
+/* Lab を足してナビが 7 項目になったぶん、タブレット幅では間隔を詰める。
+   1024px 以上は --pad-x が広がっても収まるので既定のままでよい */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .nav { gap: var(--s-5); }
+}
+
 /* Hamburger toggle — hidden on desktop, shown on SP */
 .nav-toggle {
   display: none;
@@ -1403,14 +1409,19 @@ select {
     transform 1000ms var(--ease-out);
 }
 
+/* OS の「視差を減らす」設定を既定で尊重する。
+   ただし Lab は動きそのものが中身なので、訪問者がそこで「再生する」を
+   選んだときだけ html[data-motion="on"] が立ち、この抑制が外れる。
+   data-motion は Lab のページ以外では決してセットされない */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  html:not([data-motion="on"]),
+  html:not([data-motion="on"]) :is(*, *::before, *::after) {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  [data-anim="rise"] { opacity: 1; transform: none; }
+  html:not([data-motion="on"]) [data-anim="rise"] { opacity: 1; transform: none; }
 }
 
 /* ============== SERVICES: 目玉プロダクトカード ============== */

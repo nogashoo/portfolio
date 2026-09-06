@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        <meta name="format-detection" content="telephone=no" />
+        <title>Lab / 下地 — サイトの人格 | Shota Nogami</title>
+        <meta
+            name="description"
+            content="サイト構築カタログ Lab の第 0 層「下地」。色・書体・動きの速さをひとかたまりで選びます。選んだ下地は、場面の見本にそのまま反映されます。"
+        />
+        <meta property="og:title" content="Lab / 下地 — サイトの人格 | Shota Nogami" />
+        <meta
+            property="og:description"
+            content="サイト構築カタログ Lab の第 0 層「下地」。色・書体・動きの速さをひとかたまりで選びます。"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+            property="og:url"
+            content="https://nogashoo.github.io/portfolio/lab/foundation/"
+        />
+        <meta
+            property="og:image"
+            content="https://nogashoo.github.io/portfolio/assets/brand/ogp.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Lab / 下地 — サイトの人格 | Shota Nogami" />
+        <meta
+            name="twitter:description"
+            content="サイト構築カタログ Lab の第 0 層「下地」。"
+        />
+        <meta
+            name="twitter:image"
+            content="https://nogashoo.github.io/portfolio/assets/brand/ogp.png"
+        />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@500;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        />
+
+        <!-- 本体からは色・書体・リセットだけ借りる。見た目は lab.css が全部持つ -->
+        <link rel="stylesheet" href="../../style.css" />
+        <link rel="stylesheet" href="../lab.css" />
+        <link rel="stylesheet" href="./foundation.css" />
+
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="../../assets/brand/favicon.svg"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="../../assets/brand/icons/icon-32.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            href="../../assets/brand/icons/apple-touch-icon.png"
+        />
+    </head>
+    <body class="lab-body">
+        <div class="lab-app">
+            <aside class="lab-nav" aria-label="Lab のナビゲーション">
+                <a class="lab-nav__brand" href="../">
+                    <span class="lab-nav__mark" aria-hidden="true">
+                        <svg viewBox="0 0 640 420" fill="none" stroke="currentColor" stroke-width="52" stroke-linecap="butt" stroke-linejoin="round">
+                            <path d="M 224 216 C 178 204, 116 211, 72 249 C 31 285, 18 337, 46 373 C 74 409, 133 408, 186 376 C 237 345, 272 290, 306 226 L 350 142 C 386 76, 435 33, 493 29 C 540 26, 581 51, 596 88 C 614 132, 594 184, 549 220 C 504 256, 435 272, 363 253" />
+                        </svg>
+                    </span>
+                    <span>
+                        <span class="lab-nav__name">Lab</span>
+                        <span class="lab-nav__sub">サイト構築カタログ</span>
+                    </span>
+                </a>
+
+                <nav class="lab-nav__group" aria-label="層">
+                    <p class="lab-nav__head">Layers</p>
+                    <ul class="lab-nav__list" data-lab-layers></ul>
+                </nav>
+
+                <div class="lab-nav__foot">
+                    <button class="lab-btn" type="button" data-motion-toggle aria-pressed="true">
+                        <span class="lab-btn__dot" aria-hidden="true"></span>
+                        <span data-motion-label>アニメーション オン</span>
+                    </button>
+                    <a class="lab-btn" href="../../index.html">← ポートフォリオへ</a>
+                </div>
+            </aside>
+            <div class="lab-scrim" aria-hidden="true"></div>
+
+            <div class="lab-main">
+                <header class="lab-top">
+                    <button class="lab-btn lab-navtoggle" type="button" data-nav-open aria-label="メニューを開く">☰</button>
+                    <div class="lab-top__title">
+                        <h1>層 0 — 下地</h1>
+                        <p>色・書体・動きの速さ。サイトの人格をひとかたまりで決めます</p>
+                    </div>
+                </header>
+
+                <div class="lab-content">
+                    <section class="lab-lead" aria-labelledby="lead-title">
+                        <h2 id="lead-title">いちばん最初に、ここを決める</h2>
+                        <p>
+                            下地は、この上に載る場面・部品・動きのすべてが立つ土台です。
+                            ここを決めておくと、あとの判断がほとんど自動的に決まります。
+                            選んだ下地は覚えておくので、そのまま場面を見に行けば、
+                            すべての見本がその色と書体で表示されます。
+                        </p>
+                    </section>
+
+                    <!-- カードは data/foundation.js から foundation.js が組み立てる。
+                         下地を追加するときは LAB_FOUNDATIONS にエントリを 1 つ足すだけ -->
+                    <ol class="lab-grid lab-grid--foundations" data-lab-foundations></ol>
+
+                    <noscript>
+                        <p class="lab-empty">下地の表示には JavaScript が必要です。</p>
+                    </noscript>
+                </div>
+            </div>
+        </div>
+
+        <script src="../lab-core.js" defer></script>
+        <script src="../data/layers.js" defer></script>
+        <script src="../data/foundation.js" defer></script>
+        <script src="./foundation.js" defer></script>
+    </body>
+</html>

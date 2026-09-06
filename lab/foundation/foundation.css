@@ -1,0 +1,106 @@
+/* ==========================================================================
+   Lab / 層 0「下地」のページだけに要るスタイル
+
+   カードの上半分は**その下地の値で描いた見本**なので、ここでは寸法しか決めない。
+   色と書体は foundation.js が data/foundation.js から読んで直接当てる。
+   ========================================================================== */
+
+.lab-grid--foundations {
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 760px) {
+  .lab-grid--foundations {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1280px) {
+  .lab-grid--foundations {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.lab-found {
+  contain-intrinsic-size: auto 340px;
+}
+.lab-found[data-selected="1"] {
+  border-color: var(--app-accent);
+  box-shadow: 0 0 0 3px rgba(31, 58, 46, 0.12);
+}
+
+.lab-found__sample {
+  position: relative;
+  padding: 22px 20px 40px;
+  min-height: 168px;
+  border-bottom: 1px solid var(--app-line);
+}
+.lab-found__display {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.55;
+  margin: 0 0 10px;
+}
+.lab-found__text {
+  font-size: 12.5px;
+  line-height: 1.95;
+  margin: 0;
+}
+.lab-found__mark {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 12px 0 0;
+}
+
+/* 5 色の帯。役割の順（地・面・文字・主役・差し色）に並べる */
+.lab-found__chips {
+  position: absolute;
+  left: 20px;
+  bottom: 16px;
+  display: flex;
+  gap: 4px;
+}
+.lab-found__chip {
+  width: 18px;
+  height: 10px;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(35, 35, 31, 0.16);
+}
+
+.lab-found__note {
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: var(--app-ink-2);
+  margin: 4px 0 0;
+  /* 2 行ぶんを確保する。1 行と 2 行が混ざるとカードの高さが揃わない */
+  min-height: 3.7em;
+}
+
+.lab-found__foot {
+  margin-top: auto;
+  padding-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.lab-found__motion {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--app-ink-3);
+  margin-right: auto;
+}
+.lab-found__foot .lab-btn[aria-pressed="true"] {
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+  cursor: default;
+}
+
+/* 「場面で見る」は選んだ下地のカードにだけ出す */
+.lab-found__go {
+  display: none;
+}
+.lab-found[data-selected="1"] .lab-found__go {
+  display: inline-flex;
+}

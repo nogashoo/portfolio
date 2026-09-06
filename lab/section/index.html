@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        <meta name="format-detection" content="telephone=no" />
+        <title>Lab / 場面 — ページを作る塊 | Shota Nogami</title>
+        <meta
+            name="description"
+            content="サイト構築カタログ Lab の第 2 層「場面」。ヒーロー・特徴・流れ・実績・よくある質問・問い合わせを、実物大で動く状態で公開しています。"
+        />
+        <meta property="og:title" content="Lab / 場面 — ページを作る塊 | Shota Nogami" />
+        <meta
+            property="og:description"
+            content="サイト構築カタログ Lab の第 2 層「場面」。選んで並べれば、サイトの形が決まります。"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+            property="og:url"
+            content="https://nogashoo.github.io/portfolio/lab/section/"
+        />
+        <meta
+            property="og:image"
+            content="https://nogashoo.github.io/portfolio/assets/brand/ogp.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Lab / 場面 — ページを作る塊 | Shota Nogami" />
+        <meta
+            name="twitter:description"
+            content="サイト構築カタログ Lab の第 2 層「場面」。"
+        />
+        <meta
+            name="twitter:image"
+            content="https://nogashoo.github.io/portfolio/assets/brand/ogp.png"
+        />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        />
+
+        <!-- 本体からは色・書体・リセットだけ借りる。見た目は lab.css が全部持つ -->
+        <link rel="stylesheet" href="../../style.css" />
+        <link rel="stylesheet" href="../lab.css" />
+        <link rel="stylesheet" href="./section.css" />
+
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="../../assets/brand/favicon.svg"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="../../assets/brand/icons/icon-32.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            href="../../assets/brand/icons/apple-touch-icon.png"
+        />
+    </head>
+    <body class="lab-body">
+        <div class="lab-app">
+            <aside class="lab-nav" aria-label="Lab のナビゲーション">
+                <a class="lab-nav__brand" href="../">
+                    <span class="lab-nav__mark" aria-hidden="true">
+                        <svg viewBox="0 0 640 420" fill="none" stroke="currentColor" stroke-width="52" stroke-linecap="butt" stroke-linejoin="round">
+                            <path d="M 224 216 C 178 204, 116 211, 72 249 C 31 285, 18 337, 46 373 C 74 409, 133 408, 186 376 C 237 345, 272 290, 306 226 L 350 142 C 386 76, 435 33, 493 29 C 540 26, 581 51, 596 88 C 614 132, 594 184, 549 220 C 504 256, 435 272, 363 253" />
+                        </svg>
+                    </span>
+                    <span>
+                        <span class="lab-nav__name">Lab</span>
+                        <span class="lab-nav__sub">サイト構築カタログ</span>
+                    </span>
+                </a>
+
+                <nav class="lab-nav__group" aria-label="層">
+                    <p class="lab-nav__head">Layers</p>
+                    <ul class="lab-nav__list" data-lab-layers></ul>
+                </nav>
+
+                <nav class="lab-nav__group" aria-label="場面の索引">
+                    <p class="lab-nav__head">Sections</p>
+                    <ul class="lab-nav__list" data-lab-side></ul>
+                </nav>
+
+                <div class="lab-nav__foot">
+                    <button class="lab-btn" type="button" data-motion-toggle aria-pressed="true">
+                        <span class="lab-btn__dot" aria-hidden="true"></span>
+                        <span data-motion-label>アニメーション オン</span>
+                    </button>
+                    <a class="lab-btn" href="../../index.html">← ポートフォリオへ</a>
+                </div>
+            </aside>
+            <div class="lab-scrim" aria-hidden="true"></div>
+
+            <div class="lab-main">
+                <header class="lab-top">
+                    <button class="lab-btn lab-navtoggle" type="button" data-nav-open aria-label="メニューを開く">☰</button>
+                    <div class="lab-top__title">
+                        <h1>層 2 — 場面</h1>
+                        <p>選んで並べれば、それだけでサイトの形になる塊</p>
+                    </div>
+                    <div class="lab-top__tools">
+                        <div class="lab-search">
+                            <svg class="lab-search__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <circle cx="9" cy="9" r="6" />
+                                <path d="M13.5 13.5 L17 17" stroke-linecap="round" />
+                            </svg>
+                            <input type="search" data-lab-search placeholder="場面を検索…" aria-label="場面を検索" />
+                        </div>
+                        <label class="lab-select">
+                            <span class="lab-select__label">下地</span>
+                            <select data-lab-foundation aria-label="下地を切り替える"></select>
+                        </label>
+                        <span class="lab-group__n" data-lab-count></span>
+                    </div>
+                </header>
+
+                <div class="lab-bar" role="group" aria-label="種類で絞り込む" data-lab-chips></div>
+
+                <div class="lab-content">
+                    <!-- カード・索引ともに data/sections.js から section.js が自動生成する。
+                         場面を追加するときは LAB_SECTIONS にエントリを 1 つ足すだけ -->
+                    <div data-lab-groups></div>
+                    <p class="lab-empty" data-lab-empty hidden>条件に合う場面がありません。</p>
+                    <noscript>
+                        <p class="lab-empty">見本の表示には JavaScript が必要です。</p>
+                    </noscript>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============== DETAIL ==============
+             一覧はサムネイルだけに絞ったので、実物大の見本と短い説明はここへ来る。
+             中身はカードを押したときに section.js が流し込む -->
+        <div class="lab-detail-scrim" data-lab-detail-scrim hidden></div>
+        <aside class="lab-detail" data-lab-detail hidden aria-label="場面の詳細">
+            <div class="lab-detail__head">
+                <div class="lab-detail__title">
+                    <h2 data-detail-title></h2>
+                    <p data-detail-en></p>
+                </div>
+                <button class="lab-detail__close" type="button" data-detail-close aria-label="閉じる">×</button>
+            </div>
+            <div class="lab-detail__body" data-detail-body>
+                <div class="lab-detail__bar">
+                    <div class="lab-seg" role="group" aria-label="プレビューの幅">
+                        <button type="button" data-width-key="pc" aria-pressed="true">PC</button>
+                        <button type="button" data-width-key="sp" aria-pressed="false">SP</button>
+                    </div>
+                    <span class="lab-detail__scale" data-detail-scale></span>
+                </div>
+                <div class="lab-detail__frame" data-detail-frame></div>
+
+                <p class="lab-detail__note" data-detail-note></p>
+            </div>
+        </aside>
+
+        <!-- 読み込み順が重要: 下回り → データ → 生成。
+             場面は動きの CSS を連結して組み立てるので motions.js も要る -->
+        <script src="../lab-core.js" defer></script>
+        <script src="../data/layers.js" defer></script>
+        <script src="../data/foundation.js" defer></script>
+        <script src="../data/motions.js" defer></script>
+        <script src="../data/sections.js" defer></script>
+        <script src="./section.js" defer></script>
+    </body>
+</html>
