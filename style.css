@@ -1501,3 +1501,77 @@ select {
 /* PCでは指定文を改行させない（狭い画面では通常折り返し） */
 .nowrap-pc { white-space: nowrap; }
 @media (max-width: 640px) { .nowrap-pc { white-space: normal; } }
+
+/* ============== SERVICES: 導入事例カード ============== */
+.cases {
+  max-width: 1080px;
+  margin: var(--s-7) auto 0;
+}
+.cases__lead { margin-bottom: var(--s-4); }
+.cases__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-4);
+}
+@media (max-width: 760px) {
+  .cases__list { grid-template-columns: 1fr; }
+}
+.case-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--s-6);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg-paper);
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    background 700ms var(--ease-out),
+    border-color 700ms var(--ease-out);
+}
+.case-card:hover {
+  background: var(--bg-paper-bright);
+  border-color: var(--green-deep);
+}
+.case-card__tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: var(--s-3);
+}
+.case-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.7vw, 22px);
+  font-weight: 700;
+  line-height: 1.45;
+  font-feature-settings: "palt" 1;
+  margin-bottom: var(--s-3);
+}
+.case-card__lead {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+.case-card__metric {
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--border);
+  font-weight: 700;
+  color: var(--green-deep);
+}
+.case-card__stack {
+  margin-top: var(--s-2);
+  font-family: var(--font-latin);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+.case-card__cta {
+  margin-top: auto;
+  padding-top: var(--s-5);
+  font-weight: 600;
+  color: var(--green-deep);
+}
