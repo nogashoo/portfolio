@@ -4,7 +4,7 @@ Frontend-focused Full-stack Engineer のポートフォリオサイト。
 
 静的な HTML / CSS / JavaScript の単一ページ構成。
 
-公開URL（GitHub Pages）: https://nogashoo.github.io/portfolio/
+公開URL（GitHub Pages）: https://nogami-works.com/
 
 ## 構成
 
