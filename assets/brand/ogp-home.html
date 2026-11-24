@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<!-- トップ（LP）の OGP 画像の元。1200×630 で開いてスクリーンショットし、ogp-home.png に書き出す -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" />
+<style>
+  :root { --ac: #1D5FD0; --aci: #143F8F; --tint: #E8F1FC; --ink: #14213D; --mute: #4A5568; --ground: #FAFCFF; --dot: #DCE4EE; --yel: #F6C945; --yel2: #FFE28A; --yel3: #FFF1C2; --dash: #A3C4EE; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; }
+  body { position: relative; overflow: hidden; color: var(--ink); font-family: 'Zen Kaku Gothic New', sans-serif; -webkit-font-smoothing: antialiased;
+    background-color: var(--ground); background-image: radial-gradient(var(--dot) 1.4px, transparent 1.8px); background-size: 22px 22px; }
+  .sun { position: absolute; right: -110px; top: -150px; width: 420px; height: 420px; border-radius: 50%; background: var(--yel3); }
+  .sun-dot { position: absolute; right: 300px; top: 70px; width: 18px; height: 18px; border-radius: 50%; background: var(--yel); }
+  .ring { position: absolute; left: -110px; bottom: -130px; width: 300px; height: 300px; border-radius: 50%; border: 3px dashed #CFE0F5; }
+
+  .copy { position: absolute; left: 72px; top: 92px; width: 740px; }
+  .eyebrow { display: inline-block; font-size: 24px; font-weight: 700; color: var(--aci); background: #fff; border: 2px solid #BFD6F2; padding: 6px 22px; border-radius: 30px; }
+  h1 { margin-top: 30px; font-size: 51px; line-height: 1.5; font-weight: 900; letter-spacing: 0.01em; }
+  h1 .nw { white-space: nowrap; }
+  .mark { background: linear-gradient(transparent 62%, var(--yel2) 62%); }
+  .points { margin-top: 34px; display: flex; gap: 14px; }
+  .points li { list-style: none; display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 40px; padding: 10px 22px 10px 14px; font-size: 22px; font-weight: 700; box-shadow: 0 6px 16px rgba(20, 40, 90, 0.08); }
+  .points i { position: relative; width: 26px; height: 26px; border-radius: 50%; background: var(--tint); flex-shrink: 0; }
+  .points i::after { content: ''; position: absolute; left: 9px; top: 5px; width: 6px; height: 11px; border: solid var(--ac); border-width: 0 3px 3px 0; transform: rotate(45deg); }
+
+  .card { position: absolute; right: 60px; top: 128px; width: 300px; height: 380px; }
+  .card .bg { position: absolute; inset: 0; background: var(--tint); border-radius: 48px 48px 48px 12px; }
+  .card .bg2 { position: absolute; inset: 12px -10px -12px 12px; border: 3px dashed var(--dash); border-radius: 48px 48px 48px 12px; }
+  .hello { position: absolute; left: 26px; top: 18px; font-family: 'Caveat', cursive; font-weight: 600; font-size: 50px; color: var(--ac); transform: rotate(-6deg); }
+  .chat { position: absolute; left: 22px; right: 22px; top: 100px; display: flex; flex-direction: column; gap: 16px; }
+  .bubble { padding: 12px 18px; font-size: 21px; line-height: 1.5; }
+  .bubble.me { align-self: flex-end; background: #9BE58C; border-radius: 22px 22px 4px 22px; font-weight: 500; box-shadow: 0 4px 14px rgba(20, 40, 90, 0.08); }
+  .bubble.you { align-self: flex-start; background: #fff; border-radius: 22px 22px 22px 4px; font-weight: 700; box-shadow: 0 6px 16px rgba(20, 40, 90, 0.10); }
+  .cap { align-self: flex-end; font-size: 16px; font-weight: 700; color: var(--aci); }
+
+  .site { position: absolute; left: 72px; bottom: 44px; font-size: 20px; font-weight: 700; color: var(--mute); letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+  <div class="sun"></div><div class="sun-dot"></div><div class="ring"></div>
+  <div class="copy">
+    <p class="eyebrow">小さな会社・お店・団体の方へ</p>
+    <h1><span class="nw">会社に頼むほどじゃない作業、</span><br><span class="mark">個人に直接</span>頼めます。</h1>
+    <ul class="points"><li><i></i>本人と直接やり取り</li><li><i></i>まず半額から</li><li><i></i>仲介手数料なし</li></ul>
+  </div>
+  <div class="card">
+    <div class="bg2"></div><div class="bg"></div>
+    <div class="hello">Hello!</div>
+    <div class="chat">
+      <p class="bubble me">見積書づくりが<br>毎回面倒で…</p>
+      <p class="bubble you">いまの作り方、<br>見せてもらえますか？</p>
+      <p class="cap">作る本人が、直接お返事します。</p>
+    </div>
+  </div>
+  <p class="site">野上 翔太 ｜ nogami-works.com</p>
+</body>
+</html>

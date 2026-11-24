@@ -1,8 +1,9 @@
-# Portfolio — Shota Nogami
+# nogami-works.com
 
-Frontend-focused Full-stack Engineer のポートフォリオサイト。
+小さな会社・お店・団体向けの事業サイト。トップ（`/`）が相談の入口の LP で、
+技術者・採用担当向けのポートフォリオは `/engineer/` に置いている。
 
-静的な HTML / CSS / JavaScript の単一ページ構成。
+静的な HTML / CSS / JavaScript。ビルドはない。
 
 公開URL（GitHub Pages）: https://nogami-works.com/
 
@@ -10,11 +11,16 @@ Frontend-focused Full-stack Engineer のポートフォリオサイト。
 
 ```
 portfolio/
-├── index.html   # トップページ（Hero / About / Services / Works / Skills / Contact）
-├── style.css    # 全ページ共通のデザイントークン・レイアウト・モーション
-├── main.js      # 全ページ共通のスクロール演出・SPナビ・ヒーローのテキストアニメーション
+├── index.html   # トップ＝事業LP。CSS / JS は中に持ち、style.css・main.js は読まない
+├── engineer/    # ポートフォリオ（Hero / About / Services / Works / Skills / Contact）
+├── legal/       # 特定商取引法に基づく表記（noindex。サイトマップには入れない）
+├── privacy/     # プライバシーポリシー（noindex）
+├── style.css    # ポートフォリオ・gallery・lab 共通のデザイントークン・レイアウト・モーション
+├── main.js      # ポートフォリオ共通のスクロール演出・SPナビ・ヒーローのテキストアニメーション
+├── sitemap.xml / robots.txt  # ページを足したら sitemap.xml にも足す
 ├── gallery/     # 制作物ギャラリー（完成した LP を丸ごと公開）
 ├── lab/         # サイト構築カタログ（5 層。詳しくは下記）
+├── assets/analytics.js  # GA4 と分析用イベント。nogami-works.com 以外では送らずコンソールに出す（トップ・engineer・legal・privacy が読む）
 └── assets/brand/# ロゴ・ファビコン・OGP
 ```
 
@@ -25,6 +31,21 @@ portfolio/
 | `gallery/` | 完成したページそのもの | `gallery/works.js` の配列の先頭に 1 エントリ |
 | `lab/section/` | ページを構成する塊 | `lab/data/sections.js` の `LAB_SECTIONS` に 1 オブジェクト |
 | `lab/motion/` | 塊に乗せる動き | `lab/data/motions.js` の `LAB_MOTIONS` に 1 オブジェクト |
+
+## トップ（LP）の文言を変えたら
+
+本文は文節の切れ目（`<wbr>`）でだけ折り返す作り（`word-break: keep-all`）なので、
+文言を変えたら区切りを入れ直す。何度流しても結果は同じ。
+
+```
+pip install budoux
+python3 scripts/add-wbr.py index.html
+```
+
+- 句点（。）のあとは `<br>` で改行する（段落の最後と「。」」の内側は除く）。文の途中は強制改行せず、文節で自然に折り返す
+- 折り返してほしくない言葉は `<span class="nw">…</span>` で囲む（中には区切りを入れない）
+- PC だけ改行したい位置は `<br class="pc">`、スマホだけなら `<br class="sp">`
+- お悩みの項目のような横並び（flex）の中では、文字全体を 1 つの `<span>` で包んでから使う
 
 ## ローカル確認
 
@@ -40,7 +61,7 @@ python3 -m http.server 8000   # http://localhost:8000
 
 ## 実績の追加
 
-`index.html` の Works セクションにある `<!-- TIMELINE ITEM -->` のブロックをコピーして、
+`engineer/index.html` の Works セクションにある `<!-- TIMELINE ITEM -->` のブロックをコピーして、
 期間・カテゴリ・タイトル・概要・技術タグ・成果を編集する。
 
 ## Lab — サイト構築カタログ
