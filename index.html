@@ -133,6 +133,10 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--ac); outline-o
 .mark { background: linear-gradient(transparent 62%, var(--yel2) 62%); }
 .pc { display: none; }
 .nw { white-space: nowrap; }
+/* Safari は keep-all の文の最小幅を大きく見積もり、箱が画面からはみ出すことがある。
+   1 列のグリッドと、横並びの中の文章の箱は、入れ物の幅より広がらないようにする */
+.worries, .svc, .cases, .fold-two, .faq-cols, .faq-cols .col, .fit, .strengths { grid-template-columns: minmax(0, 1fr); }
+.worries li > span:last-child, .stg-h h3, .pay > li > span, .prices li > span, .fold > summary > span:first-child, .qa > summary .q, .prof-who > div { min-width: 0; }
 
 /* ---------- 全体の重なり ---------- */
 .page { position: relative; z-index: 0; overflow: hidden; }
@@ -729,7 +733,6 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
             <li><h3><span class="hand" aria-hidden="true">2</span>画面を<wbr>見ながら<wbr>相談できます</h3><p>ビデオ通話で<wbr>画面を<wbr>共有しながら、<wbr>「ここは<wbr>こうしたい」を<wbr>一緒に<wbr>確かめていきます。</p></li>
             <li><h3><span class="hand" aria-hidden="true">3</span>専門用語を<wbr>使わずに<wbr>話します</h3><p>分からない<wbr>言葉が<wbr>出たら、<wbr>遠慮なく<wbr>止めてください。</p></li>
           </ol>
-          <p class="small">大手通信会社や<wbr>アパレルの<wbr>通販サイトで、<wbr>「カートに<wbr>入れてから<wbr>注文が<wbr>完了するまで」<span class="nw">という、</span>止まってはいけない<wbr>部分を<wbr>作ってきた<wbr>エンジニアが<wbr>担当します。</p>
         </div>
       </details>
     </div>
