@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>会社に頼むほどじゃない作業、個人に直接頼めます｜野上 翔太</title>
-<meta name="description" content="後回しになっている事務作業の自動化やホームページづくりを、ひとりで引き受けます。作る本人とLINEで直接やり取り。費用はまず半額、納得できたら残りの半額。仲介手数料なし。">
+<title>会社に頼むほどじゃない作業、僕にお任せください｜野上 翔太</title>
+<meta name="description" content="後回しになっている事務作業の自動化やホームページづくりを、ひとりで引き受けます。僕とLINEで直接やり取り。お支払いはまず制作費の半額、納得できたら残りの半額。仲介手数料なし。">
 <link rel="canonical" href="https://nogami-works.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nogami-works.com/">
-<meta property="og:title" content="会社に頼むほどじゃない作業、個人に直接頼めます">
-<meta property="og:description" content="事務作業の自動化やホームページづくりを、ひとりで引き受けます。作る本人とLINEで直接。まず半額、納得できたら残りの半額。">
+<meta property="og:title" content="会社に頼むほどじゃない作業、僕にお任せください">
+<meta property="og:description" content="事務作業の自動化やホームページづくりを、ひとりで引き受けます。僕とLINEで直接やり取り。お支払いはまず制作費の半額、納得できたら残りの半額。">
 <meta property="og:image" content="https://nogami-works.com/assets/brand/ogp-home.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="会社に頼むほどじゃない作業、個人に直接頼めます。野上 翔太">
+<meta property="og:image:alt" content="会社に頼むほどじゃない作業、僕にお任せください。野上 翔太">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="./assets/brand/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="./assets/brand/icons/icon-32.png">
@@ -45,7 +45,7 @@
       "name": "返事はどのくらいでもらえますか？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "平日は12時間以内を目安にお返事します。土日や休みの日は、お時間をいただくことがあります。"
+        "text": "平日は12時間以内を目安にお返事します。土日祝日は、お時間をいただくことがあります。"
       }
     },
     {
@@ -132,11 +132,11 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--ac); outline-o
 .hand { font-family: 'Caveat', cursive; font-weight: 600; line-height: 1.1; }
 .mark { background: linear-gradient(transparent 62%, var(--yel2) 62%); }
 .pc { display: none; }
-.nw { white-space: nowrap; }
+.nw { display: inline-block; white-space: nowrap; }
 /* Safari は keep-all の文の最小幅を大きく見積もり、箱が画面からはみ出すことがある。
    1 列のグリッドと、横並びの中の文章の箱は、入れ物の幅より広がらないようにする */
 .worries, .svc, .cases, .fold-two, .faq-cols, .faq-cols .col, .fit, .strengths { grid-template-columns: minmax(0, 1fr); }
-.worries li > span:last-child, .stg-h h3, .pay > li > span, .prices li > span, .fold > summary > span:first-child, .qa > summary .q, .prof-who > div { min-width: 0; }
+.worry-say, .stg-h h3, .pay > li > span, .prices li > span, .fold > summary > span:first-child, .qa > summary .q, .prof-who > div { min-width: 0; }
 
 /* ---------- 全体の重なり ---------- */
 .page { position: relative; z-index: 0; overflow: hidden; }
@@ -148,8 +148,8 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--ac); outline-o
 .in { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
 .trail { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; overflow: visible; }
 .trail .line { stroke: var(--trail); stroke-width: 2; stroke-dasharray: 6 7; fill: none; }
-.trail .run { stroke: var(--yel); stroke-linecap: round; stroke-dasharray: 0.1 1679.9; fill: none; animation: run 4s linear infinite; }
-@keyframes run { from { stroke-dashoffset: 1680; } to { stroke-dashoffset: 0; } }
+.trail .run { stroke: var(--yel); stroke-linecap: round; stroke-dasharray: 0.1 1199.9; fill: none; animation: run 4s linear infinite; }
+@keyframes run { from { stroke-dashoffset: 1200; } to { stroke-dashoffset: 0; } }
 
 /* ---------- 共通の部品 ---------- */
 .lab { display: flex; flex-direction: column; gap: 2px; }
@@ -210,9 +210,13 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
 .chat { position: absolute; right: 16px; top: 60px; width: 216px; display: flex; flex-direction: column; gap: 10px; }
 .bubble { max-width: 100%; padding: 9px 14px; font-size: 14px; line-height: 1.6; transition: opacity .3s; }
 .bubble.me { align-self: flex-end; background: var(--bub); border-radius: 18px 18px 4px 18px; font-weight: 500; box-shadow: 0 4px 14px rgba(20, 40, 90, 0.08); }
+#fb2 { font-weight: 900; }
 .bubble.you { align-self: flex-start; background: #fff; border-radius: 18px 18px 18px 4px; font-weight: 700; box-shadow: 0 6px 16px rgba(20, 40, 90, 0.10); }
-.chat .cap { align-self: flex-end; font-size: 11px; font-weight: 700; color: var(--aci); transition: opacity .4s; }
+.chat .cap { align-self: flex-end; text-align: right; font-size: 11px; font-weight: 700; color: var(--aci); transition: opacity .4s; }
 .ghost { opacity: 0; }
+.you-row { align-self: flex-start; display: flex; align-items: flex-end; gap: 6px; max-width: 100%; transition: opacity .3s; }
+.you-row .bubble { min-width: 0; }
+.avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(20, 40, 90, 0.15); }
 .face { position: absolute; left: 20px; bottom: 22px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .photo { position: relative; width: 130px; height: 130px; }
 .photo::before { content: ''; position: absolute; left: 7px; top: 7px; width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--ac); }
@@ -235,10 +239,14 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
 @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
 
 /* ---------- 2. お悩み ---------- */
-.worries { display: grid; gap: 12px; }
-.worries li { background: #fff; box-shadow: var(--card); padding: 14px 16px; display: flex; align-items: center; gap: 14px; font-size: 15px; line-height: 1.6; font-weight: 700; border-radius: 20px 20px 20px 6px; margin-right: 18px; }
-.worries li:nth-child(even) { border-radius: 20px 20px 6px 20px; margin: 0 0 0 18px; }
-.worries .ib { width: 44px; height: 44px; border-radius: 22px; background: var(--tint); color: var(--ac); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.worries { display: grid; gap: 16px; grid-auto-rows: 1fr; }
+/* 悩んでいる人のつぶやき。吹き出しのとがった角を人のほうへ向ける（SP は左右交互） */
+.worries li { display: flex; align-items: flex-end; gap: 6px; }
+.worries li > * { align-self: flex-end; }
+.worries li:nth-child(even) { flex-direction: row-reverse; }
+.worry-face { height: 64px; width: 72px; object-fit: contain; object-position: bottom; flex-shrink: 0; }
+.worry-say { flex: 1; min-width: 0; align-self: stretch !important; display: flex; align-items: center; margin-bottom: 18px; background: #fff; box-shadow: var(--card); padding: 12px 16px; border-radius: 20px 20px 20px 6px; font-size: 15px; line-height: 1.6; font-weight: 700; }
+.worries li:nth-child(even) .worry-say { border-radius: 20px 20px 6px 20px; }
 .lead-c { font-size: 17px; line-height: 1.8; font-weight: 900; text-align: center; }
 .lead-c .w { display: inline-block; }
 
@@ -460,10 +468,10 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
   .sticker { right: 20px; bottom: 30px; width: 150px; padding: 12px 10px; } .sticker span { font-size: 12px; } .sticker b { font-size: 28px; }
   .points { grid-column: 1 / -1; padding: 16px 8px; }
   .points li { flex-direction: row; justify-content: center; gap: 12px; font-size: 15px; } .points .ib { width: 40px; height: 40px; border-radius: 20px; } .points .ico { width: 22px; height: 22px; }
-  .worries { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 28px; }
-  .worries li, .worries li:nth-child(even) { margin: 0; padding: 20px 22px; gap: 16px; font-size: 17px; border-radius: 22px 22px 22px 6px; }
-  .worries li:nth-child(even) { border-radius: 22px 22px 6px 22px; }
-  .worries .ib { width: 52px; height: 52px; border-radius: 26px; } .worries .ico { width: 26px; height: 26px; }
+  .worries { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 36px; }
+  .worries li:nth-child(even) { flex-direction: row; }
+  .worry-face { height: 88px; width: 100px; }
+  .worry-say, .worries li:nth-child(even) .worry-say { margin-bottom: 24px; padding: 16px 22px; font-size: 17px; border-radius: 22px 22px 22px 6px; }
   .lead-c { font-size: 20px; }
   .svc { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
   .svc .top { height: 128px; } .svc .no { left: 20px; top: 12px; font-size: 36px; } .svc .ib { width: 76px; height: 76px; border-radius: 38px; } .svc .ib .ico { width: 36px; height: 36px; }
@@ -545,7 +553,7 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
   <div class="fv-main">
     <div class="fv-copy">
       <p class="eyebrow rv">小さな<wbr>会社・<wbr>お店・団体の<wbr>方へ</p>
-      <h1 class="rv" style="--d:.1s"><span class="nw">会社に頼むほどじゃない作業、</span><br><span class="mark">個人に<wbr>直接</span>頼めます。</h1>
+      <h1 class="rv" style="--d:.1s"><span class="nw">会社に頼むほどじゃない作業、</span><br><span class="mark">僕に<wbr>お任せ</span>ください。</h1>
       <p class="sub rv" style="--d:.2s">後回しに<wbr>なっている<wbr>事務作業の<wbr>自動化や<wbr>ホームページづくりを、<br class="pc">ひとりで<wbr>引き受けます。</p>
       <div class="fv-cta rv" style="--d:.35s">
         <div><a class="btn-line" href="https://lin.ee/SVRxHPY">LINEで<wbr>直接相談する<wbr>（無料）</a><a class="btn-mail" href="mailto:shota@nogami-works.com">メールで<wbr>相談する</a></div>
@@ -558,18 +566,18 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
       <svg class="plane float" aria-hidden="true" viewBox="0 0 96 62" fill="none" stroke="#1D5FD0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 56 Q 22 20 52 30" stroke-dasharray="1 7"/><path d="M58 28 92 10 76 44 70 32z" fill="#fff"/><path d="M70 32 92 10"/></svg>
       <div class="chat">
         <p class="bubble me" id="fb1"><span class="sr">お客さま：</span><span data-typed>見積書づくりが毎回面倒で…</span></p>
-        <p class="bubble you" id="fb2"><span class="sr">野上：</span><span data-typed>いまの作り方、見せてもらえますか？</span></p>
-        <p class="cap" id="fb3">作る<wbr>本人が、<wbr>直接お返事します。</p>
+        <p class="bubble you" id="fb2"><span class="sr">野上：</span><span data-typed>そのお悩み、&#8203;僕なら解決できます！</span></p>
+        <p class="cap" id="fb3">LINEまたは<wbr>メールで<br class="sp">直接やり取りします。</p>
       </div>
       <div class="face">
         <div class="photo"><div class="ph"><img src="./assets/home/face.webp" alt="野上 翔太のプロフィール写真" width="400" height="400" fetchpriority="high"></div></div>
-        <div class="name">私が<wbr>野上 翔太です</div>
+        <div class="name">僕が<wbr>野上 翔太です</div>
       </div>
-      <div class="sticker float2"><span>見積書づくり</span><span>約3分 →</span><b>約10秒</b></div>
+      <div class="sticker float2"><span>見積書づくり</span><span>約5分 →</span><b>約30秒</b></div>
     </div>
     <ul class="points card rv" style="--d:.45s">
-      <li><span class="ib"><svg class="ico"><use href="#i-chat"/></svg></span><span><span class="w">本人と<wbr>直接</span><span class="w">やり取り</span></span></li>
-      <li><span class="ib"><svg class="ico"><use href="#i-half"/></svg></span><span><span class="w">まず<wbr>半額</span><span class="w">から</span></span></li>
+      <li><span class="ib"><svg class="ico"><use href="#i-chat"/></svg></span><span><span class="w">僕と<wbr>直接</span><span class="w">やり取り</span></span></li>
+      <li><span class="ib"><svg class="ico"><use href="#i-half"/></svg></span><span><span class="w">半額から</span><span class="w">お試し</span></span></li>
       <li><span class="ib"><svg class="ico"><use href="#i-link"/></svg></span><span><span class="w">仲介手数料</span><span class="w">なし</span></span></li>
     </ul>
   </div>
@@ -580,12 +588,12 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
   <div class="in">
     <div class="lab"><span class="hand" aria-hidden="true">Hmm...</span><h2>こんな<wbr>こと、<wbr>ありませんか？</h2></div>
     <ul class="worries" data-reveal="side">
-      <li><span class="ib"><svg class="ico"><use href="#i-doc"/></svg></span><span>見積書や<wbr>請求書を、<wbr>毎回いちから<wbr>手で<wbr>作っている</span></li>
-      <li><span class="ib"><svg class="ico"><use href="#i-cal"/></svg></span><span>ホームページの<span class="nw">「お知らせ」が、</span><span class="nw">何年も前のまま</span></span></li>
-      <li><span class="ib"><svg class="ico"><use href="#i-bld"/></svg></span><span>会社に<wbr>頼むと<wbr>高そうで、<br class="pc">見積もりを<wbr>取るのも<wbr>気が<wbr>引ける</span></li>
-      <li><span class="ib"><svg class="ico"><use href="#i-q"/></svg></span><span>頼んで<wbr>「思っていたのと<wbr>違う」と<wbr>なったら、<br class="pc"><span class="nw">お金がもったいない</span></span></li>
+      <li><img class="worry-face" src="./assets/home/worry-paperwork.webp" alt="" width="196" height="200" loading="lazy" decoding="async"><p class="worry-say">見積書も<wbr>請求書も、<wbr>毎回いちから<wbr>手作業…</p></li>
+      <li><img class="worry-face" src="./assets/home/worry-website.webp" alt="" width="226" height="200" loading="lazy" decoding="async"><p class="worry-say">ホームページの<wbr>「お知らせ」、<wbr>何年も<wbr>前の<wbr>ままだ…</p></li>
+      <li><img class="worry-face" src="./assets/home/worry-cost.webp" alt="" width="196" height="200" loading="lazy" decoding="async"><p class="worry-say">会社に<wbr>頼むと<wbr>高そう。<wbr>見積もりを<wbr>取るのも<wbr>気が<wbr>引ける…</p></li>
+      <li><img class="worry-face" src="./assets/home/worry-mismatch.webp" alt="" width="226" height="200" loading="lazy" decoding="async"><p class="worry-say">頼んで<wbr>みて<wbr>「思ってたのと<wbr>違う」だと、<wbr>お金が<wbr>もったいない…</p></li>
     </ul>
-    <p class="lead-c"><span class="w">ひとつでも<wbr>当てはまったら、</span><span class="w"><span class="mark">作る<wbr>本人が<wbr>直接</span>うかが<wbr>います。</span></p>
+    <p class="lead-c"><span class="w">ひとつでも<wbr>当てはまったら、</span><span class="w"><span class="mark">作り手である<wbr>僕が<wbr>直接</span>うかが<wbr>います。</span></p>
   </div>
 </section>
 
@@ -607,24 +615,24 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
 <!-- ========== 4. 進め方（動く図） ========== -->
 <section class="sec tint" id="flow" data-trail>
   <div class="in">
-    <div class="lab"><span class="hand" aria-hidden="true">Flow</span><h2>頼むと、<wbr>こう<wbr>進みます</h2><small>※やり取りの<wbr>イメージです</small></div>
+    <div class="lab"><span class="hand" aria-hidden="true">Flow</span><h2>僕なら<wbr>こう<wbr>進めます</h2><small>※やり取りの<wbr>イメージです</small></div>
     <div class="flow-grid" id="flowfig">
       <ol class="stages">
         <li class="stg card">
           <div class="stg-h"><span class="n" aria-hidden="true">1</span><h3>LINEで<wbr>一言、<wbr>相談する</h3></div>
           <div class="talk">
             <p class="bubble me"><span class="sr">お客さま：</span><span data-typed data-at="0">見積書づくりが毎回面倒で…</span></p>
-            <p class="bubble you"><span class="sr">野上：</span><span data-typed data-at="1">いまの作り方、見せてもらえますか？</span></p>
+            <div class="you-row"><img class="avatar" src="./assets/home/face.webp" alt="" loading="lazy" width="400" height="400"><p class="bubble you"><span class="sr">野上：</span><span data-typed data-at="1">いまの作り方、&#8203;見せてもらえますか？</span></p></div>
           </div>
           <ol class="fcs"><li class="fc done" data-s="0">相談</li><li class="fc done" data-s="1">お返事</li><li class="fc done" data-s="2">お話を<wbr>聞く</li></ol>
         </li>
         <li class="stg card">
-          <div class="stg-h"><span class="n" aria-hidden="true">2</span><h3>見ながら、<wbr>一緒に<wbr>作る</h3><span class="badge on" data-from="3">まず<wbr>半額</span></div>
+          <div class="stg-h"><span class="n" aria-hidden="true">2</span><h3>見ながら、<span class="nw">一緒に作る</span></h3><span class="badge on" data-from="3">制作費の<wbr>半額</span></div>
           <ol class="fcs"><li class="fc done" data-s="3">ご提案</li><li class="fc done" data-s="4,6">お試し版</li><li class="fc done" data-s="5">手直し</li><li class="fc done" data-s="7">最終確認</li></ol>
           <p class="back" id="flowback"><svg class="ico" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-back"/></svg>手直しの<wbr>あと、<wbr>もう<wbr>一度<wbr>お見せします</p>
         </li>
         <li class="stg card">
-          <div class="stg-h"><span class="n" aria-hidden="true">3</span><h3>使ってみて、<wbr>納得してから</h3><span class="badge on" data-from="10">残り半額</span></div>
+          <div class="stg-h"><span class="n" aria-hidden="true">3</span><h3>使ってみて、<wbr>納得してから</h3><span class="badge on" data-from="10">残りの<wbr>半額</span></div>
           <ol class="fcs"><li class="fc done" data-s="8">お渡し</li><li class="fc done" data-s="9">14日<wbr>使う</li><li class="fc done" data-s="10">残りの<wbr>半額</li></ol>
         </li>
       </ol>
@@ -632,13 +640,13 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
         <div class="compare card">
           <div class="cmp-row"><div class="cmp-h">よく<wbr>ある<wbr>進み方の<wbr>例</div><div class="cmp-h">この<wbr>ページの<wbr>進み方</div></div>
           <div class="cmp-row"><div class="cmp-l">問い合わせフォームに<wbr>入力する</div><div class="cmp-r on" data-from="0">LINEで<wbr>一言送る</div></div>
-          <div class="cmp-row"><div class="cmp-l">担当者からの<wbr>返信を<wbr>待つ</div><div class="cmp-r on" data-from="1">作る<wbr>本人が<wbr>直接お返事</div></div>
-          <div class="cmp-row"><div class="cmp-l">打ち合わせの<wbr>日程を<wbr>調整する</div><div class="cmp-r on" data-from="2">画面を<wbr>見ながら、<wbr>その<wbr>場で<wbr>相談</div></div>
+          <div class="cmp-row"><div class="cmp-l">担当者からの<wbr>返信を<wbr>待つ</div><div class="cmp-r on" data-from="1">僕が<wbr>直接お返事</div></div>
+          <div class="cmp-row"><div class="cmp-l">打ち合わせの<wbr>日程を<wbr>調整する</div><div class="cmp-r on" data-from="2">画面を<wbr>見ながら、<span class="nw">その場で相談</span></div></div>
           <div class="cmp-row"><div class="cmp-l">見積書を<wbr>待つ</div><div class="cmp-r on" data-from="3">費用と<wbr>期間を、<br>分かりやすい<wbr>言葉で</div></div>
-          <div class="cmp-row"><div class="cmp-l">契約して、<wbr>決めた<wbr>金額を<wbr>支払う</div><div class="cmp-r on" data-from="4">まず<wbr>半額で<wbr>スタート</div></div>
+          <div class="cmp-row"><div class="cmp-l">契約して、<wbr>決めた<wbr>金額を<wbr>支払う</div><div class="cmp-r on" data-from="4">制作費の<wbr>半額で<wbr>スタート</div></div>
           <div class="cmp-row"><div class="cmp-l">完成してから<wbr>確認する</div><div class="cmp-r on" data-from="9">見ながら<wbr>直し、<br>納得してから<span class="nw">残り半額</span></div></div>
         </div>
-        <ul class="chips"><li>作る<wbr>本人と<wbr>直接やり取りできる</li><li>平日は<wbr>12時間以内を<wbr>目安に<wbr>お返事</li><li>作った<wbr>あとも、<wbr>同じ<wbr>相手に<wbr>相談できる</li></ul>
+        <ul class="chips"><li>僕と<wbr>直接やり取りできる</li><li>平日は<wbr>12時間以内を<wbr>目安に<wbr>お返事</li><li>作った<wbr>あとも、<wbr>僕が<wbr>サポート</li></ul>
         <a class="btn-line mid-cta" href="https://lin.ee/SVRxHPY">LINEで<wbr>直接相談する<wbr>（無料）</a>
       </div>
     </div>
@@ -652,7 +660,7 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
     <ul class="cases" data-reveal>
       <li class="card">
         <span class="tag">見積書づくり<wbr>（1件あたり）</span>
-        <div class="ba"><span class="from">約3分</span><svg class="ico" aria-hidden="true" viewBox="0 0 24 16"><use href="#i-arrow"/></svg><span class="sr">から</span><span class="to">約10秒</span></div>
+        <div class="ba"><span class="from">約5分</span><svg class="ico" aria-hidden="true" viewBox="0 0 24 16"><use href="#i-arrow"/></svg><span class="sr">から</span><span class="to">約30秒</span></div>
         <div class="was"><b>今まで</b>会計ソフトを<wbr>開いて、<wbr>手で<wbr>入力</div>
         <div class="now"><b>これから</b>フォームに<wbr>入力するだけで<wbr>自動作成</div>
       </li>
@@ -677,11 +685,11 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
 <section class="sec tint" id="price" data-trail>
   <div class="dc sun" aria-hidden="true"></div>
   <div class="in">
-    <div class="lab"><span class="hand" aria-hidden="true">Price</span><h2>お支払いは、<wbr>まず<wbr>半額だけ。<br class="sp">残りは、<span class="mark">納得できてから</span>。</h2></div>
+    <div class="lab"><span class="hand" aria-hidden="true">Price</span><h2>お支払いは、<span class="nw">まず制作費の半額だけ。</span><br class="sp">残りは、<span class="mark">納得できてから</span>。</h2></div>
     <ol class="pay" data-reveal>
       <li class="card"><span>ご相談・<wbr>お見積り</span><b>0円</b></li>
       <li class="link" aria-hidden="true"></li>
-      <li class="card hot"><span>制作を<wbr>始める<wbr>とき</span><b>まず<wbr>半額</b></li>
+      <li class="card hot"><span>制作を<wbr>始める<wbr>とき</span><b>制作費の<wbr>半額</b></li>
       <li class="link" aria-hidden="true"></li>
       <li class="card"><span>お渡しして、<wbr>使ってみる</span><b>14日間</b></li>
       <li class="link" aria-hidden="true"></li>
@@ -729,7 +737,7 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
         <div class="fold-body">
           <p>知り合いに<wbr>詳しい<wbr>人が<wbr>ひとりいる。<br>そんな<wbr>距離感で<wbr>お付き合いします。</p>
           <ol class="strengths">
-            <li><h3><span class="hand" aria-hidden="true">1</span>作る<wbr>本人と、<wbr>直接話せます</h3><p>ご相談を<wbr>受けるのも<wbr>作るのも<wbr>同じ<wbr>ひとりなので、<wbr>お話しした<wbr>内容が<wbr>そのまま<wbr>形に<wbr>なります。</p></li>
+            <li><h3><span class="hand" aria-hidden="true">1</span>僕と、<wbr>直接話せます</h3><p>ご相談を<wbr>受けるのも<wbr>作るのも<wbr>僕ひとりなので、<wbr>お話しした<wbr>内容が<wbr>そのまま<wbr>形に<wbr>なります。</p></li>
             <li><h3><span class="hand" aria-hidden="true">2</span>画面を<wbr>見ながら<wbr>相談できます</h3><p>ビデオ通話で<wbr>画面を<wbr>共有しながら、<wbr>「ここは<wbr>こうしたい」を<wbr>一緒に<wbr>確かめていきます。</p></li>
             <li><h3><span class="hand" aria-hidden="true">3</span>専門用語を<wbr>使わずに<wbr>話します</h3><p>分からない<wbr>言葉が<wbr>出たら、<wbr>遠慮なく<wbr>止めてください。</p></li>
           </ol>
@@ -744,7 +752,7 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
           <details class="qa"><summary><span class="hand" aria-hidden="true">Q</span><span class="q">相談したら、<wbr>必ず<wbr>依頼しないと<wbr>いけませんか？</span><span class="pm" aria-hidden="true"></span></summary><p>いいえ。<br>お話を<wbr>うかがった<wbr>結果、<span class="nw">「今のままで十分です」</span><span class="nw">「市販のサービスで足ります」</span><span class="nw">とお伝えすることもあります。</span></p></details>
         </div>
         <div class="grp"><span class="tag">やり取り・<wbr>作った<wbr>あと</span>
-          <details class="qa"><summary><span class="hand" aria-hidden="true">Q</span><span class="q">返事は<wbr>どの<wbr>くらいでもらえますか？</span><span class="pm" aria-hidden="true"></span></summary><p>平日は<wbr>12時間以内を<wbr>目安に<wbr>お返事します。<br>土日や<span class="nw">休みの日は、</span>お時間を<wbr>いただく<wbr>ことがあります。</p></details>
+          <details class="qa"><summary><span class="hand" aria-hidden="true">Q</span><span class="q">返事は<wbr>どの<wbr>くらいでもらえますか？</span><span class="pm" aria-hidden="true"></span></summary><p>平日は<wbr>12時間以内を<wbr>目安に<wbr>お返事します。<br>土日祝日は、<wbr>お時間を<wbr>いただく<wbr>ことがあります。</p></details>
           <details class="qa"><summary><span class="hand" aria-hidden="true">Q</span><span class="q">作って<wbr>もらった<wbr>あと、<wbr>使い方が<wbr>分からなくなったら？</span><span class="pm" aria-hidden="true"></span></summary><p>お渡しの<wbr>ときに<wbr>使い方を<wbr>ご案内し、<wbr>その後の<wbr>ご質問も<wbr>LINEで<wbr>受け付けています。<br>手直しや<wbr>機能の<wbr>追加は、<wbr>内容を<wbr>うかがってから<wbr>ご相談の<wbr>うえで<wbr>進めます。</p></details>
         </div></div>
         <div class="col"><div class="grp"><span class="tag">相談・進め方</span>
@@ -771,17 +779,17 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
     <div class="prof-txt">
       <p class="msg">はじめまして、<span class="nw">野上 翔太</span>です。<br>2021年から<wbr>ウェブの<wbr>開発を<wbr>しています。</p>
       <p class="msg">いまの<wbr>仕事では、<wbr>スプレッドシートや<wbr>会計ソフトと<wbr>社内の<wbr>仕組みを<wbr>つなぐ<wbr>ことも<wbr>担当しています。<br>そのなかで、<wbr>ちょっとした<wbr>仕組みが<wbr>あれば<wbr>楽に<wbr>なる<wbr>作業が<wbr>身近に<wbr>たくさん<wbr>あり、<wbr>それを<wbr>誰に<wbr>頼めばいいか<wbr>分から<wbr>ず<wbr>困っている<wbr>人が<wbr>多いと<wbr>感じました。</p>
-      <p class="msg">毎日<wbr>3<wbr>分かかっていた<wbr>作業が<wbr>10秒に<wbr>なるだけでも、<wbr>仕事は<wbr>ずいぶん<wbr>軽くなります。<br>会社に<wbr>頼むほどではない<wbr>小さな<wbr>作業ひとつから、<wbr>直接<span class="nw">お引き受け</span>していますので<span class="nw">ご相談ください。</span></p>
-      <p class="msg">仕事の<wbr>ほかでは、<wbr>フットサルを<wbr>したり、<wbr>最近は<wbr>ゴルフを<wbr>再開したりしています。<br>いろいろな<wbr>場所へ<wbr>出かけるのも<wbr>好きで、<wbr>一眼レフの<wbr>カメラを<wbr>買ってからは、<wbr>どこへ<wbr>行くにも<wbr>持ち歩いて<wbr>写真を<wbr>撮っています。<br>プロフィール写真は、<wbr>新婚旅行で<wbr>行った<wbr>八重山諸島での<wbr>一枚です。</p>
+      <p class="msg">毎日<wbr>5<wbr>分かかっていた<wbr>作業が<wbr>30秒に<wbr>なるだけでも、<wbr>仕事は<wbr>ずいぶん<wbr>軽くなります。<br>会社に<wbr>頼むほどではない<wbr>小さな<wbr>作業ひとつから、<wbr>直接<span class="nw">お引き受けしていますので</span><span class="nw">ご相談ください。</span></p>
+      <p class="msg">仕事の<wbr>ほかでは、<wbr>フットサルを<wbr>したり、<wbr>最近は<wbr>ゴルフを<wbr>再開したりしています。<br>いろいろな<wbr>場所へ<wbr>出かけるのも<wbr>好きで、<wbr>一眼レフの<wbr>カメラを<wbr>買ってからは、<wbr>どこへ<wbr>行くにも<wbr>持ち歩いて<wbr>写真を<wbr>撮っています。<br>プロフィール写真は、<wbr>新婚旅行で<wbr>訪れた<wbr>八重山諸島での<wbr>一枚です。</p>
       <div class="snap-wrap">
       <ul class="snaps" aria-label="撮った写真" data-reveal="drop">
         <li><figure><button type="button" class="snap-btn" aria-expanded="false" aria-controls="snap-msg-1" aria-label="カメラで自撮りのひとことを見る"><img src="./assets/home/snap-selfie.webp" alt="鏡に向かってカメラを構える自撮り" width="480" height="480" loading="lazy" decoding="async"></button><figcaption>カメラで<wbr>自撮り</figcaption></figure></li>
         <li><figure><button type="button" class="snap-btn" aria-expanded="false" aria-controls="snap-msg-2" aria-label="鴻巣のブルーインパルスのひとことを見る"><img src="./assets/home/snap-blue-impulse.webp" alt="白い煙を引いて編隊飛行するブルーインパルス" width="480" height="480" loading="lazy" decoding="async"></button><figcaption>鴻巣の<wbr>ブルーインパルス</figcaption></figure></li>
         <li><figure><button type="button" class="snap-btn" aria-expanded="false" aria-controls="snap-msg-3" aria-label="千畳敷カールのひとことを見る"><img src="./assets/home/snap-senjojiki.webp" alt="千畳敷カールの看板と、そびえる岩山" width="480" height="480" loading="lazy" decoding="async"></button><figcaption>千畳敷カール</figcaption></figure></li>
       </ul>
-        <p class="snap-msg" id="snap-msg-1">妻の<wbr>出発準備中に<wbr>撮った、<wbr>ホテルでの<wbr>一コマ。<br>時間つぶしに<wbr>カメラを<wbr>触っていて、<wbr>妻を<wbr>撮ると<wbr>怒られるので<wbr>自撮り撮影を<wbr>決行。<br>今は、<wbr>覗いて<wbr>撮るのが<wbr>かっこいいと<wbr>思ってます笑</p>
-        <p class="snap-msg" id="snap-msg-2">毎年<wbr>恒例に<wbr>なっている、<wbr>鴻巣の<wbr>花火大会で<wbr>撮影した<wbr>一コマ。<br>初めての<wbr>ブルーインパルス、<wbr>早すぎ、<wbr>連携されすぎでかっこ良すぎました。<br>来世は<wbr>ブルーインパルスに<wbr>なります。</p>
-        <p class="snap-msg" id="snap-msg-3">初めて<wbr>山に<wbr>圧倒された<wbr>日の<wbr>一コマ。<br>朝2時発、<wbr>9時半に<wbr>目的地に<wbr>到着と<wbr>いう<wbr>過酷な<wbr>試練を<wbr>乗り越えたのちに<wbr>待ち構えていた<wbr>景色。<br>あんなに<wbr>綺麗で<wbr>雄大な<wbr>自然を<wbr>感じられたのは<wbr>初めてでした。<br>ぜひ<wbr>行ってほしい、そしてまた<wbr>行きたい、<wbr>そんな<wbr>場所に<wbr>なりました。</p>
+        <p class="snap-msg" id="snap-msg-1">妻の<wbr>出発準備中に<wbr>撮った、<wbr>ホテルでの<wbr>一枚。<br>時間つぶしに<wbr>カメラを<wbr>触っていて、<wbr>妻を<wbr>撮ると<wbr>怒られるので<wbr>自撮り撮影を<wbr>決行。<br>今は、<wbr>覗いて<wbr>撮るのが<wbr>かっこいいと<wbr>思ってます笑</p>
+        <p class="snap-msg" id="snap-msg-2">毎年<wbr>恒例に<wbr>なっている、<wbr>鴻巣の<wbr>花火大会で<wbr>撮影した<wbr>一枚。<br>初めての<wbr>ブルーインパルス、<wbr>早すぎ、<wbr>連携されすぎでかっこ良すぎました。<br>来世は<wbr>ブルーインパルスに<wbr>なります。</p>
+        <p class="snap-msg" id="snap-msg-3">初めて<wbr>山に<wbr>圧倒された<wbr>日の<wbr>一枚。<br>朝2時発、<wbr>9時半に<wbr>目的地に<wbr>到着と<wbr>いう<wbr>過酷な<wbr>試練ののちに<wbr>待ち構えていた<wbr>絶景。<br>あんなに<wbr>綺麗で<wbr>雄大な<wbr>自然を<wbr>感じたのは<wbr>初めてでした。<br>また<wbr>行きたい、<wbr>友達にも<wbr>おすすめしたい、<wbr>そんな<wbr>場所に<wbr>なりました。<br>皆さんも<wbr>是非！</p>
       </div>
       <details class="fold"><summary><span>略歴を<wbr>見る</span><span class="pm" aria-hidden="true"></span></summary>
         <div class="fold-body"><ul class="b">
@@ -802,7 +810,7 @@ details[open] > summary .pm::after { transform: rotate(0deg); }
       <h2>まずは、<wbr>話す<wbr>ところから。</h2>
       <p class="lead">「こんな<wbr>こと、<wbr>相談していいのかな」と<wbr>思う<wbr>こと<wbr>ほど、<wbr>お聞かせ<wbr>ください。</p>
       <div class="btns"><a class="btn-line" href="https://lin.ee/SVRxHPY">LINEで<wbr>直接相談する<wbr>（無料）</a><a class="btn-mail" href="mailto:shota@nogami-works.com">メールで<wbr>相談する</a></div>
-      <p class="after"><span class="w">友だち追加して<wbr>「相談したい」と<wbr>送るだけ。</span><span class="w">作る<wbr>本人が<wbr>直接お返事します。</span></p>
+      <p class="after"><span class="w">友だち追加して<wbr>「相談したい」と<wbr>送るだけ。</span><span class="w">僕が<wbr>直接お返事します。</span></p>
     </div>
   </div>
   <footer class="foot">
