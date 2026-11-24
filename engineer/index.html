@@ -9,7 +9,8 @@
   <meta property="og:title" content="Shota Nogami — Frontend-focused Full-stack Engineer" />
   <meta property="og:description" content="フロント・API・インフラを横断して Web プロダクトを構築。実績をまとめたポートフォリオ。" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://nogami-works.com/" />
+  <link rel="canonical" href="https://nogami-works.com/engineer/" />
+  <meta property="og:url" content="https://nogami-works.com/engineer/" />
   <meta property="og:image" content="https://nogami-works.com/assets/brand/ogp.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -28,11 +29,12 @@
     href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
   />
 
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="../style.css" />
 
-  <link rel="icon" type="image/svg+xml" href="./assets/brand/favicon.svg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/brand/icons/icon-32.png" />
-  <link rel="apple-touch-icon" href="./assets/brand/icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/svg+xml" href="../assets/brand/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/brand/icons/icon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/brand/icons/apple-touch-icon.png" />
+  <script src="../assets/analytics.js" defer></script>
 </head>
 <body>
   <!-- 紙の質感を作るグレインオーバーレイ -->
@@ -53,8 +55,8 @@
       <!-- <a href="#process">Process</a> -->
       <a href="#works">Works</a>
       <a href="#tech">Skills</a>
-      <a href="./gallery/">Gallery</a>
-      <a href="./lab/">Lab</a>
+      <a href="../gallery/">Gallery</a>
+      <a href="../lab/">Lab</a>
       <a href="#contact" class="nav__cta">Contact</a>
     </nav>
     <button
@@ -168,7 +170,7 @@
         具体的なサービスとして、こんなプロダクトを提供しています。
       </p>
 
-      <a class="service-featured" href="./line-update/" data-anim="rise">
+      <a class="service-featured" href="../line-update/" data-anim="rise">
         <span class="service-featured__text">
           <span class="service-featured__tag">Product — 提供中</span>
           <span class="service-featured__title">LINEで更新できるLP</span>
@@ -237,7 +239,7 @@
         </p>
         <ul class="cases__list">
           <li data-anim="rise">
-            <a class="case-card" href="./cases/01-slack-quote-bot.pdf" target="_blank" rel="noopener">
+            <a class="case-card" href="../cases/01-slack-quote-bot.pdf" target="_blank" rel="noopener">
               <span class="case-card__tag">Case 01 — 業務自動化</span>
               <span class="case-card__title">Slackから、見積書作成を自動化</span>
               <span class="case-card__lead">チャンネルのフォームに入力するだけで、freeeに見積書を自動作成。リンクがスレッドに届きます。</span>
@@ -247,7 +249,7 @@
             </a>
           </li>
           <li data-anim="rise">
-            <a class="case-card" href="./cases/02-gmail-draft-bulk.pdf" target="_blank" rel="noopener">
+            <a class="case-card" href="../cases/02-gmail-draft-bulk.pdf" target="_blank" rel="noopener">
               <span class="case-card__tag">Case 02 — 業務自動化</span>
               <span class="case-card__title">請求依頼メールの下書きを、一括作成</span>
               <span class="case-card__lead">スプレッドシートで支払月を指定すると、対象者ごとの下書きをGmailにまとめて作成。送信は担当者が確認してから。</span>
@@ -676,7 +678,7 @@
         <a class="btn btn--primary btn--line" href="https://lin.ee/SVRxHPY" target="_blank" rel="noopener">
           LINEで相談する
         </a>
-        <a class="btn btn--ghost" href="mailto:contact.shota.dev@gmail.com">
+        <a class="btn btn--ghost" href="mailto:shota@nogami-works.com">
           メールで連絡する
         </a>
         <!-- 必要に応じて X / Zenn / note などを追加 -->
@@ -723,8 +725,8 @@
         <!-- <li><a href="#services">Services</a></li> -->
         <li><a href="#works">Works</a></li>
         <li><a href="#tech">Skills</a></li>
-        <li><a href="./gallery/">Gallery</a></li>
-        <li><a href="./lab/">Lab</a></li>
+        <li><a href="../gallery/">Gallery</a></li>
+        <li><a href="../lab/">Lab</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <p class="site-footer__copy">© 2026 Shota Nogami</p>
@@ -733,6 +735,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="./main.js" defer></script>
+  <script src="../main.js" defer></script>
 </body>
 </html>
